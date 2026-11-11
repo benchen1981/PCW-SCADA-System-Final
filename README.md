@@ -4,7 +4,8 @@
 
 > **半導體廠務製程冷卻水 (Process Cooling Water, PCW) 早期壓力預警與全端 Web SCADA 系統**  
 > **Re-Engineered Statistical Early-Warning Methodology, Full-Stack Web SCADA v2.0, Async Modbus/TCP Server, SQLite Historian & Reproducible Verification Suite**  
-> **Session Timeline**: 2026-11-11 06:56:50 CST ～ 22:37+ CST (`Steps 000–820+`) · **Live Local Endpoint**: `http://127.0.0.1:8000/` (`Modbus TCP :15020`)
+> **Session Timeline**: 2026-11-11 06:56:50 CST ～ 23:12+ CST (`Steps 000–915+`) · **Live Local Endpoint**: `http://127.0.0.1:8000/` (`Modbus TCP :15020`)  
+> **GitHub Repository**: `https://github.com/benchen1981/PCW-SCADA-System-Final.git` (`main`)
 
 ---
 
@@ -14,7 +15,7 @@
   - [1. 專案總覽與實測驗收總表](#1-專案總覽與實測驗收總表)
   - [2. 系統架構、拓撲與通訊規格](#2-系統架構拓撲與通訊規格)
   - [3. 完整 Prompts 與開發對話脈絡](#3-完整-prompts-與開發對話脈絡)
-  - [4. 開發過程演進與 15 項核心 Debug 實證](#4-開發過程演進與-15-項核心-debug-實證)
+  - [4. 開發過程演進與 16 項核心 Debug 實證](#4-開發過程演進與-16-項核心-debug-實證)
   - [5. 完整安裝、啟動、測試與論文編譯執行步驟](#5-完整安裝啟動測試與論文編譯執行步驟)
   - [6. 使用方法與 REST / SSE / Modbus API 指南](#6-使用方法與-rest--sse--modbus-api-指南)
   - [7. 誠實揭露與研究範圍邊界](#7-誠實揭露與研究範圍邊界)
@@ -71,26 +72,28 @@
 
 ## 3. 完整 Prompts 與開發對話脈絡
 
-會話自 `2026-11-11 06:56:50+08:00` 起歷經 `820+` 步驟（完整逐階實錄見 **[`prompt 01-820.md`](./prompt%2001-820.md)**）：
+會話自 `2026-11-11 06:56:50+08:00` 起歷經 `915+` 步驟（完整逐階實錄見 **[`prompt 01-915.md`](./prompt%2001-915.md)**）：
 
 - **Step 000**：依 [`PCW_AI_Coder_Master_Prompt.md`](../PCW_AI_Coder_Master_Prompt.md) 提出 6 項核心需求（分析與整套程式改寫、自動連已部署網頁測試驗證、逐點執行與留存預警紀錄、調整 Modbus 基準拉長 >10 分鐘實測、論文圖表截圖全替換、論文最佳化至印刷送審水準）。
-- **Step 365 / 599 / 697 / 819**：要求生成包含所有 prompt、執行步驟、系統架構、開發過程、debug 紀錄及使用方法之中英文 `README.md`，並持續更新輸出 `prompt xx-xxx.md` 與 `debug xx-xxx.md`。
+- **Step 365 / 599 / 697 / 819 / 914**：要求生成包含所有 prompt、執行步驟、系統架構、開發過程、debug 紀錄及使用方法之中英文 `README.md`，並持續更新輸出 `prompt xx-xxx.md` 與 `debug xx-xxx.md`。
 - **Step 405**：要求立即啟動本機 `http://127.0.0.1:8000/` 服務。
 - **Step 424**：要求「整套專案程式改寫、優化，而非複製舊專案局部修補」$\implies$ 促成完整刪除 22 份舊專案冗餘檔、全面重寫前後端 9 大頁面、實作 SSE `LIVE STREAM` 推播與 `rawOnset` 控制面板之 v2.0 深度改造。
 - **Step 619**：要求對 `http://127.0.0.1:8000/` 重跑自動瀏覽器實測與全測點 >10 分鐘行為偏差驗證（達成 `11.35 min`、`320/320` 測點全數執行預警／事件、SQLite `203,840` 筆紀錄）並更新論文圖表截圖。
 - **Step 721**：指定以初版獲教授認可之 [`PCW_T30_T20_T10_FINAL_ROLLBACK_THESIS_VERIFICATION.xlsx`](../Existing/PCW_T30_T20_T10_FINAL_ROLLBACK_THESIS_VERIFICATION.xlsx) 為程式開發基礎，逐欄解析其公式並於論文第三章清楚定義**偏移偵測（Drift Detection）**與**趨勢預測（Trend Forecast）**兩大核心問題之數學公式與程式對照表（`表 3`）。
-- **Step 584 / 689 / 805**：逐輪檢查計畫並確認所有任務與印刷版排版檢核（`35 頁`、0 溢位警告）均已落實。
+- **Step 843 / 876**：要求將論文第三章艱澀數學式簡化為直覺好記形式、增補五大「【口試備註】」與口試 Q&A 小抄 [oral_defense_notes.md](./thesis/oral_defense_notes.md)，並重新生成 [main.tex](./thesis/main.tex) 與 36 頁印刷級 [main.pdf](./thesis/main.pdf)。
+- **Step 893**：指定將完整新專案推送至 GitHub `https://github.com/benchen1981/PCW-SCADA-System-Final.git`（建立 `.gitignore` 並成功推送 `main` 分支）。
+- **Step 584 / 689 / 805**：逐輪檢查計畫並確認所有任務均已落實。
 
 ---
 
-## 4. 開發過程演進與 15 項核心 Debug 實證
+## 4. 開發過程演進與 16 項核心 Debug 實證
 
-完整八大開發階段與 **15 項真實除錯（`Debug 01-001` ～ `01-015`）** 見 [`prompt 01-820.md`](./prompt%2001-820.md) 與 **[`debug 01-015.md`](./debug%2001-015.md)**，關鍵除錯摘要如下：
+完整九大開發階段與 **16 項真實除錯（`Debug 01-001` ～ `01-016`）** 見 [`prompt 01-915.md`](./prompt%2001-915.md) 與 **[`debug 01-016.md`](./debug%2001-016.md)**，關鍵除錯摘要如下：
 
 1. **演算法核心修復 (`01-003`, `01-005`, `01-007`)**：修正 `N10 > theta` 結構不可達為 `N10 >= theta`；於 L2 加入持續水準偏移閘門 `|mean(C)-BaseAvg60| >= g%*(HI-LO)` 解決 >10 分鐘斜率歸零回落 `NORMAL` 問題；同步設定／注入與 Alarm/Prediction 狀態消除 `1.72 bar` 矛盾。
 2. **跨語言與通訊端口修復 (`01-004`, `01-006`, `01-012`)**：改寫 TS 建構子欄位通過 Node v24 `--experimental-strip-types` 原生 `<1e-9` 對等測試；避開外部佔用 Port 5020 預設改用 `15020`；隔離 pytest 測試埠為 `15029` 與獨立暫存 DB 確保在背景系統運行同時 `pytest` 穩定 `6 passed`。
 3. **文獻與消融實驗除錯 (`01-002`, `01-008`, `01-009`)**：透過 Crossref API 剔除 6 筆虛構或錯配 DOI；實作 `raw_onset=2` 消融將突波誤報率由 `25.62%` 降至 `6.88% / 1.25%`；調整圖表邊距重產 300 DPI PNG。
-4. **論文排版與全端 v2.0 改造除錯 (`01-010`, `01-011`, `01-013`, `01-014`, `01-015`)**：消除 `Overfull \hbox` 與 18 處 `\t`+`extbf{` 字元損毀；刪除 22 份舊版複製冗餘檔並改採原生 SSE `GET /api/stream` 解決 WebSocket 握手報錯 (`Console errors: 0`)；修復 `DP` (`PDT`) 計數與總覽 KPI 顯示；更新圖說至 `11.35`，並將導入 Excel 雙模型公式後新增之 9 處寬公式溢位改採 `align`/`split` 消除且收斂 `Abstract` 於單頁（**35 頁 `main.pdf`，0 Overfull/Undefined 警告**）。
+4. **論文口試排版與系統／版控發布除錯 (`01-010`, `01-011`, `01-013`, `01-014`, `01-015`, `01-016`)**：消除 `Overfull \hbox` 與 18 處 `\t`+`extbf{` 字元損毀；刪除 22 份舊版複製冗餘檔並改採原生 SSE `GET /api/stream` 解決 WebSocket 握手報錯 (`Console errors: 0`)；修復 `DP` (`PDT`) 計數與總覽 KPI 顯示；解決 Excel 雙模型與口試簡化版論文公式溢位（**36 頁 `main.pdf`，0 Overfull/Undefined 警告**）；透過 `.gitignore` 隔離運行庫與 `node_modules` 後順利推送至 GitHub。
 
 ---
 
@@ -193,9 +196,10 @@ Executed in strict compliance with [PCW_AI_Coder_Master_Prompt.md](../PCW_AI_Cod
 
 ## 3. Prompts, Development Timeline & Debug Traceability
 
-- Full chronological session prompts & architecture log (`Steps 000–820+`): **[`prompt 01-820.md`](./prompt%2001-820.md)**
-- Full 15-episode debugging log (`Debug 01-001` – `01-015`): **[`debug 01-015.md`](./debug%2001-015.md)**
-- Key fixes verified end-to-end: (1) `N10 >= theta` symmetric-noise reachability fix; (2) L2 sustained level-shift gate preventing >10-min `slope -> 0` reset; (3) immediate prediction/alarm state synchronization at `1.72 bar`; (4) Node v24 constructor field refactor for native TypeScript parity (`< 1e-9`); (5) Modbus TCP port isolation (`15020` live / `15029` pytest); (6) purging 6 invalid/mismatched BibTeX DOIs via Crossref; (7) removing 22 copied legacy files and replacing failing WebSocket polling with zero-dependency SSE `LIVE STREAM` (`0` Chrome console/page errors); (8) fixing `DP` (`PDT`) type filtering, 18 bash-corrupted `\textbf{` tokens, caption sync (`11.35 min`), adding Excel Rollback formula mapping + dual Drift Detection / Trend Forecast equations in Chapter 3, eliminating all 9 `Overfull \hbox` overflow warnings, and verifying the 35-page PDF (`0` warnings) via Swift PDFKit page renders.
+- Full chronological session prompts & architecture log (`Steps 000–915+`): **[`prompt 01-915.md`](./prompt%2001-915.md)**
+- Full 16-episode debugging log (`Debug 01-001` – `01-016`): **[`debug 01-016.md`](./debug%2001-016.md)**
+- **GitHub Repository**: `https://github.com/benchen1981/PCW-SCADA-System-Final.git` (published on `main`)
+- Key fixes verified end-to-end: (1) `N10 >= theta` symmetric-noise reachability fix; (2) L2 sustained level-shift gate preventing >10-min `slope -> 0` reset; (3) immediate prediction/alarm state synchronization at `1.72 bar`; (4) Node v24 constructor field refactor for native TypeScript parity (`< 1e-9`); (5) Modbus TCP port isolation (`15020` live / `15029` pytest); (6) purging 6 invalid/mismatched BibTeX DOIs via Crossref; (7) removing 22 copied legacy files and replacing failing WebSocket polling with zero-dependency SSE `LIVE STREAM` (`0` Chrome console/page errors); (8) fixing `DP` (`PDT`) type filtering, 18 bash-corrupted `\textbf{` tokens, caption sync (`11.35 min`), adding Excel Rollback formula mapping + simplified oral-defense Drift Detection / Trend Forecast equations & five defense notes ([`oral_defense_notes.md`](./thesis/oral_defense_notes.md)), eliminating all LaTeX overflow warnings (`36 pages, 0 warnings`), and publishing cleanly to GitHub via `.gitignore`.
 
 ---
 
