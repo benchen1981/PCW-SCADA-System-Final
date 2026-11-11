@@ -1,0 +1,15 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.9.6, pytest-8.3.3, pluggy-1.6.0 -- /Users/benchen1981/Downloads/Web SCADA/Code/pcw-poc-v1_merged/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/benchen1981/Downloads/Web SCADA Final 20261111/PCW_SCADA_Final_Project/system
+plugins: anyio-4.12.1
+collecting ... collected 6 items
+
+../tests/test_unified_system.py::test_topology_and_cdab_mapping PASSED   [ 16%]
+../tests/test_unified_system.py::test_n10_reachability_and_l1_to_l7 PASSED [ 33%]
+../tests/test_unified_system.py::test_python_typescript_parity PASSED    [ 50%]
+../tests/test_unified_system.py::test_state_consistency_and_ten_minute_deviation PASSED [ 66%]
+../tests/test_unified_system.py::test_modbus_tcp_wire_roundtrip PASSED   [ 83%]
+../tests/test_unified_system.py::test_fastapi_endpoints PASSED           [100%]
+
+============================== 6 passed in 3.88s ===============================

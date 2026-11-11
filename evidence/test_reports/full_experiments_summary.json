@@ -1,0 +1,232 @@
+{
+  "executed_at": "2026-11-11T07:10:39+0800",
+  "elapsed_sec": 4.88,
+  "platform": "macOS-26.7.3-arm64-arm-64bit",
+  "python": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]",
+  "excel_comparison": {
+    "rows_compared": 480,
+    "exact_matches": 480,
+    "parity_rate": 1.0,
+    "max_abs_diff": 0.0,
+    "tolerance": 1e-09,
+    "pt1_excel_rollback_t30": {
+      "TP": 12,
+      "FP": 90,
+      "FN": 18,
+      "TN": 294,
+      "Precision": 0.1176,
+      "Recall": 0.4,
+      "F1": 0.1818
+    },
+    "pt1_unified_v1_eval": {
+      "TP": 12,
+      "FP": 106,
+      "FN": 18,
+      "TN": 206,
+      "Precision": 0.1017,
+      "Recall": 0.4,
+      "F1": 0.1622
+    }
+  },
+  "matrix_summary": {
+    "pt_160": {
+      "Static Threshold": {
+        "n": 1920,
+        "TP": 1280,
+        "TN": 640,
+        "FP": 0,
+        "FN": 0,
+        "Accuracy": 1.0,
+        "Precision": 1.0,
+        "Recall": 1.0,
+        "Specificity": 1.0,
+        "F1": 1.0,
+        "FAR": 0.0,
+        "EarlyWarningRate": 0.0,
+        "MeanLeadMin": 0.0,
+        "MedianLeadMin": 0.0,
+        "Recall_95CI": [
+          0.997008,
+          1.0
+        ],
+        "Precision_95CI": [
+          0.997008,
+          1.0
+        ]
+      },
+      "EWMA": {
+        "n": 1920,
+        "TP": 1280,
+        "TN": 291,
+        "FP": 349,
+        "FN": 0,
+        "Accuracy": 0.818229,
+        "Precision": 0.785758,
+        "Recall": 1.0,
+        "Specificity": 0.454688,
+        "F1": 0.880028,
+        "FAR": 0.545312,
+        "EarlyWarningRate": 0.75,
+        "MeanLeadMin": 12.9211,
+        "MedianLeadMin": 14.0,
+        "Recall_95CI": [
+          0.997008,
+          1.0
+        ],
+        "Precision_95CI": [
+          0.765173,
+          0.804998
+        ]
+      },
+      "Naive OLS": {
+        "n": 1920,
+        "TP": 1280,
+        "TN": 480,
+        "FP": 160,
+        "FN": 0,
+        "Accuracy": 0.916667,
+        "Precision": 0.888889,
+        "Recall": 1.0,
+        "Specificity": 0.75,
+        "F1": 0.941176,
+        "FAR": 0.25,
+        "EarlyWarningRate": 0.75,
+        "MeanLeadMin": 10.6578,
+        "MedianLeadMin": 12.0,
+        "Recall_95CI": [
+          0.997008,
+          1.0
+        ],
+        "Precision_95CI": [
+          0.871611,
+          0.904098
+        ]
+      },
+      "Proposed Unified": {
+        "n": 1920,
+        "TP": 1280,
+        "TN": 478,
+        "FP": 162,
+        "FN": 0,
+        "Accuracy": 0.915625,
+        "Precision": 0.887656,
+        "Recall": 1.0,
+        "Specificity": 0.746875,
+        "F1": 0.940485,
+        "FAR": 0.253125,
+        "EarlyWarningRate": 0.75,
+        "MeanLeadMin": 10.5789,
+        "MedianLeadMin": 12.0,
+        "Recall_95CI": [
+          0.997008,
+          1.0
+        ],
+        "Precision_95CI": [
+          0.870316,
+          0.902936
+        ]
+      }
+    },
+    "all_320": {
+      "Static Threshold": {
+        "n": 3840,
+        "TP": 2560,
+        "TN": 1280,
+        "FP": 0,
+        "FN": 0,
+        "Accuracy": 1.0,
+        "Precision": 1.0,
+        "Recall": 1.0,
+        "Specificity": 1.0,
+        "F1": 1.0,
+        "FAR": 0.0,
+        "EarlyWarningRate": 0.0,
+        "MeanLeadMin": 0.0,
+        "MedianLeadMin": 0.0,
+        "Recall_95CI": [
+          0.998502,
+          1.0
+        ],
+        "Precision_95CI": [
+          0.998502,
+          1.0
+        ]
+      },
+      "EWMA": {
+        "n": 3840,
+        "TP": 2560,
+        "TN": 593,
+        "FP": 687,
+        "FN": 0,
+        "Accuracy": 0.821094,
+        "Precision": 0.78842,
+        "Recall": 1.0,
+        "Specificity": 0.463281,
+        "F1": 0.881695,
+        "FAR": 0.536719,
+        "EarlyWarningRate": 0.75,
+        "MeanLeadMin": 12.943,
+        "MedianLeadMin": 14.0,
+        "Recall_95CI": [
+          0.998502,
+          1.0
+        ],
+        "Precision_95CI": [
+          0.774035,
+          0.802124
+        ]
+      },
+      "Naive OLS": {
+        "n": 3840,
+        "TP": 2560,
+        "TN": 959,
+        "FP": 321,
+        "FN": 0,
+        "Accuracy": 0.916406,
+        "Precision": 0.88858,
+        "Recall": 1.0,
+        "Specificity": 0.749219,
+        "F1": 0.941003,
+        "FAR": 0.250781,
+        "EarlyWarningRate": 0.75,
+        "MeanLeadMin": 10.6664,
+        "MedianLeadMin": 12.0,
+        "Recall_95CI": [
+          0.998502,
+          1.0
+        ],
+        "Precision_95CI": [
+          0.876569,
+          0.899557
+        ]
+      },
+      "Proposed Unified": {
+        "n": 3840,
+        "TP": 2560,
+        "TN": 954,
+        "FP": 326,
+        "FN": 0,
+        "Accuracy": 0.915104,
+        "Precision": 0.887041,
+        "Recall": 1.0,
+        "Specificity": 0.745313,
+        "F1": 0.94014,
+        "FAR": 0.254688,
+        "EarlyWarningRate": 0.75,
+        "MeanLeadMin": 10.5934,
+        "MedianLeadMin": 11.0,
+        "Recall_95CI": [
+          0.998502,
+          1.0
+        ],
+        "Precision_95CI": [
+          0.874974,
+          0.898079
+        ]
+      }
+    },
+    "total_runs": 3840
+  },
+  "edge_cases_passed": 12,
+  "edge_cases_total": 12
+}

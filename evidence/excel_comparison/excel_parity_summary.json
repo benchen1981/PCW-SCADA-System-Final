@@ -1,0 +1,25 @@
+{
+  "rows_compared": 480,
+  "exact_matches": 480,
+  "parity_rate": 1.0,
+  "max_abs_diff": 0.0,
+  "tolerance": 1e-09,
+  "pt1_excel_rollback_t30": {
+    "TP": 12,
+    "FP": 90,
+    "FN": 18,
+    "TN": 294,
+    "Precision": 0.1176,
+    "Recall": 0.4,
+    "F1": 0.1818
+  },
+  "pt1_unified_v1_eval": {
+    "TP": 12,
+    "FP": 106,
+    "FN": 18,
+    "TN": 206,
+    "Precision": 0.1017,
+    "Recall": 0.4,
+    "F1": 0.1622
+  }
+}

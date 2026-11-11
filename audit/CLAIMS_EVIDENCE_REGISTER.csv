@@ -1,0 +1,14 @@
+claim_id,thesis_location,claim_summary,evidence_source,verification_method,status,limitation_or_gap
+C01,Ch1 §1.1-1.3,"全廠 8 套 PCW、每套 10 個 Submain，共 160 支 PT、80 支 TT、16 支 FT","sensorDefinitions.ts / pcwSubmains.ts",程式碼與前端清單核對,FAIL,"實際程式碼為 160 PT (PTS/PTR)、80 FT、80 PDT，共 320 測點；並無 80 TT 或 16 FT，需修正論文與系統對齊"
+C02,Ch1 Table 1-1,"Group 4 (PCW07-08) Baseline=2.10, HiHi=2.40, Hi=2.30, Lo=1.90, LoLo=1.80","sensorDefinitions.ts / ModbusMonitor.tsx / pcwSystems.ts",程式碼設定值核對,FAIL,"程式與線上部署版本實際皆為 Baseline=2.20, HiHi=2.50, Hi=2.40, Lo=2.00, LoLo=1.90"
+C03,Ch3 §3.1-3.3,"演算法 1 為 Darcy-Weisbach 水阻比對 (DW-ADE)","DriftForecastEngine.ts / baselines.py / algorithms.py",原始碼逐行追蹤,FAIL,"實際推論引擎並未計算 Re、Colebrook-White f 或水阻偏差率，僅實作 70 點因果雙視窗 N10 與斜率外推"
+C04,Ch3 §3.4,"演算法 2 為二項分佈檢定 p0=0.05, alpha=0.01 與 W=60 OLS","DriftForecastEngine.ts / Excel MinuteInference",原始碼與 Excel 公式核對,FAIL,"實際程式採用 N10 = M10/(M60/6) 與 5 分鐘均差斜率 (R-P)/5；OLS 僅於最近 10 點用於計算 slopeOls/R2/95% 預測區間"
+C05,Ch3 §3.5,"演算法 3 為七層濾波含 <2s 水錘中位數濾波、Tool Maintenance 遮罩、跨樓層聯鎖控制 CUB VFD","DriftForecastEngine.ts / AlarmEngine.ts",原始碼逐行追蹤,FAIL,"實際 L1-L7 硬化層為 Quality Gate、Span-Normalized Drift Gate、OLS 95% Band、TTL、EVENT 分離、Hysteresis Latch 與 Risk Index；無 VFD 控制輸出"
+C06,Ch3 Table 3-1,"Modbus TCP 保持暫存器為 40001-40160 INT16 (x100)","modbusRegisterMap.ts / ModbusMonitor.tsx",暫存器映射表核對,FAIL,"實際前端採用 FLOAT32 CDAB Word-Swap (每測點占 2 暫存器)，320 測點映射至 40001-40639"
+C07,Ch2 & Refs,"引用 11 篇文獻含 caballero2026, li2024, lin2023, smith2021, zhang2022, wang2025","refs 20261109.bib",Crossref API DOI 實查,FAIL,"4 筆 DOI 返回 404 不存在，2 筆 DOI 對應完全不同主題之他人論文；僅 5 筆為真實文獻"
+C08,Ch4 §4.1,"硬體環境為 Apple Silicon arm64 (型號與 RAM 未採集)","sysctl / sw_vers / uname",系統命令實測,PARTIAL,"2026-11-11 實機探測確認為 Apple M5, 10 cores, 16 GiB RAM, macOS 26.7.3 (arm64)"
+C09,Ch4 §4.2,"單次 predict 平均延遲 7.53 us, P99 10.88 us, 127,298 ops/s","revalidated_latency.json",微基準腳本重跑驗證,PARTIAL,"舊報告值須隨重構後統一引擎重新實測，並補充 320 點批次、SQLite 與 Modbus TCP 延遲"
+C10,Ch4 §4.3-4.4,"1600 場合成測試 Proposed F1=0.9899 (FP=26) vs Naive OLS F1=1.0000","run_revalidated_1600.py",程式碼與輸出檔案核對,PARTIAL,"舊測試僅覆蓋 160 PT 且使用舊版 baselines.py (非系統實際 TS 邏輯)，需用統一後雙引擎重新執行並涵蓋全部 15 類測試情境"
+C11,Ch4 §4.5,"線上系統已巡覽 9 頁且存在 1.72 bar 狀態不一致缺陷 (Alarm HIGH vs Prediction NORMAL)","https://pcw-scada-system.vercel.app/",瀏覽器實測重現,PASS,"已確認舊版線上網站存在此缺陷；本專案將實測舊版並於重構系統中徹底修復後重新驗證"
+C12,Excel Replay,"PT-1 480 分鐘歷史資料與 Excel Rollback 模型回放結果","PCW_T30_T20_T10_FINAL_ROLLBACK_THESIS_VERIFICATION.xlsx",Excel 公式逐列與 Python/TS 比對,PARTIAL,"須重新產出完整逐筆誤差表 EXCEL_PROGRAM_COMPARISON.csv 並標明固定容許誤差"
+

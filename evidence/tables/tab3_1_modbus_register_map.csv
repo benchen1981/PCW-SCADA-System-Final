@@ -1,0 +1,5 @@
+Signal_Group,Tag_Suffix,Modbus_Register_Range,Register_Count,Encoding
+Supply Pressure,.PTS,"40001..40633 (offset +0, step 8)",80 x 2 = 160,FLOAT32 CDAB
+Supply Flow,.FT,"40003..40635 (offset +2, step 8)",80 x 2 = 160,FLOAT32 CDAB
+Return Pressure,.PTR,"40005..40637 (offset +4, step 8)",80 x 2 = 160,FLOAT32 CDAB
+Differential Pressure,.PDT,"40007..40639 (offset +6, step 8)",80 x 2 = 160,FLOAT32 CDAB

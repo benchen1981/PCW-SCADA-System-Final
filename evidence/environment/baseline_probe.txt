@@ -1,0 +1,19 @@
+=== TIMESTAMP ===
+2026-11-11T07:00:54+08:00
+=== HARDWARE & OS ===
+Apple M5
+ncpu=10
+mem_bytes=17179869184
+ProductName:		macOS
+ProductVersion:		26.7.3
+BuildVersion:		25G342
+Darwin Benchen1981deMacBook-Pro.local 25.6.0 Darwin Kernel Version 25.6.0: Mon Oct 12 00:40:18 PDT 2026; root:xnu-12377.161.15.701.48~2/RELEASE_ARM64_T8142 arm64
+=== RUNTIMES ===
+Python 3.9.6
+Python 3.9.6
+v24.14.1
+11.11.0
+Tectonic 0.17.0
+Google Chrome 157.0.8103.40 
+=== GIT BASELINE ===
+4daa3b0e8ce51101a0b60a514af0da8a06736f5c

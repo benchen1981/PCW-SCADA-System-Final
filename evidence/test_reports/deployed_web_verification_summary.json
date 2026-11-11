@@ -1,0 +1,59 @@
+{
+  "url": "https://pcw-scada-system.vercel.app",
+  "executedAt": "2026-11-10T23:21:04.085Z",
+  "durationMinutes": 11.12,
+  "patrolResults": [
+    {
+      "navName": "1. Plant Overview",
+      "bodyLen": 1305,
+      "shot": "deployed_01_overview.png"
+    },
+    {
+      "navName": "2. Live Sensor Data",
+      "bodyLen": 1336,
+      "shot": "deployed_02_sensors.png"
+    },
+    {
+      "navName": "3. Historian Trend",
+      "bodyLen": 690,
+      "shot": "deployed_03_historian.png"
+    },
+    {
+      "navName": "4. Live Trend",
+      "bodyLen": 911,
+      "shot": "deployed_04_live_trend.png"
+    },
+    {
+      "navName": "5. Alarm Center",
+      "bodyLen": 787,
+      "shot": "deployed_05_alarms.png"
+    },
+    {
+      "navName": "6. System Prediction",
+      "bodyLen": 52143,
+      "shot": "deployed_06_prediction.png"
+    },
+    {
+      "navName": "7. Prediction Tuning",
+      "bodyLen": 16886,
+      "shot": "deployed_07_tuning.png"
+    },
+    {
+      "navName": "8. Modbus Simulator",
+      "bodyLen": 38282,
+      "shot": "deployed_08_modbus_monitor.png"
+    },
+    {
+      "navName": "9. Prediction Model Info",
+      "bodyLen": 1804,
+      "shot": "deployed_09_model_info.png"
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "consistencyCheck172": {
+    "alarmCenterRow": "2026/11/11 上午7:09:37 PCW01 Submain01 PCW01.Submain01.PTS 1.72 PCW01.Submain01.PTS HIGH HIGH ACTIVE_UNACK ACK",
+    "systemPredictionRow": "PCW01.Submain01.PTS 1.80 / 1.70 / 1.30 / 1.20 1.723 1.500 30 / 5 1.00 0.0003 1.510 1.507 1.503 NORMAL Forecasts within limits, no density shift ➔ STABLE"
+  },
+  "samplesCount": 22
+}

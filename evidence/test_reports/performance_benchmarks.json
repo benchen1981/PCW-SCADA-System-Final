@@ -1,0 +1,55 @@
+{
+  "single_predict": {
+    "samples": 10000,
+    "mean_us": 14.531,
+    "median_us": 13.75,
+    "std_us": 4.554,
+    "p95_us": 17.625,
+    "p99_us": 31.792,
+    "min_us": 12.625,
+    "max_us": 117.833,
+    "throughput_ops_sec": 68352.1
+  },
+  "batch_320_predict": {
+    "samples": 500,
+    "mean_us": 4681.957,
+    "median_us": 4631.312,
+    "std_us": 294.261,
+    "p95_us": 4959.292,
+    "p99_us": 5441.958,
+    "min_us": 4370.667,
+    "max_us": 8014.0,
+    "batch_size": 320,
+    "throughput_tags_sec": 68343.7
+  },
+  "full_320_eval_and_sqlite_insert": {
+    "samples": 100,
+    "mean_us": 20540.468,
+    "median_us": 19751.042,
+    "std_us": 4817.462,
+    "p95_us": 28964.709,
+    "p99_us": 44690.375,
+    "min_us": 16379.666,
+    "max_us": 47827.583
+  },
+  "sqlite_query_100_rows": {
+    "samples": 100,
+    "mean_us": 706.063,
+    "median_us": 645.5,
+    "std_us": 142.067,
+    "p95_us": 939.916,
+    "p99_us": 995.209,
+    "min_us": 593.375,
+    "max_us": 1621.792
+  },
+  "modbus_tcp_fc03_20regs": {
+    "samples": 100,
+    "mean_us": 271.373,
+    "median_us": 266.979,
+    "std_us": 29.271,
+    "p95_us": 317.667,
+    "p99_us": 380.625,
+    "min_us": 237.458,
+    "max_us": 442.5
+  }
+}

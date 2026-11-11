@@ -1,0 +1,15 @@
+.DS_Store
+**/.DS_Store
+__pycache__/
+*.py[cod]
+.pytest_cache/
+node_modules/
+system/backend/data/*.db
+system/backend/data/*.db-wal
+system/backend/data/*.db-shm
+thesis/*.log
+thesis/*.aux
+thesis/*.toc
+thesis/*.lof
+thesis/*.lot
+thesis/*.out

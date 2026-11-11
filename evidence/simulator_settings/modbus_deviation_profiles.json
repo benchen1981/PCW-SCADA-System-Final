@@ -1,0 +1,78 @@
+{
+  "modbus_tcp_port": 15020,
+  "encoding": "IEEE-754 FLOAT32 CDAB Word-Swap",
+  "holding_register_range": "40001-40639 (640 registers, 320 sensors)",
+  "group_deviation_targets_bar": {
+    "PCW01": {
+      "PTS_base_bar": 1.62,
+      "PTR_base_bar": 1.38,
+      "noise": 0.008,
+      "HI": 1.7,
+      "LO": 1.3
+    },
+    "PCW02": {
+      "PTS_base_bar": 1.62,
+      "PTR_base_bar": 1.38,
+      "noise": 0.008,
+      "HI": 1.7,
+      "LO": 1.3
+    },
+    "PCW03": {
+      "PTS_base_bar": 2.02,
+      "PTR_base_bar": 1.78,
+      "noise": 0.008,
+      "HI": 2.1,
+      "LO": 1.7
+    },
+    "PCW04": {
+      "PTS_base_bar": 2.02,
+      "PTR_base_bar": 1.78,
+      "noise": 0.008,
+      "HI": 2.1,
+      "LO": 1.7
+    },
+    "PCW05": {
+      "PTS_base_bar": 2.62,
+      "PTR_base_bar": 2.38,
+      "noise": 0.008,
+      "HI": 2.7,
+      "LO": 2.3
+    },
+    "PCW06": {
+      "PTS_base_bar": 2.62,
+      "PTR_base_bar": 2.38,
+      "noise": 0.008,
+      "HI": 2.7,
+      "LO": 2.3
+    },
+    "PCW07": {
+      "PTS_base_bar": 2.32,
+      "PTR_base_bar": 2.08,
+      "noise": 0.008,
+      "HI": 2.4,
+      "LO": 2.0
+    },
+    "PCW08": {
+      "PTS_base_bar": 2.32,
+      "PTR_base_bar": 2.08,
+      "noise": 0.008,
+      "HI": 2.4,
+      "LO": 2.0
+    }
+  },
+  "ramp_drift_injection": {
+    "tags": [
+      "PCW01.Submain01.PTS",
+      "PCW05.Submain01.PTS"
+    ],
+    "scenario": "DRIFT",
+    "driftRatePerMin_bar": 0.008
+  },
+  "state_consistency_probe": {
+    "tag": "PCW01.Submain01.PTS",
+    "baseValue_bar": 1.72,
+    "noise": 0.0,
+    "expected_alarm": "HIGH",
+    "expected_prediction": "EVENT"
+  }
+}

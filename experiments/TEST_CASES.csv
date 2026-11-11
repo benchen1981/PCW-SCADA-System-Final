@@ -1,0 +1,13 @@
+test_case_id,scenario_name,current_value,expected_states,actual_state,detector,n10,slope,ttl_min,result
+TC-01,Normal_Stable,1.501,NORMAL,NORMAL,NONE,1.0,-0.00016,1256.25,PASS
+TC-02,Slow_Drift_Up_Forecast,1.63,T-10|T-20|T-30,T-10,FORECAST,2.0,0.012,5.83,PASS
+TC-03,Slow_Drift_Down_Forecast,1.37,T-10|T-20|T-30,T-10,FORECAST,2.0,-0.012,5.83,PASS
+TC-04,Sustained_Level_Shift_10min,1.62,T-30,T-30,DENSITY,2.0,0.0,,PASS
+TC-05,Near_HI_Limit,1.69,T-10|T-20|T-30,T-10,FORECAST,2.0,0.002,5.0,PASS
+TC-06,Near_LO_Limit,1.31,T-10|T-20|T-30,T-10,FORECAST,2.0,-0.002,5.0,PASS
+TC-07,Already_Beyond_HI_EVENT,1.72,EVENT,EVENT,FORECAST,2.0,0.0,,PASS
+TC-08,Already_Below_LO_EVENT,1.28,EVENT,EVENT,FORECAST,0.0,0.0,,PASS
+TC-09,Bad_Quality_Data_Drop_L1,1.5,INSUFFICIENT_DATA,INSUFFICIENT_DATA,NONE,0.0,0.0,,PASS
+TC-10,Insufficient_Window_Length,1.5,INSUFFICIENT_DATA,INSUFFICIENT_DATA,NONE,0.0,0.0,,PASS
+TC-11,Frozen_Zero_Variance_Normal,1.5,NORMAL,NORMAL,NONE,0.0,0.0,,PASS
+TC-12,Trend_Reversal_Down_To_Up,1.53,NORMAL|T-20|T-30,T-20,FORECAST,0.4,0.01,17.0,PASS

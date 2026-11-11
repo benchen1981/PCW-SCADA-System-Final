@@ -1,0 +1,7 @@
+Group,Loops,Measure_Type,Baseline,Unit,LOLO,LO,HI,HIHI,Sensor_Count
+Group 1,PCW01-02,PT (PTS/PTR),1.5,bar,1.2,1.3,1.7,1.8,40
+Group 2,PCW03-04,PT (PTS/PTR),1.9,bar,1.6,1.7,2.1,2.2,40
+Group 3,PCW05-06,PT (PTS/PTR),2.5,bar,2.2,2.3,2.7,2.8,40
+Group 4,PCW07-08,PT (PTS/PTR),2.2,bar,1.9,2.0,2.4,2.5,40
+All,PCW01-08,FT,180.0,L/min,150.0,160.0,200.0,220.0,80
+All,PCW01-08,PDT,0.3,bar,0.0,0.1,0.5,0.6,80
