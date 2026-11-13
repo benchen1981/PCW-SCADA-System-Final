@@ -1,5 +1,6 @@
 """Build clean, professional NCHU thesis Word document (.docx and .doc) from thesis/main.tex."""
 import os
+import shutil
 import subprocess
 from pathlib import Path
 import docx
@@ -12,8 +13,14 @@ ROOT = Path(__file__).resolve().parent.parent
 THESIS_DIR = ROOT / "thesis"
 MAIN_TEX = THESIS_DIR / "main.tex"
 RAW_DOCX = THESIS_DIR / "raw_pandoc.docx"
+
+# Target file paths
 FINAL_DOCX = THESIS_DIR / "NCHU_Thesis_陳宥興_可編輯修改稿.docx"
 FINAL_DOC = THESIS_DIR / "NCHU_Thesis_陳宥興_可編輯修改稿.doc"
+MAIN_DOCX = THESIS_DIR / "main.docx"
+MAIN_DOC = THESIS_DIR / "main.doc"
+DATE_DOCX = THESIS_DIR / "NCHU_Thesis_陳宥興_可編輯修改稿_20261114.docx"
+DATE_DOC = THESIS_DIR / "NCHU_Thesis_陳宥興_可編輯修改稿_20261114.doc"
 
 def run_pandoc():
     cmd = [
@@ -52,7 +59,6 @@ def main():
         section.right_margin = Inches(1.0)
     
     # ------------------ COVER PAGE ------------------
-    # Add spacing at top
     p_top = new_doc.add_paragraph()
     p_top.paragraph_format.space_before = Pt(36)
     
@@ -114,22 +120,19 @@ def main():
     new_doc.add_page_break()
     
     # ------------------ COPY BODY FROM RAW DOCX ------------------
-    # Skip any redundant "口試審核頁預留" in raw_doc
     skip_first_oral = True
     
     for element in raw_doc.element.body:
-        # Check if paragraph
         if element.tag.endswith('p'):
             text = "".join(element.itertext()).strip()
             if skip_first_oral and "口試審核頁預留" in text:
                 skip_first_oral = False
                 continue
-            # Append paragraph element to new doc
             new_doc.element.body.append(element)
         elif element.tag.endswith('tbl'):
             new_doc.element.body.append(element)
         elif element.tag.endswith('sectPr'):
-            pass  # preserve section settings
+            pass
     
     print(f"Step 3: Saving final docx to {FINAL_DOCX}...")
     new_doc.save(FINAL_DOCX)
@@ -141,7 +144,25 @@ def main():
     cmd_doc = ["textutil", "-convert", "doc", "-output", str(FINAL_DOC), str(FINAL_DOCX)]
     subprocess.run(cmd_doc, check=True)
     
-    print(f"Successfully generated:\n- {FINAL_DOCX}\n- {FINAL_DOC}")
+    print("Step 5: Creating aliases and copies (main.doc, main.docx, date-stamped copies)...")
+    shutil.copy2(FINAL_DOCX, MAIN_DOCX)
+    shutil.copy2(FINAL_DOC, MAIN_DOC)
+    shutil.copy2(FINAL_DOCX, DATE_DOCX)
+    shutil.copy2(FINAL_DOC, DATE_DOC)
+    
+    # Also sync to project root
+    shutil.copy2(FINAL_DOCX, ROOT / FINAL_DOCX.name)
+    shutil.copy2(FINAL_DOC, ROOT / FINAL_DOC.name)
+    shutil.copy2(MAIN_DOCX, ROOT / "main.docx")
+    shutil.copy2(MAIN_DOC, ROOT / "main.doc")
+    
+    print("Successfully generated all Word documents:")
+    print(f"  - {FINAL_DOCX}")
+    print(f"  - {FINAL_DOC}")
+    print(f"  - {MAIN_DOCX}")
+    print(f"  - {MAIN_DOC}")
+    print(f"  - {DATE_DOCX}")
+    print(f"  - {DATE_DOC}")
 
 if __name__ == "__main__":
     main()

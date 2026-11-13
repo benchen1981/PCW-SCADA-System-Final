@@ -45,7 +45,7 @@
 | **Apple M5 執行效能** | 單點平均 **`14.53 µs`** (`68,352 ops/s`)、320 批次 **`4.68 ms`**、含 SQLite **`20.54 ms`**、Modbus FC03 **`271.4 µs`** | [`performance_benchmarks.json`](./evidence/test_reports/performance_benchmarks.json) |
 | **雙邊 >10 分鐘實測** | 線上 `vercel.app` (`11.12 min`) 捕獲 `1.72 bar` 矛盾與 `10.48m` 回落 `NORMAL`；本機 v2.0 (`11.35 min`) 同步 `HIGH+EVENT`，**320 / 320 支全數執行預警/事件**，SQLite `prediction_logs` 實存 **203,840 筆** | [`pcw_scada_11min.db`](./evidence/database_exports/pcw_scada_11min.db) |
 | **Web UI v2.0 巡檢** | 無頭 Chrome `1440×900` 巡檢全 9 頁 + SSE `LIVE STREAM`：0 console/page error、`1.72 bar` 與 Pair Level 即時同步 | [`evidence/browser_screenshots/local_v2/`](./evidence/browser_screenshots/local_v2) |
-| **正式印刷論文** | **36 頁** A4 PDF（`3.81 MiB`、0 `Overfull \hbox`、14 圖 5 表全部正文引用、含口試簡化公式與備註、7 筆 Crossref 實查書目） | [`thesis/main.pdf`](./thesis/main.pdf) |
+| **正式印刷論文** | **34 頁** 中興大學官方格式 A4 PDF（`5.14 MiB`、0 `Overfull \hbox`、14 圖 5 表全部正文引用、含口試簡化公式與備註、7 筆 Crossref 實查書目）與可編輯 Word 稿（`.docx` / `.doc`） | [`thesis/main.pdf`](./thesis/main.pdf) · [`可編輯修改稿.docx`](./thesis/NCHU_Thesis_陳宥興_可編輯修改稿.docx) |
 
 ---
 
@@ -67,6 +67,16 @@
    - `7. Prediction Tuning`（θ / g% / K_hold / `raw_onset=1/2` 消融調參與單點覆寫）
    - `8. Modbus Simulator`（一鍵實測場景預設按鈕 + 行為偏差注入 + CDAB Hex 監視器）
    - `9. Prediction Model Info`（模型公式、L1–L7 與實機基準總表）
+
+### 2.2 晶圓廠雙棟拓撲與 PCW 系統架構（論文第 1.1.1 節與第 1.1.3 節）
+
+- **雙單體建築與連通管廊**：全廠由 FAB 棟（生產廠房，B2F～6F）與 CUB 棟（中央廠務大樓，B2F～6F）構成。地上以**大型鋼構管廊空橋（Pipe Bridge）** 連接（輸送熱水回水主管、雙向備援水管與線槽）；地下室（B1F～B2F）全面開放共通，作為供水主管與重型能源管溝。
+- **無塵室生產層垂直配置**：
+  - **5F Cleanroom**：配置 PCW01～PCW04 迴路（微影 EUV/ArFi、乾式蝕刻、高溫擴散），壓力公差極嚴苛（±0.05 bar）。
+  - **3F Cleanroom**：配置 PCW05～PCW08 迴路（CVD、PVD、CMP、濕式清洗），承載重散熱與大流量沖洗。
+  - **CUB 棟**：1F 主冷水機組（數千 RT）、B1F 一次板式換熱器（PHE）、微米濾網、脫氣器與主循環泵群。
+- **PCW 四步驟閉迴路循環程序**：
+  $\text{CUB 供應水 (22°C)} \to \text{FAB B1F 增壓} \to \text{垂直立管 (Risers) 衝 3F/5F} \to \text{Submain 機台盤管吸熱} \to \text{回水集水管} \to \text{空橋熱水回流 CUB} \to \text{脫氣與微米濾網} \to \text{一次板換降溫} \to \text{混入冰水再循環}$。
 
 ---
 
@@ -138,12 +148,16 @@ cd "PCW_SCADA_Final_Project"
 PYTHONPATH=.:system/backend python3 scripts/generate_all_figures.py
 ```
 
-### 步驟 5：編譯 A4 正式印刷品質 PDF 論文與核對校驗碼
+### 步驟 5：編譯 A4 正式印刷品質 PDF 論文、匯出 Word 檔與核對校驗碼
 ```bash
 cd "PCW_SCADA_Final_Project/thesis"
 tectonic main.tex
 
+# 匯出官方樣式可編輯 Word 稿（.docx 與 .doc）
 cd ".."
+python3 scripts/build_clean_docx.py
+
+# 驗證全廠 35 份交付檔案 SHA-256
 shasum -a 256 -c evidence/checksums/final_deliverables_sha256.txt
 ```
 
