@@ -215,3 +215,4 @@ PCW_SCADA_Final_Project/
    - 逐欄解析教授認可之 `PCW_T30_T20_T10_FINAL_ROLLBACK_THESIS_VERIFICATION.xlsx`，於第三章獨立拆解 **偏移偵測模型（Drift Detection）** 與 **趨勢預測模型（Trend Forecast）** 並建置 `表 3` 與 `§4.2` 全 480 列工作簿實測統計；隨後依口試記憶需求將艱澀集合／邏輯／雙重加總符號簡化為工程直覺公式，於正文嵌入五大「【口試備註】」並產出 [oral_defense_notes.md](./thesis/oral_defense_notes.md)，重編輸出 **36 頁**（`3.81 MiB`、`ZERO OVERFULL OR UNDEFINED WARNINGS`）`main.pdf` 與 `35/35 OK` SHA-256。
 9. **Stage 9 · Git 版控整理與 GitHub 遠端公開發布（Steps `893`–`915+` · 23:09–23:12+）**
    - 建立 `.gitignore` 隔離運行庫與快取、設定局部 Git 身份 `Benchen1981 <benchen1981@users.noreply.github.com>`、初始提交 **253 份專案檔案**（`53adffd`）並成功推送至 `https://github.com/benchen1981/PCW-SCADA-System-Final.git` (`main` 分支)，隨後同步更新終版雙語文件、`prompt 01-915.md` 與 `debug 01-016.md` 並再次同步推送。
+
