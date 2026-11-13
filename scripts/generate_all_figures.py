@@ -37,27 +37,223 @@ def save_fig(fig: plt.Figure, name: str) -> None:
 
 def plot_architecture_diagrams() -> None:
     """Design diagrams (explicitly labeled as system design, not empirical benchmarks)."""
-    # 1. Dual-Level Fab & 8-PCW Topology Diagram
-    fig, ax = plt.subplots(figsize=(11, 5.4))
+    # 1. Dual-Building Fab & CUB Spatial Topology Diagram (FAB B2F-6F & CUB B2F-6F with Skybridge & Open Basement)
+    fig, ax = plt.subplots(figsize=(15.5, 10.6), dpi=300)
     ax.set_xlim(0, 100)
-    ax.set_ylim(0, 60)
+    ax.set_ylim(0, 100)
     ax.axis("off")
+    fig.patch.set_facecolor("#ffffff")
 
-    def box(x, y, w, h, title, body, fc="#f8fafc", ec="#111827", lw=1.5):
-        r = patches.FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.6", facecolor=fc, edgecolor=ec, linewidth=lw)
-        ax.add_patch(r)
-        ax.text(x + w / 2, y + h - 3.0, title, ha="center", va="top", fontsize=9.5, fontweight="bold", color="#111827")
-        ax.text(x + w / 2, y + h / 2 - 1.5, body, ha="center", va="center", fontsize=8.0, color="#1f2937")
+    # Outer container
+    outer = patches.FancyBboxPatch((0.8, 0.8), 98.4, 98.4, boxstyle="round,pad=0.4", facecolor="#ffffff", edgecolor="#cbd5e1", linewidth=1.2)
+    ax.add_patch(outer)
 
-    ax.text(50, 58, "設計架構圖：雙層半導體晶圓廠 PCW01–PCW08 迴路與 320 測點拓撲", ha="center", va="top", fontsize=11.5, fontweight="bold")
-    box(4, 37, 42, 16, "2F Cleanroom 無塵室生產層", "Group 1: PCW01, PCW02 (1.50 bar | H=1.70, L=1.30)\nGroup 2: PCW03, PCW04 (1.90 bar | H=2.10, L=1.70)\n各迴路 10 Submains × (PTS, PTR, FT, PDT) = 160 測點", fc="#f1f5f9")
-    box(54, 37, 42, 16, "1F Sub-Fab 廠務輔助層", "Group 3: PCW05, PCW06 (2.50 bar | H=2.70, L=2.30)\nGroup 4: PCW07, PCW08 (2.20 bar | H=2.40, L=2.00)\n各迴路 10 Submains × (PTS, PTR, FT, PDT) = 160 測點", fc="#f1f5f9")
-    box(16, 17, 68, 12, "CUB 中央廠務公用區 (供給與熱交換迴路)", "冰水主機 / 板式熱交換器 / VFD 主泵群 -> 供回水獨立立管 (Riser) -> 全廠 80 組 Submain 配對 (160 PT)", fc="#e2e8f0")
-    box(10, 2, 80, 9, "Modbus/TCP FLOAT32 CDAB 映射 (40001–40639, 640 Registers)", "Unit ID 1 | FC03/06/16 | 每感測器占 2 暫存器 -> 1 分鐘聚合 Historian -> PT 單點 / 配對 / 系統三層推論", fc="#ffffff")
+    # Title & Subtitle
+    ax.text(50, 97.4, "半導體雙棟晶圓廠（FAB / CUB, B2F～6F）空間拓撲、空橋管廊與 PCW 封閉循環流程圖", ha="center", va="center", fontsize=14, fontweight="bold", color="#0f172a")
+    ax.text(50, 95.0, "Dual-Building Spatial Architecture (FAB & CUB, B2F-6F), Skybridge Pipe Gallery, Open Basement & PCW Closed-Loop Operation", ha="center", va="center", fontsize=8.8, color="#64748b", style="italic")
 
-    for x in (25, 75):
-        ax.annotate("", xy=(x, 36.5), xytext=(x, 29.5), arrowprops=dict(arrowstyle="<->", lw=1.5, color="#111827"))
-    ax.annotate("", xy=(50, 16.5), xytext=(50, 11.5), arrowprops=dict(arrowstyle="<->", lw=1.5, color="#111827"))
+    # Ground level line across buildings
+    ax.plot([1.5, 98.5], [32.5, 32.5], color="#94a3b8", linestyle="--", linewidth=1.2, zorder=2)
+    ax.text(2.2, 33.2, "地上層 (Above Ground) ▲", fontsize=8, fontweight="bold", color="#475569")
+    ax.text(2.2, 31.5, "地下層 (Basement) ▼", fontsize=8, fontweight="bold", color="#475569")
+
+    # ==================== 1. FAB BUILDING (Left) ====================
+    fab_bg = patches.FancyBboxPatch((3.0, 13.0), 41.5, 79.5, boxstyle="round,pad=0.5", facecolor="#f8fafc", edgecolor="#3b82f6", linewidth=1.8)
+    ax.add_patch(fab_bg)
+    b_fab = patches.FancyBboxPatch((4.5, 88.2), 38.5, 3.8, boxstyle="round,pad=0.2", facecolor="#1d4ed8", edgecolor="none")
+    ax.add_patch(b_fab)
+    ax.text(23.7, 90.1, "FAB 棟（生產廠房 · B2F～6F）", ha="center", va="center", fontsize=11, fontweight="bold", color="#ffffff")
+
+    # Floors in FAB
+    # 6F
+    f6_fab = patches.Rectangle((4.5, 84.0), 38.5, 3.6, facecolor="#ffffff", edgecolor="#cbd5e1", linewidth=0.8)
+    ax.add_patch(f6_fab)
+    ax.text(5.5, 85.8, "6F", fontsize=9, fontweight="bold", color="#475569", va="center")
+    ax.text(8.5, 85.8, "屋頂排氣洗滌塔（Scrubbers）/ 冰水送風機房（MAU Penthouse）", fontsize=7.8, color="#334155", va="center")
+
+    # 5F Cleanroom (Highlighted)
+    f5_fab = patches.Rectangle((4.5, 73.5), 38.5, 9.8, facecolor="#eff6ff", edgecolor="#2563eb", linewidth=1.5)
+    ax.add_patch(f5_fab)
+    ax.text(5.5, 81.5, "5F Cleanroom（無塵室生產層 · Group 1 & 2）", fontsize=9.2, fontweight="bold", color="#1d4ed8")
+    ax.text(5.5, 79.0, "• 涵蓋迴路：PCW01～PCW04 獨立閉迴路（20 組 Submains，共 80 測點）", fontsize=7.8, color="#1e3a8a")
+    ax.text(5.5, 76.8, "• 製程設備：微影步進機（EUV / ArFi Litho）、乾式電漿蝕刻（Dry Etch）、高溫擴散氧化", fontsize=7.5, color="#334155")
+    ax.text(5.5, 74.8, "• 流體特性：水壓公差極嚴苛（±0.05 bar），對流體水阻與壓力脈動高度敏感", fontsize=7.5, color="#0284c7")
+
+    # 4F
+    f4_fab = patches.Rectangle((4.5, 66.8), 38.5, 6.0, facecolor="#ffffff", edgecolor="#cbd5e1", linewidth=0.8)
+    ax.add_patch(f4_fab)
+    ax.text(5.5, 70.8, "4F", fontsize=9, fontweight="bold", color="#475569")
+    ax.text(8.5, 70.8, "無塵室回風夾層（TFS / Return Air Plenum）/ 廠務管路轉接層", fontsize=7.8, color="#334155")
+    ax.text(8.5, 68.3, "• 內部配置：PCW 回水集水幹管、排氣風管、化學品二次配管（Hookup）", fontsize=7.4, color="#64748b")
+
+    # 3F Cleanroom (Highlighted)
+    f3_fab = patches.Rectangle((4.5, 56.0), 38.5, 10.0, facecolor="#f0fdf4", edgecolor="#059669", linewidth=1.5)
+    ax.add_patch(f3_fab)
+    ax.text(5.5, 64.0, "3F Cleanroom（無塵室生產層 · Group 3 & 4）", fontsize=9.2, fontweight="bold", color="#047857")
+    ax.text(5.5, 61.5, "• 涵蓋迴路：PCW05～PCW08 獨立閉迴路（20 組 Submains，共 80 測點）", fontsize=7.8, color="#065f46")
+    ax.text(5.5, 59.3, "• 製程設備：化學氣相沉積（CVD）、物理氣相沉積（PVD）、研磨（CMP）、濕式清洗", fontsize=7.5, color="#334155")
+    ax.text(5.5, 57.3, "• 流體特性：大流量連續供水、重負載熱交換，研磨盤摩擦熱即時冷卻", fontsize=7.5, color="#059669")
+
+    # 2F
+    f2_fab = patches.Rectangle((4.5, 47.0), 38.5, 8.2, facecolor="#ffffff", edgecolor="#cbd5e1", linewidth=0.8)
+    ax.add_patch(f2_fab)
+    ax.text(5.5, 52.5, "2F", fontsize=9, fontweight="bold", color="#475569")
+    ax.text(8.5, 52.5, "無塵室下層輔助夾層（Sub-Fab Facility Mezzanine）", fontsize=7.8, color="#334155")
+    ax.text(8.5, 50.0, "• 內部配置：真空泵浦群（Dry Pumps）、電漿射頻產生器（RF Generators）、洗滌塔", fontsize=7.4, color="#64748b")
+    ax.text(8.5, 48.0, "• 輔助冷卻：承接 3F 機台之附屬動力設備二次冷卻水支管", fontsize=7.4, color="#64748b")
+
+    # 1F
+    f1_fab = patches.Rectangle((4.5, 34.5), 38.5, 11.5, facecolor="#ffffff", edgecolor="#cbd5e1", linewidth=0.8)
+    ax.add_patch(f1_fab)
+    ax.text(5.5, 43.5, "1F", fontsize=9, fontweight="bold", color="#475569")
+    ax.text(8.5, 43.5, "廠務中央幹道／物流裝卸區／氣瓶室／支援設施", fontsize=7.8, color="#334155")
+    ax.text(8.5, 40.5, "• 廠區功能：重型物流出入、化學品裝卸碼頭、公用公用氣體分配盤", fontsize=7.4, color="#64748b")
+    ax.text(8.5, 37.0, "• 空橋連接埠：對接地上空橋管廊，電纜線槽與備援管道進出通道", fontsize=7.4, color="#0284c7")
+
+    # B1F (FAB Booster Pumps)
+    fb1_fab = patches.Rectangle((4.5, 23.5), 38.5, 9.5, facecolor="#fef3c7", edgecolor="#d97706", linewidth=1.5)
+    ax.add_patch(fb1_fab)
+    ax.text(5.5, 31.0, "B1F FAB 棟離心冷卻泵增壓站（Centrifugal Booster Pumps）", fontsize=9.2, fontweight="bold", color="#b45309")
+    ax.text(5.5, 28.5, "• 運作核心 [步驟 2]：承接來自 CUB 之 22°C 供水，各二次離心泵加壓推送", fontsize=7.8, color="#92400e", fontweight="bold")
+    ax.text(5.5, 26.2, "• 垂直立管中繼：推動冷卻水沿垂直供水立管（Supply Risers）直衝 3F 與 5F", fontsize=7.5, color="#334155")
+    ax.text(5.5, 24.2, "• 儀表監控：安裝主流量計（FT）與母管壓力計（PTS），確保揚程與動壓穩定", fontsize=7.5, color="#475569")
+
+    # B2F
+    fb2_fab = patches.Rectangle((4.5, 14.0), 38.5, 8.5, facecolor="#ffffff", edgecolor="#cbd5e1", linewidth=0.8)
+    ax.add_patch(fb2_fab)
+    ax.text(5.5, 20.0, "B2F", fontsize=9, fontweight="bold", color="#475569")
+    ax.text(8.5, 20.0, "地下二層重型結構筏基／全廠廢水分流溝槽／綜合共同管溝", fontsize=7.8, color="#334155")
+    ax.text(8.5, 17.5, "• 地下共通特性：與 CUB 棟 B2F 開放打通，提供重型管線無障礙鋪設空間", fontsize=7.4, color="#475569")
+    ax.text(8.5, 15.2, "• 抗震與阻尼：大體積筏式基礎隔離泵浦低頻震動，阻絕向生產層傳播", fontsize=7.4, color="#64748b")
+
+    # ==================== 2. CUB BUILDING (Right) ====================
+    cub_bg = patches.FancyBboxPatch((55.5, 13.0), 41.5, 79.5, boxstyle="round,pad=0.5", facecolor="#f8fafc", edgecolor="#475569", linewidth=1.8)
+    ax.add_patch(cub_bg)
+    b_cub = patches.FancyBboxPatch((57.0, 88.2), 38.5, 3.8, boxstyle="round,pad=0.2", facecolor="#334155", edgecolor="none")
+    ax.add_patch(b_cub)
+    ax.text(76.2, 90.1, "CUB 棟（中央廠務大樓 · B2F～6F）", ha="center", va="center", fontsize=11, fontweight="bold", color="#ffffff")
+
+    # Floors in CUB
+    # 6F
+    f6_cub = patches.Rectangle((57.0, 84.0), 38.5, 3.6, facecolor="#ffffff", edgecolor="#cbd5e1", linewidth=0.8)
+    ax.add_patch(f6_cub)
+    ax.text(58.0, 85.8, "6F", fontsize=9, fontweight="bold", color="#475569", va="center")
+    ax.text(61.0, 85.8, "屋頂大型冷卻水塔群（Cooling Towers & Heat Dissipation）", fontsize=7.8, color="#334155", va="center")
+
+    # 5F
+    f5_cub = patches.Rectangle((57.0, 73.5), 38.5, 9.8, facecolor="#ffffff", edgecolor="#cbd5e1", linewidth=0.8)
+    ax.add_patch(f5_cub)
+    ax.text(58.0, 81.5, "5F 特高壓變電所與配電中樞（161kV Substation）", fontsize=9, fontweight="bold", color="#334155")
+    ax.text(58.0, 78.8, "• 主變壓器（Main Transformers）、氣體絕緣開關設備（GIS Switchgear）", fontsize=7.5, color="#475569")
+    ax.text(58.0, 76.5, "• 動力中樞：提供變頻泵浦、主冷水機組與無塵室百萬瓦級不斷電電力", fontsize=7.5, color="#64748b")
+    ax.text(58.0, 74.5, "• 緊急備援：配備雙迴路自動切換開關（ATS）與柴油發電機組鏈路", fontsize=7.5, color="#64748b")
+
+    # 4F
+    f4_cub = patches.Rectangle((57.0, 66.8), 38.5, 6.0, facecolor="#ffffff", edgecolor="#cbd5e1", linewidth=0.8)
+    ax.add_patch(f4_cub)
+    ax.text(58.0, 70.8, "4F", fontsize=9, fontweight="bold", color="#475569")
+    ax.text(61.0, 70.8, "無油離心式空壓機組群（Centrifugal Air Compressors / CDA）", fontsize=7.8, color="#334155")
+    ax.text(61.0, 68.3, "• 提供全廠高潔淨乾燥空氣與氣壓控制儀表源", fontsize=7.4, color="#64748b")
+
+    # 3F
+    f3_cub = patches.Rectangle((57.0, 56.0), 38.5, 10.0, facecolor="#ffffff", edgecolor="#cbd5e1", linewidth=0.8)
+    ax.add_patch(f3_cub)
+    ax.text(58.0, 64.0, "3F 超純水系統處理區（Ultra Pure Water / UPW System）", fontsize=9, fontweight="bold", color="#334155")
+    ax.text(58.0, 61.5, "• RO 逆滲透、EDI 電透析去離子、紫外線殺菌（UV）與真空脫氣柱", fontsize=7.5, color="#475569")
+    ax.text(58.0, 59.3, "• PCW 水質供應：供應電阻率 >18 MΩ·cm 之超純水作為 PCW 補給水", fontsize=7.5, color="#0284c7")
+    ax.text(58.0, 57.3, "• 嚴苛防腐阻垢：防止換熱板結垢、微小管徑阻塞與金屬離子析出污染", fontsize=7.5, color="#64748b")
+
+    # 2F
+    f2_cub = patches.Rectangle((57.0, 47.0), 38.5, 8.2, facecolor="#ffffff", edgecolor="#cbd5e1", linewidth=0.8)
+    ax.add_patch(f2_cub)
+    ax.text(58.0, 52.5, "2F", fontsize=9, fontweight="bold", color="#475569")
+    ax.text(61.0, 52.5, "廠務中央監控大廳（FMCS Central Control Room）& 伺服器機房", fontsize=7.8, color="#334155")
+    ax.text(61.0, 50.0, "• SCADA 系統中樞：本專案 Web SCADA v2.0、Modbus 閘道器與 SQLite 伺服器", fontsize=7.4, color="#0369a1", fontweight="bold")
+    ax.text(61.0, 48.0, "• 24 小時值班監控：即時推播全廠 320 測點 T-30/20/10 早期預警與 TTL 倒數", fontsize=7.4, color="#0369a1")
+
+    # 1F
+    f1_cub = patches.Rectangle((57.0, 34.5), 38.5, 11.5, facecolor="#ffffff", edgecolor="#cbd5e1", linewidth=0.8)
+    ax.add_patch(f1_cub)
+    ax.text(58.0, 43.5, "1F 集中式主冷水機組區（Central Chillers 能源中樞）", fontsize=9, fontweight="bold", color="#334155")
+    ax.text(58.0, 40.5, "• 設備配置：離心式主冷水機組群（Centrifugal Chillers, 數千 RT 製冷能力）", fontsize=7.5, color="#475569")
+    ax.text(58.0, 38.2, "• 冰水供應：生產 7°C 冰水（Chilled Water），供應全廠一次冷源與換熱混水", fontsize=7.5, color="#2563eb")
+    ax.text(58.0, 36.0, "• 變頻主泵：一次循環定壓泵群，維持全廠冷卻能源充沛供給", fontsize=7.5, color="#64748b")
+
+    # B1F (CUB PCW Processing)
+    fb1_cub = patches.Rectangle((57.0, 23.5), 38.5, 9.5, facecolor="#f1f5f9", edgecolor="#475569", linewidth=1.5)
+    ax.add_patch(fb1_cub)
+    ax.text(58.0, 31.0, "B1F CUB 棟冷卻水熱交換與水質再循環中樞", fontsize=9.2, fontweight="bold", color="#0f172a")
+    ax.text(58.0, 28.5, "• 處理流程 [步驟 5 & 6]：脫氣器（除氣泡）-> 微米濾網 -> 一次板換（PHE）降溫", fontsize=7.6, color="#0f172a", fontweight="bold")
+    ax.text(58.0, 26.2, "• 混水恆溫 [步驟 1]：視回水水溫及水量，調度混入一次冰水，維持 22.0 ± 0.5 °C", fontsize=7.6, color="#0284c7", fontweight="bold")
+    ax.text(58.0, 24.2, "• 差壓調度：差壓旁通調度閥（DPV），防止端部憋壓與水錘脈衝", fontsize=7.4, color="#475569")
+
+    # B2F
+    fb2_cub = patches.Rectangle((57.0, 14.0), 38.5, 8.5, facecolor="#ffffff", edgecolor="#cbd5e1", linewidth=0.8)
+    ax.add_patch(fb2_cub)
+    ax.text(58.0, 20.0, "B2F", fontsize=9, fontweight="bold", color="#475569")
+    ax.text(61.0, 20.0, "大型地下水蓄水池／消防儲槽／廢水集中中和池", fontsize=7.8, color="#334155")
+    ax.text(61.0, 17.5, "• 地下共通特性：地下二層全開放連通 FAB 棟，提供緊急大量儲備水源", fontsize=7.4, color="#475569")
+    ax.text(61.0, 15.2, "• 連通管線：重型管線在地下室貫穿兩棟，無地面阻礙", fontsize=7.4, color="#64748b")
+
+    # ==================== 3. INTERCONNECTIONS ====================
+    # A. Skybridge (地上鋼構空橋管廊)
+    sb_box = patches.FancyBboxPatch((44.0, 52.0), 12.0, 14.0, boxstyle="round,pad=0.3", facecolor="#fef9c3", edgecolor="#ca8a04", linewidth=1.8, linestyle="-")
+    ax.add_patch(sb_box)
+    ax.plot([44.5, 55.5], [52.5, 65.5], color="#eab308", linewidth=1.2, alpha=0.6)
+    ax.plot([44.5, 55.5], [65.5, 52.5], color="#eab308", linewidth=1.2, alpha=0.6)
+    ax.text(50.0, 63.8, "地上鋼構空橋", ha="center", va="center", fontsize=9, fontweight="bold", color="#854d0e")
+    ax.text(50.0, 61.8, "（Pipe Bridge）", ha="center", va="center", fontsize=8, fontweight="bold", color="#854d0e")
+    ax.text(50.0, 57.5, "內含：\n• PCW 熱水回水主管 [步驟 4]\n• 雙向備援水管\n• 儀表與通訊線槽", ha="center", va="center", fontsize=7.0, color="#713f12")
+
+    # B. Open Interconnected Basement (地下室開放共通)
+    bs_box = patches.FancyBboxPatch((44.0, 14.0), 12.0, 18.5, boxstyle="square,pad=0.2", facecolor="#e0f2fe", edgecolor="#0284c7", linewidth=2.0, linestyle="-")
+    ax.add_patch(bs_box)
+    ax.text(50.0, 28.5, "地下室開放共通", ha="center", va="center", fontsize=9.2, fontweight="bold", color="#0369a1")
+    ax.text(50.0, 26.5, "（B1F～B2F 通廊）", ha="center", va="center", fontsize=8.2, fontweight="bold", color="#0369a1")
+    ax.text(50.0, 21.0, "兩棟地下室無實體隔震牆\n開放連通 · 自由穿梭\n\n[步驟 1] 供水主管\nCUB 供應水 -> FAB B1F", ha="center", va="center", fontsize=7.2, color="#0c4a6e", multialignment="center")
+
+    # ==================== 4. WATER FLOW ARROWS & LABELS ====================
+    # Step 1: Supply from CUB B1F -> FAB B1F (through basement)
+    ax.annotate("", xy=(43.5, 27.5), xytext=(57.0, 27.5),
+                arrowprops=dict(arrowstyle="->", lw=3.0, color="#2563eb"))
+    ax.text(50.0, 29.8, "PCW 供水 (22°C) ->", ha="center", va="bottom", fontsize=8.2, fontweight="bold", color="#1d4ed8")
+
+    # Step 2: Riser up inside FAB from B1F to 3F & 5F
+    ax.annotate("", xy=(4.0, 77.0), xytext=(4.0, 28.0),
+                arrowprops=dict(arrowstyle="->", lw=3.0, color="#2563eb"))
+    ax.text(2.6, 52.0, "垂直供水立管 (Supply Riser) ▲", rotation=90, ha="center", va="center", fontsize=8.5, fontweight="bold", color="#1d4ed8")
+
+    # Step 3: Feeding into 3F & 5F Cleanroom tools
+    ax.annotate("", xy=(7.0, 78.5), xytext=(4.0, 78.5),
+                arrowprops=dict(arrowstyle="->", lw=2.0, color="#2563eb"))
+    ax.text(12.0, 78.5, "[步驟 3] Submain 調節閥進機台盤管吸熱", fontsize=7.5, color="#1e3a8a", fontweight="bold", va="center")
+
+    ax.annotate("", xy=(7.0, 61.0), xytext=(4.0, 61.0),
+                arrowprops=dict(arrowstyle="->", lw=2.0, color="#2563eb"))
+    ax.text(12.0, 61.0, "[步驟 3] Submain 調節閥進機台盤管吸熱", fontsize=7.5, color="#065f46", fontweight="bold", va="center")
+
+    # Step 4: Return flow from 5F down and into Skybridge
+    ax.annotate("", xy=(44.0, 58.5), xytext=(42.5, 78.5),
+                arrowprops=dict(arrowstyle="->", lw=2.8, color="#dc2626"))
+    ax.annotate("", xy=(44.0, 58.5), xytext=(42.5, 61.0),
+                arrowprops=dict(arrowstyle="->", lw=2.8, color="#dc2626"))
+    ax.text(39.0, 69.5, "回水立管 (Return) ▼", rotation=90, ha="center", va="center", fontsize=8.2, fontweight="bold", color="#b91c1c")
+
+    # Skybridge return to CUB B1F
+    ax.annotate("", xy=(57.0, 31.0), xytext=(55.5, 58.5),
+                arrowprops=dict(arrowstyle="->", lw=2.8, color="#dc2626"))
+    ax.text(59.5, 45.0, "熱水回流 CUB (B1F) ▼", rotation=-90, ha="center", va="center", fontsize=8.2, fontweight="bold", color="#b91c1c")
+
+    # ==================== 5. BOTTOM SUMMARY BAR (Section 1.1.3 Highlights) ====================
+    sum_box = patches.FancyBboxPatch((3.0, 1.8), 94.0, 9.5, boxstyle="round,pad=0.4", facecolor="#ffffff", edgecolor="#0284c7", linewidth=1.5)
+    ax.add_patch(sum_box)
+
+    ax.text(5.0, 9.4, "1.1.3 PCW 系統架構配置、功能目的與運作程序精要彙整：", fontsize=9.5, fontweight="bold", color="#0369a1")
+    ax.text(5.0, 7.3, "1. 架構配置：8 套獨立封閉循環迴路（PCW01～PCW08）· 80 個 Submain 分支 · 全廠 320 測點（160 支壓力計 PT-01～160、80 支溫度計 TT、16 支主流量計 FT）", fontsize=8.2, color="#0f172a", fontweight="bold")
+    ax.text(5.0, 5.3, "2. 參數分組與工程門檻：四大參數分組（G1～G4）各自定義嚴格運轉基準線（Baseline）與四級警報安全門檻（HiHi, Hi, Lo, LoLo）", fontsize=8.0, color="#334155")
+    ax.text(5.0, 3.4, "3. 功能目的：提供高純度去離子冷卻水，維持供水溫度在 22.0 ± 0.5 °C，並維持穩定供回水壓差，即時吸收製程高熱", fontsize=8.0, color="#334155")
+    ax.text(5.0, 1.6, "4. 運作程序：CUB 供應水 -> FAB B1F 增壓 -> 垂直立管向上輸送至 3F/5F 各區 -> Submain 進機台吸熱 -> 匯入回水集水管 -> 空橋熱水回 CUB -> 脫氣器與微米濾網 -> 一次板換降溫 -> 混入冰水再循環", fontsize=7.8, color="#b45309", fontweight="bold")
+
     save_fig(fig, "fig_fab_topology_design.png")
 
     # 2. Five-Layer Implemented vs Planned System Architecture Diagram

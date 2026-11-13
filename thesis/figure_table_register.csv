@@ -1,5 +1,5 @@
 id,kind,label,title,source_script_or_origin,data_source,file_path
-圖 1,Figure,fig:fab_topo,雙層晶圓廠 PCW01–PCW08 迴路與 320 測點拓撲配置圖,scripts/generate_all_figures.py,system/backend/app/config/topology.py,thesis/picture/fig_fab_topology_design.png
+圖 1,Figure,fig:fab_topo,半導體雙棟晶圓廠（FAB / CUB, B2F～6F）空間拓撲、空橋管廊與 PCW 封閉循環流程圖,scripts/generate_all_figures.py,system/backend/app/config/topology.py,thesis/picture/fig_fab_topology_design.png
 圖 2,Figure,fig:arch_layers,五層式軟硬體系統架構圖,scripts/generate_all_figures.py,research/SYSTEM_ARCHITECTURE.md,thesis/picture/fig_system_architecture_layers.png
 圖 3,Figure,fig:window_design,Past-Only 70 分鐘因果滑動視窗切分與多視域外推示意圖,scripts/generate_all_figures.py,research/MODEL_SPECIFICATION.md,thesis/picture/fig_past_only_window_design.png
 圖 4,Figure,fig:excel_replay,Excel 參考模型 PT-1 (480 分鐘) Past-Only 逐筆回放與狀態比較圖,scripts/generate_all_figures.py,experiments/EXCEL_PROGRAM_COMPARISON.csv,thesis/picture/fig_excel_pt1_replay.png

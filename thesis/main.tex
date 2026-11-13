@@ -260,21 +260,39 @@ At the system level, an industrial-grade full-stack Web SCADA architecture is en
 % ============================================================
 \section{緒論}
 
-\subsection{半導體雙層晶圓廠 PCW 空間拓撲與監控配置}
-現代先進 12 吋半導體晶圓廠為隔離重型動力泵浦振動並滿足嚴格無塵室潔淨度需求，廠房普遍採垂直空間分層規劃。如圖~\ref{fig:fab_topo} 所示，全廠水動力循環由中央廠務大樓（Central Utility Building, CUB）主泵群輸送，透過獨立供水立管與回水立管構成封閉循環迴路，分別送達二樓無塵室生產層（2F Cleanroom）與一樓廠務輔助層（1F Sub-Fab）：
+\subsection{半導體晶圓廠空間拓撲與PCW系統配置}
+\label{sec:fab_topology}
+現代先進半導體晶圓廠（Fab）採用多樓層空間分區結構，將精密生產設備與重型廠務公用系統實體隔離，以維持最高等級無塵潔淨度並抑制機械振動干擾。
+
+全廠主要由兩棟獨立之單體建築構成：FAB棟（主生產大樓，B2F至6F）與CUB棟（中央廠務大樓，Central Utility Building，B2F至6F）。兩棟建築在地上層透過大型鋼構管廊空橋（Pipe Bridge，內含大型水管路與電力儀控線槽）互相連接，地下室（B1F至B2F）則採全面開放共通設計，形成貫穿全廠的重型能源傳輸廊道。主要空間分區與PCW迴路配置如下：
 \begin{enumerate}
-    \item \textbf{2F Cleanroom（PCW01–PCW04 迴路）}：專責供應微影（Lithography, EUV/ArFi）、乾式電漿蝕刻（Dry Etching）及擴散氧化（Diffusion）等關鍵核心製程機台，對冷卻水壓穩定度要求極為嚴苛。
-    \item \textbf{1F Sub-Fab（PCW05–PCW08 迴路）}：專責供應化學氣相沉積（CVD）、物理氣相沉積（PVD）、化學機械研磨（CMP）及濕式清洗（Wet Cleaning）等重負載設備之輔助冷卻模組。
+    \item \textbf{5F Cleanroom（無塵室生產層）}：配置 PCW01～PCW04 迴路，專屬供應微影（Lithography, EUV/ArFi）、乾式電漿蝕刻（Dry Etching）及高溫擴散氧化（Diffusion）等關鍵核心製程。此區機台對流體壓力脈動與水阻變化極為敏感。
+    \item \textbf{3F Cleanroom（無塵室生產層）}：配置 PCW05～PCW08 迴路，負責化學氣相沉積（CVD）、物理氣相沉積（PVD）、化學機械研磨（CMP）及濕式化學清洗（Wet Cleaning）等重負載設備。
+    \item \textbf{CUB（中央廠務大樓, Central Utility Building）}：安置集中式主冷水機組（Chillers）、板式熱交換器（PHE）、離心式變頻主泵群（VFD Primary Pumps）及差壓旁通調度閥，構成全廠冷卻能源中樞。
 \end{enumerate}
+
+如圖~\ref{fig:fab_topo} 所示，全廠主要劃分為三大空間層級。
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.92\textwidth,keepaspectratio]{picture/fig_fab_topology_design.png}
-    \caption{雙層晶圓廠 PCW01–PCW08 迴路與 320 測點拓撲配置圖}
+    \includegraphics[width=0.95\textwidth,keepaspectratio]{picture/fig_fab_topology_design.png}
+    \caption{半導體雙棟晶圓廠（FAB / CUB, B2F～6F）空間拓撲、空橋管廊與 PCW 封閉循環流程圖}
     \label{fig:fab_topo}
 \end{figure}
 
-全廠總計建置 8 套獨立封閉循環迴路（PCW01 至 PCW08），每套迴路轄下 10 組次幹管（Submain01 至 Submain10），合計全廠共 80 組供／回水配對。每組次幹管依工業儀控標準配置 4 支即時感測器：供水壓力計（\texttt{PTS}）、供水流量計（\texttt{FT}）、回水壓力計（\texttt{PTR}）與供回水壓差計（\texttt{PDT}），全廠總計 \textbf{320 支感測器}（包含 \textbf{160 支 PT}、80 支 FT 及 80 支 PDT）。各迴路依負載特性分屬四大參數分組（Group 1–4），其正常運轉基準線與四級工程安全上下限配置如表~\ref{tab:pcw_groups_v2} 所示。
+\subsection{製程無塵室分區與流體穩定度要求}
+\label{sec:cleanroom_pcw}
+半導體黃光微影與電漿蝕刻製程機台具備極端嚴苛之溫控要求（通常需維持在 $\pm 0.1^\circ\mathrm{C}$ 範圍內），冷卻水若產生微小壓力擾動或流量匱乏，將直接導致光學鏡頭熱膨脹形變或晶圓表面加工溫度不均，進而引發奈米級對準誤差與良率崩跌。為此，廠務工程透過 5F 與 3F 實體垂直分區，將震動敏感之高階微影蝕刻與高散熱負載之研磨化學設備分別指派至專屬 PCW 迴路，並藉由獨立壓力補償調節閥確保動態水力平衡。
+
+\subsection{PCW 系統架構配置、功能目的與運作程序}
+\label{sec:pcw_system_operation}
+本研究針對現代 12 吋先進製程晶圓廠標準規模進行建模與實體驗證：
+\begin{enumerate}
+    \item \textbf{架構配置}：全廠共建置 8 套獨立封閉循環迴路（PCW01 至 PCW08）。每套迴路各配置 10 個次幹管分支（Submain 01 至 Submain 10），全廠共計 80 個Submain。每個 Submain 皆安裝供水（Supply）與回水（Return）雙壓力計，全廠實體監控測點涵蓋 160 支壓力計（PT-01～PT-160）、80 支溫度計（TT）與 16 支主流量計（FT）。
+    \item \textbf{參數分組與工程門檻}：如表~\ref{tab:pcw_groups_v2} 所示，全廠依機台負載特性劃分為四大參數分組（G1～G4），各自定義嚴格的常態運轉基準線（Baseline）與四級警報安全門檻（HiHi, Hi, Lo, LoLo）。
+    \item \textbf{功能目的}：提供高純度去離子冷卻水，維持供水溫度在 $22.0 \pm 0.5^\circ\mathrm{C}$，並維持穩定供回水壓差，即時吸收製程高熱。
+    \item \textbf{運作程序}：CUB棟供應水 $\to$ FAB棟B1層 $\to$ 各離心冷卻泵增壓 $\to$ 垂直立管（Riser）向上輸送至 3F/5F 各區 $\to$ Submain 調節閥進冰水至機台熱交換盤管 $\to$ 吸熱後匯入回水集水管 $\to$ 熱水 $\to$ 經空橋管廊回流 $\to$ CUB棟 $\to$ 進入脫氣器與微米級濾網 $\to$ 流經一次板式換熱器降溫 $\to$ 視水溫度及水量混入冰水，完成封閉式再循環。
+\end{enumerate}
 
 \begin{table}[H]
 \centering
@@ -287,15 +305,15 @@ At the system level, an industrial-grade full-stack Web SCADA architecture is en
 \toprule
 \textbf{分組代碼} & \textbf{涵蓋迴路} & \textbf{配置樓層} & \textbf{測點類型} & \textbf{Baseline} & \textbf{LoLo / Lo} & \textbf{Hi / HiHi} \\
 \midrule
-Group 1 & PCW01, PCW02 & 2F Cleanroom & PT (\texttt{PTS}/\texttt{PTR}) & 1.50 bar & 1.20 / 1.30 & 1.70 / 1.80 \\
-Group 2 & PCW03, PCW04 & 2F Cleanroom & PT (\texttt{PTS}/\texttt{PTR}) & 1.90 bar & 1.50 / 1.70 & 2.10 / 2.20 \\
-Group 3 & PCW05, PCW06 & 1F Sub-Fab   & PT (\texttt{PTS}/\texttt{PTR}) & 2.50 bar & 2.20 / 2.30 & 2.70 / 2.80 \\
-Group 4 & PCW07, PCW08 & 1F Sub-Fab   & PT (\texttt{PTS}/\texttt{PTR}) & 2.20 bar & 1.90 / 2.00 & 2.40 / 2.50 \\
+Group 1 & PCW01, PCW02 & 5F Cleanroom & PT (\texttt{PTS}/\texttt{PTR}) & 1.50 bar & 1.20 / 1.30 & 1.70 / 1.80 \\
+Group 2 & PCW03, PCW04 & 5F Cleanroom & PT (\texttt{PTS}/\texttt{PTR}) & 1.90 bar & 1.50 / 1.70 & 2.10 / 2.20 \\
+Group 3 & PCW05, PCW06 & 3F Cleanroom & PT (\texttt{PTS}/\texttt{PTR}) & 2.50 bar & 2.20 / 2.30 & 2.70 / 2.80 \\
+Group 4 & PCW07, PCW08 & 3F Cleanroom & PT (\texttt{PTS}/\texttt{PTR}) & 2.20 bar & 1.90 / 2.00 & 2.40 / 2.50 \\
 \midrule
-Group 1/2 & PCW01–04 & 2F Cleanroom & FT (流量) & 180 LPM & 150 / 160 & 200 / 220 \\
-Group 3   & PCW05–06 & 1F Sub-Fab   & FT (流量) & 260 LPM & 230 / 240 & 280 / 300 \\
-Group 4   & PCW07–08 & 1F Sub-Fab   & FT (流量) & 240 LPM & 200 / 220 & 260 / 280 \\
-All       & PCW01–08 & 1F / 2F      & PDT (壓差) & 0.30 bar & 0.00 / 0.10 & 0.50 / 0.60 \\
+Group 1/2 & PCW01–04 & 5F Cleanroom & FT (流量) & 180 LPM & 150 / 160 & 200 / 220 \\
+Group 3   & PCW05–06 & 3F Cleanroom & FT (流量) & 260 LPM & 230 / 240 & 280 / 300 \\
+Group 4   & PCW07–08 & 3F Cleanroom & FT (流量) & 240 LPM & 200 / 220 & 260 / 280 \\
+All       & PCW01–08 & 3F / 5F      & PDT (壓差) & 0.30 bar & 0.00 / 0.10 & 0.50 / 0.60 \\
 \bottomrule
 \end{tabularx}
 \end{table}
