@@ -588,62 +588,61 @@ def plot_terminal_sha256_evidence() -> None:
     save_fig(fig, "fig_terminal_sha256_evidence.png")
 
 
-def plot_11min_realtime_traces() -> None:
-    local_path = ROOT / "evidence" / "inference_logs" / "local_11min_deviation_log.json"
-    dep_path = ROOT / "evidence" / "inference_logs" / "deployed_11min_deviation_log.json"
-    if not local_path.exists() or not dep_path.exists():
-        print("11min logs not ready yet; skipping realtime trace plot.")
+def plot_35min_realtime_traces() -> None:
+    path_35m = ROOT / "evidence" / "inference_logs" / "local_35min_deviation_log.json"
+    if not path_35m.exists():
+        print("35min log not found; skipping 35min trace plot.")
         return
 
-    local_log = json.loads(local_path.read_text())
-    dep_log = json.loads(dep_path.read_text())
+    log_35m = json.loads(path_35m.read_text())
+    t_min = [s["minute"] for s in log_35m]
 
-    # Plot local 11.5-min behavioral deviation & drift progression
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(11.5, 5.8), sharex=True)
-    t_loc = [s["elapsedMin"] for s in local_log]
-    for tag, lbl, col, ls in (
-        ("PCW01.Submain01.PTS", "PCW01.Submain01.PTS (基準+斜坡漂移, H=1.70)", "#b91c1c", "-"),
-        ("PCW01.Submain01.PTR", "PCW01.Submain01.PTR (基準下偏 1.38 bar, L=1.30)", "#1d4ed8", "--"),
-        ("PCW03.Submain01.PTS", "PCW03.Submain01.PTS (基準上偏 2.02 bar, H=2.10)", "#047857", "-."),
-    ):
-        vals = []
-        for s in local_log:
-            rec = next((r for r in s["representative"] if r["tagId"] == tag), None)
-            vals.append(rec["currentValue"] if rec else np.nan)
-        ax1.plot(t_loc, vals, color=col, ls=ls, lw=1.6, marker="o", ms=3, label=lbl)
-    ax1.axhline(1.70, color="#b91c1c", ls=":", lw=1.0, label="PCW01 HI=1.70 / LO=1.30")
-    ax1.axhline(1.30, color="#1d4ed8", ls=":", lw=1.0)
-    ax1.set_ylim(1.22, 2.28)
-    ax1.set_ylabel("壓力讀值 (bar)")
-    ax1.set_title("重構 v2.0 系統 11.35 分鐘 Modbus/TCP 基準行為偏差實測軌跡與全廠預警變化", fontsize=10.5, fontweight="bold")
-    ax1.legend(fontsize=7.6, ncol=2, loc="upper center")
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(11.5, 6.2), sharex=True)
+
+    # Top panel: Target sensor PCW01.Submain01.PTS pressure trajectory across 35 minutes
+    pts_vals = [s["targetSensor"]["currentValue"] for s in log_35m]
+    n10_vals = [s["targetSensor"]["n10"] for s in log_35m]
+    base_avg = [s["targetSensor"]["baseAvg60"] for s in log_35m]
+
+    ax1.plot(t_min, pts_vals, color="#b91c1c", lw=2.0, marker="o", ms=3.5, label="PCW01.Submain01.PTS (實測水壓 P(t), 基準 1.60 bar)")
+    ax1.plot(t_min, base_avg, color="#4b5563", ls="--", lw=1.5, label="滾動 60 分鐘歷史基準均值 BaseAvg60")
+    ax1.axhline(1.70, color="#dc2626", ls=":", lw=1.2, label="工程高限 (High Limit, HI = 1.70 bar)")
+    ax1.axhline(1.72, color="#991b1b", ls="-.", lw=1.2, label="軟界限/緊急臨界高限 (HiHi = 1.72 bar)")
+
+    # Color background zones for states
+    ax1.axvspan(0, 8, color="#f0fdf4", alpha=0.6, label="穩態/初期漂移區 (Baseline / Incipient)")
+    ax1.axvspan(8, 18, color="#fefce8", alpha=0.6, label="T-30 階梯預警生效區 (T-30 Advisory)")
+    ax1.axvspan(18, 24, color="#fff7ed", alpha=0.6, label="T-20 / T-10 預警升級區 (Warning Escalation)")
+    ax1.axvspan(24, 35, color="#fef2f2", alpha=0.6, label="軟界限觸發與 EVENT 狀態區 (Limit EVENT)")
+
+    ax1.set_ylabel("水壓讀值 (bar)", fontsize=9.5)
+    ax1.set_title("重構 v2.0 系統 35 分鐘全週期 Modbus/TCP 行為偏差實測軌跡與全廠預警演化", fontsize=11, fontweight="bold")
+    ax1.legend(fontsize=7.8, ncol=3, loc="upper left")
     ax1.grid(alpha=0.25)
 
-    # Bottom panel: count of all-320 and 160-PT sensors in early warning / event + DRIFT alarms
-    all_warn_cnt = [
+    # Bottom panel: All 320 sensors and 160 PT subset state counts across 35 minutes
+    all_warn = [
         sum(s.get("allStateCounts", {}).get(k, 0) for k in ("T-30", "T-20", "T-10", "EVENT"))
-        for s in local_log
+        for s in log_35m
     ]
-    warn_cnt = [
-        sum(s["ptStateCounts"].get(k, 0) for k in ("T-30", "T-20", "T-10", "EVENT"))
-        for s in local_log
+    pt_warn = [
+        sum(s.get("ptStateCounts", {}).get(k, 0) for k in ("T-30", "T-20", "T-10", "EVENT"))
+        for s in log_35m
     ]
-    drift_alm = [s["driftAlarmsCount"] for s in local_log]
-    ax2.plot(t_loc, all_warn_cnt, color="#0369a1", lw=1.7, marker="o", ms=3.2, label="本機重構 v2.0：全廠 320 測點預警/事件數 (累計 320/320)")
-    ax2.plot(t_loc, warn_cnt, color="#111827", lw=1.8, marker="s", ms=3.5, label="本機重構 v2.0：160 PT 子集預警/事件數")
-    ax2.plot(t_loc, drift_alm, color="#b45309", lw=1.5, ls="--", marker="^", ms=3.5, label="本機重構 v2.0：Alarm Center DRIFT 警報數")
+    drift_alarms = [s.get("driftAlarmsCount", 0) for s in log_35m]
 
-    t_dep = [s["elapsedMin"] for s in dep_log]
-    dep_warn = [min(160, s["nonNormalCount"]) for s in dep_log]
-    ax2.plot(t_dep, dep_warn, color="#64748b", lw=1.4, ls=":", marker="x", ms=4, label="線上舊版 (Vercel)：PT 非 NORMAL 數 (SM01 於 10.48m 失效)")
+    ax2.plot(t_min, all_warn, color="#0369a1", lw=2.0, marker="o", ms=3.5, label="全廠 320 測點非 NORMAL 總數 (含 160 PT + 80 FT + 80 PDT)")
+    ax2.plot(t_min, pt_warn, color="#1e293b", lw=2.0, marker="s", ms=3.5, label="160 支壓力計 (PT) 預警/越界總數")
+    ax2.plot(t_min, drift_alarms, color="#d97706", lw=1.6, ls="--", marker="^", ms=3.5, label="SCADA 警報中心活躍預警日誌數 (Active Drift Alarms)")
 
-    ax2.axvline(10.0, color="#475569", ls="--", lw=1.0)
-    ax2.text(10.1, 18, "10 min 門檻線", fontsize=8, color="#475569")
-    ax2.set_ylim(-12, 410)
-    ax2.set_xlabel("真實經過時間 (minutes)")
-    ax2.set_ylabel("感測器 / 警報數量")
-    ax2.legend(fontsize=7.2, loc="upper left", ncol=2)
+    ax2.set_xlabel("真實實體運轉時間 (分鐘, Minutes)", fontsize=9.5)
+    ax2.set_ylabel("測點 / 警報計數", fontsize=9.5)
+    ax2.set_xlim(1, 35)
+    ax2.legend(fontsize=8.0, loc="center left")
     ax2.grid(alpha=0.25)
+
+    save_fig(fig, "fig_35min_realtime_deviation.png")
+    # Also save as fig_11min_realtime_deviation.png for backward compatibility
     save_fig(fig, "fig_11min_realtime_deviation.png")
 
 
@@ -653,7 +652,7 @@ def main():
     plot_baseline_and_ablation()
     plot_performance_benchmarks()
     plot_terminal_sha256_evidence()
-    plot_11min_realtime_traces()
+    plot_35min_realtime_traces()
     print("Figures generated in:", FIG_DIR)
 
 

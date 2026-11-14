@@ -1,0 +1,16 @@
+\contentsline {figure}{\numberline {1}{\ignorespaces 半導體雙大樓（FAB / CUB）實體空間拓撲與 PCW 管路立管配置圖\relax }}{3}{figure.caption.1}%
+\contentsline {figure}{\numberline {2}{\ignorespaces PCW 預測型 Web SCADA 系統五層架構與資料流向拓撲圖\relax }}{11}{figure.caption.4}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Past-Only 70 分鐘因果滑動雙視窗（基準 60 分鐘 / 近期 10 分鐘）切分定義架構圖\relax }}{12}{figure.caption.5}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Excel 基準模型與 Python 推論引擎 480 筆因果歷史回放數值對齊驗證圖\relax }}{25}{figure.caption.16}%
+\contentsline {figure}{\numberline {5}{\ignorespaces 四種方法在全廠 1,920 場試驗下之 F1-Score、精確率、召回率與提前時間雷達圖\relax }}{26}{figure.caption.18}%
+\contentsline {figure}{\numberline {6}{\ignorespaces 兩點連續確認防抖與閥值靈敏度 $\theta $ 之消融分析與參數敏感度曲線\relax }}{27}{figure.caption.19}%
+\contentsline {figure}{\numberline {7}{\ignorespaces 全廠 320 測點推論延遲、Modbus 讀取與資料庫寫入之微秒級效能評測分解圖\relax }}{28}{figure.caption.20}%
+\contentsline {figure}{\numberline {8}{\ignorespaces 35 分鐘全生命週期 Modbus 行為偏差實測軌跡與全廠 320 測點預警演化圖\relax }}{29}{figure.caption.21}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Web SCADA v2.0 全廠 PCW 系統健康狀態與階梯預警總覽監控介面\relax }}{30}{figure.caption.22}%
+\contentsline {figure}{\numberline {10}{\ignorespaces Web SCADA v2.0 次幹管動態水流 P\&ID 與供回水測點儀表監控介面\relax }}{31}{figure.caption.23}%
+\contentsline {figure}{\numberline {11}{\ignorespaces Web SCADA v2.0 系統預測錐面、到限時間 (TTL) 與階梯狀態一致性展示介面\relax }}{31}{figure.caption.24}%
+\contentsline {figure}{\numberline {12}{\ignorespaces Web SCADA v2.0 供回水配對雙壓力計聯動診斷與水力阻抗分析介面\relax }}{32}{figure.caption.25}%
+\contentsline {figure}{\numberline {13}{\ignorespaces Web SCADA v2.0 Modbus TCP 暫存器模擬與動態故障注入控制台\relax }}{32}{figure.caption.26}%
+\contentsline {figure}{\numberline {14}{\ignorespaces Web SCADA v2.0 歷史數據趨勢曲線與 SQLite 推論日誌審計介面\relax }}{33}{figure.caption.27}%
+\contentsline {figure}{\numberline {15}{\ignorespaces 2026-11-14 實驗重跑終端日誌、實機效能與核心證據檔 SHA-256 雜湊清冊\relax }}{34}{figure.caption.28}%
+\contentsfinish 

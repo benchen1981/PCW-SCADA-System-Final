@@ -1,0 +1,149 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand*\HyPL@Entry[1]{}
+\HyPL@Entry{0<</S/D>>}
+\HyPL@Entry{1<</S/r>>}
+\citation{isa1822016}
+\HyPL@Entry{14<</S/D>>}
+\@writefile{toc}{\contentsline {section}{\numberline {第一章}緒論}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}研究背景與工業動機}{1}{subsection.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}半導體雙大樓空間拓撲與 PCW 管路配置}{2}{subsection.1.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces 半導體雙大樓（FAB / CUB）實體空間拓撲與 PCW 管路立管配置圖\relax }}{3}{figure.caption.1}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:fab_cub_topology}{{1}{3}{半導體雙大樓（FAB / CUB）實體空間拓撲與 PCW 管路立管配置圖\relax }{figure.caption.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces 半導體晶圓廠 PCW 系統四大分組工程界限與基準線規格表\relax }}{4}{table.caption.2}\protected@file@percent }
+\newlabel{tab:pcw_group_specs}{{1}{4}{半導體晶圓廠 PCW 系統四大分組工程界限與基準線規格表\relax }{table.caption.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3}研究問題與研究目的}{4}{subsection.1.3}\protected@file@percent }
+\citation{isa1822016}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.4}研究範圍與限制}{5}{subsection.1.4}\protected@file@percent }
+\citation{montgomery2020statistical}
+\citation{roberts1959control}
+\citation{page1954continuous}
+\@writefile{toc}{\contentsline {section}{\numberline {第二章}文獻探討與理論基礎}{6}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}工業 SCADA 系統與警報管理規範}{6}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}統計製程管制與時間序列監測理論}{6}{subsection.2.2}\protected@file@percent }
+\citation{chandola2009anomaly}
+\citation{cherry2006multiblock}
+\citation{he2007fault}
+\citation{he2010statistics}
+\citation{kaufman2012leakage}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}時間序列異常偵測與多元統計監測方法}{7}{subsection.2.3}\protected@file@percent }
+\citation{isa1822016}
+\citation{montgomery2020statistical}
+\citation{roberts1959control}
+\citation{page1954continuous}
+\citation{cherry2006multiblock}
+\citation{he2010statistics}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}因果式資料切分與時間序列資料洩漏防範}{8}{subsection.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}文獻總結與本研究定位}{8}{subsection.2.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces 工業監控文獻方法與本研究所提架構之比較矩陣\relax }}{9}{table.caption.3}\protected@file@percent }
+\newlabel{tab:lit_comparison}{{2}{9}{工業監控文獻方法與本研究所提架構之比較矩陣\relax }{table.caption.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {第三章}研究方法與因果式預警架構}{10}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}系統資料流與整體架構設計}{10}{subsection.3.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces PCW 預測型 Web SCADA 系統五層架構與資料流向拓撲圖\relax }}{11}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:system_layers}{{2}{11}{PCW 預測型 Web SCADA 系統五層架構與資料流向拓撲圖\relax }{figure.caption.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}資料時間粒度、品質檢核與 Past-Only 因果視窗}{11}{subsection.3.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Past-Only 70 分鐘因果滑動雙視窗（基準 60 分鐘 / 近期 10 分鐘）切分定義架構圖\relax }}{12}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:past_only_window}{{3}{12}{Past-Only 70 分鐘因果滑動雙視窗（基準 60 分鐘 / 近期 10 分鐘）切分定義架構圖\relax }{figure.caption.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}即時特徵工程與漂移偵測模型}{12}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}趨勢外推、到限時間 (TTL) 與 95\% 預測區間}{13}{subsection.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}多層聯合決策狀態機與抗噪消融架構}{14}{subsection.3.5}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces 因果式時間序列預警與多層狀態機推論演算法\relax }}{16}{algorithm.1}\protected@file@percent }
+\newlabel{alg:causal_inference}{{1}{16}{因果式時間序列預警與多層狀態機推論演算法\relax }{algorithm.1}{}}
+\citation{modbus2006application}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6}系統實作與通訊映射協定}{17}{subsection.3.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces 全廠 320 測點 Modbus/TCP FLOAT32 (CDAB) 保持暫存器位址映射表\relax }}{17}{table.caption.6}\protected@file@percent }
+\newlabel{tab:modbus_map_v2}{{3}{17}{全廠 320 測點 Modbus/TCP FLOAT32 (CDAB) 保持暫存器位址映射表\relax }{table.caption.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces 初版 Excel 參考模型與系統 Unified V1 核心演算法對照表\relax }}{18}{table.caption.7}\protected@file@percent }
+\newlabel{tab:excel_to_program_map}{{4}{18}{初版 Excel 參考模型與系統 Unified V1 核心演算法對照表\relax }{table.caption.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {第四章}實驗設計、結果分析與系統驗證}{18}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}實驗環境、資料集性質與物理建模}{18}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}軟硬體實測平台規格}{18}{subsubsection.4.1.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces 實測硬體平台、軟體執行環境與資料集規格清冊\relax }}{19}{table.caption.8}\protected@file@percent }
+\newlabel{tab:env_real}{{5}{19}{實測硬體平台、軟體執行環境與資料集規格清冊\relax }{table.caption.8}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}基準 Excel 驗證模型之工作表功能拓撲}{19}{subsubsection.4.1.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Excel 基準驗證工作簿（10 大功能工作表）結構清冊\relax }}{20}{table.caption.9}\protected@file@percent }
+\newlabel{tab:excel_sheets}{{6}{20}{Excel 基準驗證工作簿（10 大功能工作表）結構清冊\relax }{table.caption.9}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.3}Parameters 與 RawData 工作表欄位結構與品質檢核規則}{20}{subsubsection.4.1.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces \texttt  {Parameters} 工作表 8 大核心參數設定清冊\relax }}{21}{table.caption.10}\protected@file@percent }
+\newlabel{tab:excel_parameters}{{7}{21}{\texttt {Parameters} 工作表 8 大核心參數設定清冊\relax }{table.caption.10}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces \texttt  {RawData} 工作表欄位架構、資料型態與檢核規則表\relax }}{21}{table.caption.11}\protected@file@percent }
+\newlabel{tab:excel_rawdata}{{8}{21}{\texttt {RawData} 工作表欄位架構、資料型態與檢核規則表\relax }{table.caption.11}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.4}MinuteInference 工作表 24 欄位（A～X 欄）結構清冊}{21}{subsubsection.4.1.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces \texttt  {MinuteInference} 工作表欄位清冊（第一部分：A～L 欄 觀測與因果特徵）\relax }}{22}{table.caption.12}\protected@file@percent }
+\newlabel{tab:minute_inference_pt1}{{9}{22}{\texttt {MinuteInference} 工作表欄位清冊（第一部分：A～L 欄 觀測與因果特徵）\relax }{table.caption.12}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces \texttt  {MinuteInference} 工作表欄位清冊（第二部分：M～X 欄 推論狀態與離線驗證）\relax }}{22}{table.caption.13}\protected@file@percent }
+\newlabel{tab:minute_inference_pt2}{{10}{22}{\texttt {MinuteInference} 工作表欄位清冊（第二部分：M～X 欄 推論狀態與離線驗證）\relax }{table.caption.13}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.5}Model\_Logic 工作表之線上推論與離線標籤因果防線設計}{22}{subsubsection.4.1.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces \texttt  {Model\_Logic} 工作表線上推論 vs 離線驗證之因果防線設計表\relax }}{23}{table.caption.14}\protected@file@percent }
+\newlabel{tab:excel_model_logic}{{11}{23}{\texttt {Model\_Logic} 工作表線上推論 vs 離線驗證之因果防線設計表\relax }{table.caption.14}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.6}受控合成時序資料集性質與 12 種工況物理建模}{23}{subsubsection.4.1.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces 全廠 160 PT 評測之 12 種受控時序工況數學模型與半導體流體物理意義表\relax }}{24}{table.caption.15}\protected@file@percent }
+\newlabel{tab:scenarios_v2}{{12}{24}{全廠 160 PT 評測之 12 種受控時序工況數學模型與半導體流體物理意義表\relax }{table.caption.15}{}}
+\newlabel{eq:ground_truth_def}{{18}{24}{受控合成時序資料集性質與 12 種工況物理建模}{equation.4.18}{}}
+\newlabel{eq:lead_time_def}{{19}{24}{受控合成時序資料集性質與 12 種工況物理建模}{equation.4.19}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}跨平台與 Excel 參考模型數值實作一致性驗證}{25}{subsection.4.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Excel 基準模型與 Python 推論引擎 480 筆因果歷史回放數值對齊驗證圖\relax }}{25}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:excel_pt1_replay}{{4}{25}{Excel 基準模型與 Python 推論引擎 480 筆因果歷史回放數值對齊驗證圖\relax }{figure.caption.16}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}全廠 160 測點公平基準比較}{25}{subsection.4.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces 全廠 160 個 PT 測點四種方法在 1,920 場試驗下之性能綜合比較表\relax }}{26}{table.caption.17}\protected@file@percent }
+\newlabel{tab:model_benchmark}{{13}{26}{全廠 160 個 PT 測點四種方法在 1,920 場試驗下之性能綜合比較表\relax }{table.caption.17}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces 四種方法在全廠 1,920 場試驗下之 F1-Score、精確率、召回率與提前時間雷達圖\relax }}{26}{figure.caption.18}\protected@file@percent }
+\newlabel{fig:model_comparison}{{5}{26}{四種方法在全廠 1,920 場試驗下之 F1-Score、精確率、召回率與提前時間雷達圖\relax }{figure.caption.18}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}模組消融分析與抗噪前置確認效益}{27}{subsection.4.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces 兩點連續確認防抖與閥值靈敏度 $\theta $ 之消融分析與參數敏感度曲線\relax }}{27}{figure.caption.19}\protected@file@percent }
+\newlabel{fig:ablation_analysis}{{6}{27}{兩點連續確認防抖與閥值靈敏度 $\theta $ 之消融分析與參數敏感度曲線\relax }{figure.caption.19}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}實機推論延遲與微秒級效能評測}{27}{subsection.4.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces 全廠 320 測點推論延遲、Modbus 讀取與資料庫寫入之微秒級效能評測分解圖\relax }}{28}{figure.caption.20}\protected@file@percent }
+\newlabel{fig:performance_latency}{{7}{28}{全廠 320 測點推論延遲、Modbus 讀取與資料庫寫入之微秒級效能評測分解圖\relax }{figure.caption.20}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}35 分鐘全生命週期行為偏差實測與 Web SCADA 介面展示}{28}{subsection.4.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces 35 分鐘全生命週期 Modbus 行為偏差實測軌跡與全廠 320 測點預警演化圖\relax }}{29}{figure.caption.21}\protected@file@percent }
+\newlabel{fig:35min_traces}{{8}{29}{35 分鐘全生命週期 Modbus 行為偏差實測軌跡與全廠 320 測點預警演化圖\relax }{figure.caption.21}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Web SCADA v2.0 全廠 PCW 系統健康狀態與階梯預警總覽監控介面\relax }}{30}{figure.caption.22}\protected@file@percent }
+\newlabel{fig:scada_overview}{{9}{30}{Web SCADA v2.0 全廠 PCW 系統健康狀態與階梯預警總覽監控介面\relax }{figure.caption.22}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Web SCADA v2.0 次幹管動態水流 P\&ID 與供回水測點儀表監控介面\relax }}{31}{figure.caption.23}\protected@file@percent }
+\newlabel{fig:scada_pid}{{10}{31}{Web SCADA v2.0 次幹管動態水流 P\&ID 與供回水測點儀表監控介面\relax }{figure.caption.23}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Web SCADA v2.0 系統預測錐面、到限時間 (TTL) 與階梯狀態一致性展示介面\relax }}{31}{figure.caption.24}\protected@file@percent }
+\newlabel{fig:scada_pred}{{11}{31}{Web SCADA v2.0 系統預測錐面、到限時間 (TTL) 與階梯狀態一致性展示介面\relax }{figure.caption.24}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Web SCADA v2.0 供回水配對雙壓力計聯動診斷與水力阻抗分析介面\relax }}{32}{figure.caption.25}\protected@file@percent }
+\newlabel{fig:scada_pair}{{12}{32}{Web SCADA v2.0 供回水配對雙壓力計聯動診斷與水力阻抗分析介面\relax }{figure.caption.25}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Web SCADA v2.0 Modbus TCP 暫存器模擬與動態故障注入控制台\relax }}{32}{figure.caption.26}\protected@file@percent }
+\newlabel{fig:scada_sim}{{13}{32}{Web SCADA v2.0 Modbus TCP 暫存器模擬與動態故障注入控制台\relax }{figure.caption.26}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces Web SCADA v2.0 歷史數據趨勢曲線與 SQLite 推論日誌審計介面\relax }}{33}{figure.caption.27}\protected@file@percent }
+\newlabel{fig:scada_historian}{{14}{33}{Web SCADA v2.0 歷史數據趨勢曲線與 SQLite 推論日誌審計介面\relax }{figure.caption.27}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.7}歷史回放低分分析與實務適用限制}{33}{subsection.4.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.8}密碼學雜湊證據與交付檔案完整性}{34}{subsection.4.8}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces 2026-11-14 實驗重跑終端日誌、實機效能與核心證據檔 SHA-256 雜湊清冊\relax }}{34}{figure.caption.28}\protected@file@percent }
+\newlabel{fig:sha256_terminal}{{15}{34}{2026-11-14 實驗重跑終端日誌、實機效能與核心證據檔 SHA-256 雜湊清冊\relax }{figure.caption.28}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {第五章}結論與未來研究方向}{35}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}研究成果總結}{35}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}核心學術與工程貢獻}{35}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}研究限制與現場適用邊界}{36}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}未來研究展望}{36}{subsection.5.4}\protected@file@percent }
+\bibstyle{IEEEtran}
+\bibdata{refs}
+\bibcite{isa1822016}{1}
+\bibcite{montgomery2020statistical}{2}
+\bibcite{roberts1959control}{3}
+\bibcite{page1954continuous}{4}
+\bibcite{chandola2009anomaly}{5}
+\bibcite{cherry2006multiblock}{6}
+\bibcite{he2007fault}{7}
+\bibcite{he2010statistics}{8}
+\bibcite{kaufman2012leakage}{9}
+\ttl@finishall
+\gdef \@abspage@last{52}

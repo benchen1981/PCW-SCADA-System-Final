@@ -1,0 +1,1013 @@
+[
+  {
+    "minute": 1,
+    "timestamp": "2026-11-14T09:57:31.132Z",
+    "allStateCounts": {
+      "T-30": 83,
+      "T-20": 165,
+      "NORMAL": 25,
+      "T-10": 7,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-30": 83,
+      "NORMAL": 25,
+      "T-20": 52
+    },
+    "cumulativePredictedTags": 295,
+    "cumulativeDriftAlarmTags": 258,
+    "activeAlarmsCount": 299,
+    "driftAlarmsCount": 259,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.6019684488023886,
+      "baseAvg60": 1.4997867989233113,
+      "m60": 33,
+      "m10": 4,
+      "n10": 0.7272727272727273,
+      "slope": 0.0038069493055421953,
+      "state": "T-30",
+      "ttlMinutes": 25.75068468994215
+    }
+  },
+  {
+    "minute": 2,
+    "timestamp": "2026-11-14T09:57:32.312Z",
+    "allStateCounts": {
+      "T-20": 80,
+      "T-10": 200,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-20": 80,
+      "T-10": 80
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 333,
+    "driftAlarmsCount": 293,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.607258122706566,
+      "baseAvg60": 1.4997466334891623,
+      "m60": 33,
+      "m10": 5,
+      "n10": 0.9090909090909091,
+      "slope": 0.00805657371956361,
+      "state": "T-20",
+      "ttlMinutes": 11.51132981855931
+    }
+  },
+  {
+    "minute": 3,
+    "timestamp": "2026-11-14T09:57:33.489Z",
+    "allStateCounts": {
+      "T-10": 280,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-10": 160
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 333,
+    "driftAlarmsCount": 293,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.6154506387692742,
+      "baseAvg60": 1.4997193396565747,
+      "m60": 33,
+      "m10": 6,
+      "n10": 1.0909090909090908,
+      "slope": 0.012568334272247527,
+      "state": "T-10",
+      "ttlMinutes": 6.727173179776214
+    }
+  },
+  {
+    "minute": 4,
+    "timestamp": "2026-11-14T09:57:34.715Z",
+    "allStateCounts": {
+      "T-10": 280,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-10": 160
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 333,
+    "driftAlarmsCount": 293,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.6186802775807743,
+      "baseAvg60": 1.4996799490729162,
+      "m60": 34,
+      "m10": 6,
+      "n10": 1.0588235294117647,
+      "slope": 0.01721631142355453,
+      "state": "T-10",
+      "ttlMinutes": 4.723411445030435
+    }
+  },
+  {
+    "minute": 5,
+    "timestamp": "2026-11-14T09:57:35.811Z",
+    "allStateCounts": {
+      "T-10": 280,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-10": 160
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 333,
+    "driftAlarmsCount": 293,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.6225320037729503,
+      "baseAvg60": 1.49961777383333,
+      "m60": 33,
+      "m10": 7,
+      "n10": 1.2727272727272727,
+      "slope": 0.021724712748682994,
+      "state": "T-10",
+      "ttlMinutes": 3.5658927748881744
+    }
+  },
+  {
+    "minute": 6,
+    "timestamp": "2026-11-14T09:57:37.009Z",
+    "allStateCounts": {
+      "T-10": 280,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-10": 160
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 333,
+    "driftAlarmsCount": 293,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.62923097680445,
+      "baseAvg60": 1.4995666792881177,
+      "m60": 32,
+      "m10": 8,
+      "n10": 1.5,
+      "slope": 0.019564248862798818,
+      "state": "T-10",
+      "ttlMinutes": 3.6172624715542465
+    }
+  },
+  {
+    "minute": 7,
+    "timestamp": "2026-11-14T09:57:38.136Z",
+    "allStateCounts": {
+      "T-10": 280,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-10": 160
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 333,
+    "driftAlarmsCount": 293,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.6392306709055346,
+      "baseAvg60": 1.4995562112709162,
+      "m60": 32,
+      "m10": 9,
+      "n10": 1.6875,
+      "slope": 0.016309346483827803,
+      "state": "T-10",
+      "ttlMinutes": 3.726043171302027
+    }
+  },
+  {
+    "minute": 8,
+    "timestamp": "2026-11-14T09:57:39.445Z",
+    "allStateCounts": {
+      "T-10": 202,
+      "T-20": 78,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-10": 82,
+      "T-20": 78
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 333,
+    "driftAlarmsCount": 293,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.6384997042961256,
+      "baseAvg60": 1.4995154532731858,
+      "m60": 32,
+      "m10": 10,
+      "n10": 1.875,
+      "slope": 0.012881547543330063,
+      "state": "T-10",
+      "ttlMinutes": 4.774294043243168
+    }
+  },
+  {
+    "minute": 9,
+    "timestamp": "2026-11-14T09:57:41.426Z",
+    "allStateCounts": {
+      "T-10": 122,
+      "T-20": 81,
+      "T-30": 77,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-10": 2,
+      "T-20": 81,
+      "T-30": 77
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 333,
+    "driftAlarmsCount": 293,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.6432183825793327,
+      "baseAvg60": 1.4995200648626652,
+      "m60": 32,
+      "m10": 10,
+      "n10": 1.875,
+      "slope": 0.009274853416257622,
+      "state": "T-10",
+      "ttlMinutes": 6.122104023890704
+    }
+  },
+  {
+    "minute": 10,
+    "timestamp": "2026-11-14T09:57:42.521Z",
+    "allStateCounts": {
+      "T-10": 2,
+      "T-30": 201,
+      "NORMAL": 77,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-10": 2,
+      "T-30": 87,
+      "NORMAL": 71
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 350,
+    "driftAlarmsCount": 310,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.6518934530624914,
+      "baseAvg60": 1.4995852662902318,
+      "m60": 32,
+      "m10": 10,
+      "n10": 1.875,
+      "slope": 0.005560173136080459,
+      "state": "T-10",
+      "ttlMinutes": 8.651987224164104
+    }
+  },
+  {
+    "minute": 11,
+    "timestamp": "2026-11-14T09:57:43.670Z",
+    "allStateCounts": {
+      "T-10": 2,
+      "T-30": 136,
+      "NORMAL": 142,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-10": 2,
+      "T-30": 74,
+      "NORMAL": 84
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 382,
+    "driftAlarmsCount": 342,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.6523182458217183,
+      "baseAvg60": 1.501116496107406,
+      "m60": 14,
+      "m10": 10,
+      "n10": 4.285714285714286,
+      "slope": 0.005047339774301207,
+      "state": "T-10",
+      "ttlMinutes": 9.446907937733025
+    }
+  },
+  {
+    "minute": 12,
+    "timestamp": "2026-11-14T09:57:44.865Z",
+    "allStateCounts": {
+      "T-10": 2,
+      "T-30": 146,
+      "NORMAL": 132,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-10": 2,
+      "T-30": 90,
+      "NORMAL": 68
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 428,
+    "driftAlarmsCount": 388,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.65956111381319,
+      "baseAvg60": 1.502905341226614,
+      "m60": 6,
+      "m10": 10,
+      "n10": 10,
+      "slope": 0.005025146646985945,
+      "state": "T-10",
+      "ttlMinutes": 8.04730469130984
+    }
+  },
+  {
+    "minute": 13,
+    "timestamp": "2026-11-14T09:57:46.159Z",
+    "allStateCounts": {
+      "T-10": 2,
+      "T-30": 144,
+      "NORMAL": 134,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-10": 2,
+      "NORMAL": 76,
+      "T-30": 82
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 460,
+    "driftAlarmsCount": 420,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.6641359235589976,
+      "baseAvg60": 1.5046829800566972,
+      "m60": 3,
+      "m10": 10,
+      "n10": 20,
+      "slope": 0.004964853420771442,
+      "state": "T-10",
+      "ttlMinutes": 7.223592199310032
+    }
+  },
+  {
+    "minute": 14,
+    "timestamp": "2026-11-14T09:57:47.511Z",
+    "allStateCounts": {
+      "T-10": 2,
+      "T-30": 131,
+      "NORMAL": 147,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-10": 2,
+      "NORMAL": 85,
+      "T-30": 73
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 488,
+    "driftAlarmsCount": 448,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.6701339361449246,
+      "baseAvg60": 1.5065997687159225,
+      "m60": 4,
+      "m10": 10,
+      "n10": 15,
+      "slope": 0.004924576253819391,
+      "state": "T-10",
+      "ttlMinutes": 6.0646972075845005
+    }
+  },
+  {
+    "minute": 15,
+    "timestamp": "2026-11-14T09:57:48.846Z",
+    "allStateCounts": {
+      "T-10": 2,
+      "T-30": 144,
+      "NORMAL": 134,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-10": 2,
+      "NORMAL": 80,
+      "T-30": 78
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 529,
+    "driftAlarmsCount": 489,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.6736136015345355,
+      "baseAvg60": 1.5086587145537416,
+      "m60": 5,
+      "m10": 10,
+      "n10": 12,
+      "slope": 0.004915007847216213,
+      "state": "T-10",
+      "ttlMinutes": 5.368536386042453
+    }
+  },
+  {
+    "minute": 16,
+    "timestamp": "2026-11-14T09:57:50.173Z",
+    "allStateCounts": {
+      "T-10": 2,
+      "T-30": 135,
+      "NORMAL": 143,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-10": 2,
+      "NORMAL": 87,
+      "T-30": 71
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 559,
+    "driftAlarmsCount": 519,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.679444049246752,
+      "baseAvg60": 1.510778212958289,
+      "m60": 6,
+      "m10": 10,
+      "n10": 10,
+      "slope": 0.004968543767187761,
+      "state": "T-10",
+      "ttlMinutes": 4.137218411760687
+    }
+  },
+  {
+    "minute": 17,
+    "timestamp": "2026-11-14T09:57:51.679Z",
+    "allStateCounts": {
+      "T-10": 2,
+      "NORMAL": 149,
+      "T-30": 129,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-10": 2,
+      "T-30": 71,
+      "NORMAL": 87
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 594,
+    "driftAlarmsCount": 554,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.6836655536892948,
+      "baseAvg60": 1.5129946628219824,
+      "m60": 7,
+      "m10": 10,
+      "n10": 8.571428571428571,
+      "slope": 0.0050598508794189815,
+      "state": "T-10",
+      "ttlMinutes": 3.2282465827492532
+    }
+  },
+  {
+    "minute": 18,
+    "timestamp": "2026-11-14T09:57:53.228Z",
+    "allStateCounts": {
+      "T-10": 2,
+      "NORMAL": 152,
+      "T-30": 126,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-10": 2,
+      "T-30": 71,
+      "NORMAL": 87
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 632,
+    "driftAlarmsCount": 592,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.694385139141679,
+      "baseAvg60": 1.515261815325555,
+      "m60": 8,
+      "m10": 10,
+      "n10": 7.5,
+      "slope": 0.005096710745067989,
+      "state": "T-10",
+      "ttlMinutes": 1.1016636295780127
+    }
+  },
+  {
+    "minute": 19,
+    "timestamp": "2026-11-14T09:57:55.605Z",
+    "allStateCounts": {
+      "T-10": 2,
+      "NORMAL": 140,
+      "T-30": 138,
+      "EVENT": 40
+    },
+    "ptStateCounts": {
+      "T-10": 2,
+      "T-30": 78,
+      "NORMAL": 80
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 675,
+    "driftAlarmsCount": 635,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.6928641577398895,
+      "baseAvg60": 1.5176155197606742,
+      "m60": 9,
+      "m10": 10,
+      "n10": 6.666666666666667,
+      "slope": 0.005164463271724618,
+      "state": "T-10",
+      "ttlMinutes": 1.3817200132255947
+    }
+  },
+  {
+    "minute": 20,
+    "timestamp": "2026-11-14T09:57:57.199Z",
+    "allStateCounts": {
+      "EVENT": 42,
+      "NORMAL": 129,
+      "T-30": 149
+    },
+    "ptStateCounts": {
+      "EVENT": 2,
+      "T-30": 87,
+      "NORMAL": 71
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 712,
+    "driftAlarmsCount": 671,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.6979861788453074,
+      "baseAvg60": 1.520036755148899,
+      "m60": 10,
+      "m10": 10,
+      "n10": 6,
+      "slope": 0.005128721605499686,
+      "state": "EVENT",
+      "ttlMinutes": 0.39265557961520575
+    }
+  },
+  {
+    "minute": 21,
+    "timestamp": "2026-11-14T09:57:58.851Z",
+    "allStateCounts": {
+      "EVENT": 42,
+      "NORMAL": 128,
+      "T-30": 150
+    },
+    "ptStateCounts": {
+      "EVENT": 2,
+      "T-30": 86,
+      "NORMAL": 72
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 755,
+    "driftAlarmsCount": 713,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.70513027003665,
+      "baseAvg60": 1.5225445610794308,
+      "m60": 11,
+      "m10": 10,
+      "n10": 5.454545454545455,
+      "slope": 0.0050629493666197066,
+      "state": "EVENT",
+      "ttlMinutes": 18.738036486959803
+    }
+  },
+  {
+    "minute": 22,
+    "timestamp": "2026-11-14T09:58:00.422Z",
+    "allStateCounts": {
+      "EVENT": 42,
+      "NORMAL": 133,
+      "T-30": 145
+    },
+    "ptStateCounts": {
+      "EVENT": 2,
+      "T-30": 78,
+      "NORMAL": 80
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 789,
+    "driftAlarmsCount": 747,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.7158614538880763,
+      "baseAvg60": 1.525101167148751,
+      "m60": 12,
+      "m10": 10,
+      "n10": 5,
+      "slope": 0.004970471305978608,
+      "state": "EVENT",
+      "ttlMinutes": 16.92767967712031
+    }
+  },
+  {
+    "minute": 23,
+    "timestamp": "2026-11-14T09:58:02.056Z",
+    "allStateCounts": {
+      "EVENT": 42,
+      "T-30": 150,
+      "NORMAL": 128
+    },
+    "ptStateCounts": {
+      "EVENT": 2,
+      "T-30": 85,
+      "NORMAL": 73
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 827,
+    "driftAlarmsCount": 785,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.719868060423712,
+      "baseAvg60": 1.5277178333359513,
+      "m60": 13,
+      "m10": 10,
+      "n10": 4.615384615384616,
+      "slope": 0.004918010092986869,
+      "state": "EVENT",
+      "ttlMinutes": 16.293569565983
+    }
+  },
+  {
+    "minute": 24,
+    "timestamp": "2026-11-14T09:58:03.726Z",
+    "allStateCounts": {
+      "EVENT": 42,
+      "T-30": 146,
+      "NORMAL": 132
+    },
+    "ptStateCounts": {
+      "EVENT": 2,
+      "T-30": 77,
+      "NORMAL": 81
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 855,
+    "driftAlarmsCount": 813,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.7247841590457222,
+      "baseAvg60": 1.5304991574342461,
+      "m60": 14,
+      "m10": 10,
+      "n10": 4.285714285714286,
+      "slope": 0.004870055970416232,
+      "state": "EVENT",
+      "ttlMinutes": 15.444553699420684
+    }
+  },
+  {
+    "minute": 25,
+    "timestamp": "2026-11-14T09:58:06.249Z",
+    "allStateCounts": {
+      "EVENT": 42,
+      "T-30": 152,
+      "NORMAL": 126
+    },
+    "ptStateCounts": {
+      "EVENT": 2,
+      "T-30": 83,
+      "NORMAL": 75
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 892,
+    "driftAlarmsCount": 850,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.7292327096482691,
+      "baseAvg60": 1.5333115361352474,
+      "m60": 15,
+      "m10": 10,
+      "n10": 4,
+      "slope": 0.004957937987141614,
+      "state": "EVENT",
+      "ttlMinutes": 14.273532774162463
+    }
+  },
+  {
+    "minute": 26,
+    "timestamp": "2026-11-14T09:58:08.004Z",
+    "allStateCounts": {
+      "EVENT": 42,
+      "T-30": 150,
+      "NORMAL": 128
+    },
+    "ptStateCounts": {
+      "EVENT": 2,
+      "NORMAL": 74,
+      "T-30": 84
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 927,
+    "driftAlarmsCount": 885,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.7313795466157378,
+      "baseAvg60": 1.5363029321476422,
+      "m60": 16,
+      "m10": 10,
+      "n10": 3.75,
+      "slope": 0.005021315225724488,
+      "state": "EVENT",
+      "ttlMinutes": 13.665832615470089
+    }
+  },
+  {
+    "minute": 27,
+    "timestamp": "2026-11-14T09:58:09.843Z",
+    "allStateCounts": {
+      "EVENT": 42,
+      "T-30": 140,
+      "NORMAL": 138
+    },
+    "ptStateCounts": {
+      "EVENT": 2,
+      "NORMAL": 77,
+      "T-30": 81
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 963,
+    "driftAlarmsCount": 921,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.7405542343374694,
+      "baseAvg60": 1.5393292873284137,
+      "m60": 17,
+      "m10": 10,
+      "n10": 3.5294117647058822,
+      "slope": 0.005049371225089016,
+      "state": "EVENT",
+      "ttlMinutes": 11.77290458803268
+    }
+  },
+  {
+    "minute": 28,
+    "timestamp": "2026-11-14T09:58:11.630Z",
+    "allStateCounts": {
+      "EVENT": 42,
+      "T-30": 174,
+      "NORMAL": 104
+    },
+    "ptStateCounts": {
+      "EVENT": 2,
+      "NORMAL": 60,
+      "T-30": 98
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 1030,
+    "driftAlarmsCount": 988,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.7433877119140262,
+      "baseAvg60": 1.545595676699385,
+      "m60": 19,
+      "m10": 10,
+      "n10": 3.1578947368421053,
+      "slope": 0.005148611183797636,
+      "state": "EVENT",
+      "ttlMinutes": 10.995642526693267
+    }
+  },
+  {
+    "minute": 29,
+    "timestamp": "2026-11-14T09:58:14.471Z",
+    "allStateCounts": {
+      "EVENT": 42,
+      "T-30": 165,
+      "NORMAL": 113
+    },
+    "ptStateCounts": {
+      "EVENT": 2,
+      "NORMAL": 66,
+      "T-30": 92
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 1060,
+    "driftAlarmsCount": 1018,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.7485972610131078,
+      "baseAvg60": 1.5488793205675642,
+      "m60": 20,
+      "m10": 10,
+      "n10": 3,
+      "slope": 0.005081136731538339,
+      "state": "EVENT",
+      "ttlMinutes": 10.116385703190842
+    }
+  },
+  {
+    "minute": 30,
+    "timestamp": "2026-11-14T09:58:16.401Z",
+    "allStateCounts": {
+      "EVENT": 42,
+      "T-30": 173,
+      "NORMAL": 105
+    },
+    "ptStateCounts": {
+      "EVENT": 2,
+      "NORMAL": 62,
+      "T-30": 96
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 1095,
+    "driftAlarmsCount": 1053,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.7557314422551227,
+      "baseAvg60": 1.5522141299841536,
+      "m60": 21,
+      "m10": 10,
+      "n10": 2.857142857142857,
+      "slope": 0.005036487322519889,
+      "state": "EVENT",
+      "ttlMinutes": 8.789569974084364
+    }
+  },
+  {
+    "minute": 31,
+    "timestamp": "2026-11-14T09:58:18.174Z",
+    "allStateCounts": {
+      "EVENT": 42,
+      "T-30": 161,
+      "NORMAL": 117
+    },
+    "ptStateCounts": {
+      "EVENT": 2,
+      "NORMAL": 69,
+      "T-30": 89
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 1128,
+    "driftAlarmsCount": 1086,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.761025607517931,
+      "baseAvg60": 1.555669622396676,
+      "m60": 22,
+      "m10": 10,
+      "n10": 2.7272727272727275,
+      "slope": 0.004965607536435712,
+      "state": "EVENT",
+      "ttlMinutes": 7.848866869983195
+    }
+  },
+  {
+    "minute": 32,
+    "timestamp": "2026-11-14T09:58:20.309Z",
+    "allStateCounts": {
+      "EVENT": 42,
+      "T-30": 168,
+      "NORMAL": 110
+    },
+    "ptStateCounts": {
+      "EVENT": 2,
+      "T-30": 94,
+      "NORMAL": 64
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 1164,
+    "driftAlarmsCount": 1122,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.7597904168957064,
+      "baseAvg60": 1.5592004146800214,
+      "m60": 23,
+      "m10": 10,
+      "n10": 2.608695652173913,
+      "slope": 0.004970448284851603,
+      "state": "EVENT",
+      "ttlMinutes": 8.089729698393628
+    }
+  },
+  {
+    "minute": 33,
+    "timestamp": "2026-11-14T09:58:22.328Z",
+    "allStateCounts": {
+      "EVENT": 42,
+      "T-30": 182,
+      "NORMAL": 96
+    },
+    "ptStateCounts": {
+      "EVENT": 2,
+      "T-30": 99,
+      "NORMAL": 59
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 1202,
+    "driftAlarmsCount": 1160,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.7643866935554757,
+      "baseAvg60": 1.56278148585429,
+      "m60": 24,
+      "m10": 10,
+      "n10": 2.5,
+      "slope": 0.0048330405546764595,
+      "state": "EVENT",
+      "ttlMinutes": 7.368716658101453
+    }
+  },
+  {
+    "minute": 34,
+    "timestamp": "2026-11-14T09:58:24.246Z",
+    "allStateCounts": {
+      "EVENT": 42,
+      "T-30": 137,
+      "NORMAL": 141
+    },
+    "ptStateCounts": {
+      "EVENT": 2,
+      "T-30": 81,
+      "NORMAL": 77
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 1236,
+    "driftAlarmsCount": 1194,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.776370773541554,
+      "baseAvg60": 1.5665138832846277,
+      "m60": 25,
+      "m10": 10,
+      "n10": 2.4,
+      "slope": 0.004766243527836611,
+      "state": "EVENT",
+      "ttlMinutes": 4.957620465769901
+    }
+  },
+  {
+    "minute": 35,
+    "timestamp": "2026-11-14T09:58:26.393Z",
+    "allStateCounts": {
+      "EVENT": 42,
+      "T-30": 154,
+      "NORMAL": 124
+    },
+    "ptStateCounts": {
+      "EVENT": 2,
+      "T-30": 94,
+      "NORMAL": 64
+    },
+    "cumulativePredictedTags": 320,
+    "cumulativeDriftAlarmTags": 280,
+    "activeAlarmsCount": 1283,
+    "driftAlarmsCount": 1241,
+    "targetSensor": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.7816792117458242,
+      "baseAvg60": 1.5703408668290295,
+      "m60": 26,
+      "m10": 10,
+      "n10": 2.307692307692308,
+      "slope": 0.004795374817929954,
+      "state": "EVENT",
+      "ttlMinutes": 3.820512253948162
+    }
+  }
+]

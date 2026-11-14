@@ -1,0 +1,113 @@
+{
+  "url": "http://127.0.0.1:8000",
+  "health": {
+    "status": "ok",
+    "version": "2.0.0",
+    "modbusHost": "127.0.0.1",
+    "modbusPort": 15020,
+    "sensorCount": 320,
+    "ptCount": 160,
+    "predictionConfig": {
+      "global": true,
+      "systems": {
+        "PCW01": true,
+        "PCW02": true,
+        "PCW03": true,
+        "PCW04": true,
+        "PCW05": true,
+        "PCW06": true,
+        "PCW07": true,
+        "PCW08": true
+      },
+      "submains": {},
+      "sensors": {},
+      "sensitivity": 2,
+      "sensorSensitivity": {},
+      "slopeGatePct": 5,
+      "releaseHold": 3,
+      "rawOnset": 1
+    },
+    "sqlitePredictionRows": 131200,
+    "sqliteUniqueTags": 320,
+    "streamClients": 2
+  },
+  "executedAt": "2026-11-14T09:58:34.916Z",
+  "totalDurationMinutes": 35,
+  "consoleErrors": [],
+  "pageErrors": [],
+  "consistencyCheck172": {
+    "alarmCenterRow": "2026/11/14 下午5:57:00 PCW01.Submain01.PTS DRIFT PREDICTION_ENGINE MEDIUM CLEARED_UNACK 1.627 / 1.7272075199102284 bar PCW01.Submain01.PTS PREDICTIVE T-20 (forecast) · TTL 15 min -> H ACK",
+    "systemPredictionRow": "PCW01.Submain01.PTS 1.3/1.7 1.729 1.499 27/5 1.11 0.0050 1.879 1.779 14m 100 EVENT"
+  },
+  "samplesCount": 35,
+  "cumulativePredictedTagsCount": 320,
+  "cumulativeDriftAlarmTagsCount": 280,
+  "finalAll320StateCounts": {
+    "EVENT": 42,
+    "T-30": 154,
+    "NORMAL": 124
+  },
+  "finalPtStateCounts": {
+    "EVENT": 2,
+    "T-30": 94,
+    "NORMAL": 64
+  },
+  "finalDriftAlarmsCount": 1241,
+  "keyMilestones": {
+    "min08_T30_advisory": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.6384997042961256,
+      "baseAvg60": 1.4995154532731858,
+      "m60": 32,
+      "m10": 10,
+      "n10": 1.875,
+      "slope": 0.012881547543330063,
+      "state": "T-10",
+      "ttlMinutes": 4.774294043243168
+    },
+    "min18_T20_warning": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.694385139141679,
+      "baseAvg60": 1.515261815325555,
+      "m60": 8,
+      "m10": 10,
+      "n10": 7.5,
+      "slope": 0.005096710745067989,
+      "state": "T-10",
+      "ttlMinutes": 1.1016636295780127
+    },
+    "min24_T10_alarm": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.7247841590457222,
+      "baseAvg60": 1.5304991574342461,
+      "m60": 14,
+      "m10": 10,
+      "n10": 4.285714285714286,
+      "slope": 0.004870055970416232,
+      "state": "EVENT",
+      "ttlMinutes": 15.444553699420684
+    },
+    "min28_EVENT_boundary": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.7433877119140262,
+      "baseAvg60": 1.545595676699385,
+      "m60": 19,
+      "m10": 10,
+      "n10": 3.1578947368421053,
+      "slope": 0.005148611183797636,
+      "state": "EVENT",
+      "ttlMinutes": 10.995642526693267
+    },
+    "min35_recovery": {
+      "tagId": "PCW01.Submain01.PTS",
+      "currentValue": 1.7816792117458242,
+      "baseAvg60": 1.5703408668290295,
+      "m60": 26,
+      "m10": 10,
+      "n10": 2.307692307692308,
+      "slope": 0.004795374817929954,
+      "state": "EVENT",
+      "ttlMinutes": 3.820512253948162
+    }
+  }
+}

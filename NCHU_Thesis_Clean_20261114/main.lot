@@ -1,0 +1,14 @@
+\contentsline {table}{\numberline {1}{\ignorespaces 半導體晶圓廠 PCW 系統四大分組工程界限與基準線規格表\relax }}{4}{table.caption.2}%
+\contentsline {table}{\numberline {2}{\ignorespaces 工業監控文獻方法與本研究所提架構之比較矩陣\relax }}{9}{table.caption.3}%
+\contentsline {table}{\numberline {3}{\ignorespaces 全廠 320 測點 Modbus/TCP FLOAT32 (CDAB) 保持暫存器位址映射表\relax }}{17}{table.caption.6}%
+\contentsline {table}{\numberline {4}{\ignorespaces 初版 Excel 參考模型與系統 Unified V1 核心演算法對照表\relax }}{18}{table.caption.7}%
+\contentsline {table}{\numberline {5}{\ignorespaces 實測硬體平台、軟體執行環境與資料集規格清冊\relax }}{19}{table.caption.8}%
+\contentsline {table}{\numberline {6}{\ignorespaces Excel 基準驗證工作簿（10 大功能工作表）結構清冊\relax }}{20}{table.caption.9}%
+\contentsline {table}{\numberline {7}{\ignorespaces \texttt {Parameters} 工作表 8 大核心參數設定清冊\relax }}{21}{table.caption.10}%
+\contentsline {table}{\numberline {8}{\ignorespaces \texttt {RawData} 工作表欄位架構、資料型態與檢核規則表\relax }}{21}{table.caption.11}%
+\contentsline {table}{\numberline {9}{\ignorespaces \texttt {MinuteInference} 工作表欄位清冊（第一部分：A～L 欄 觀測與因果特徵）\relax }}{22}{table.caption.12}%
+\contentsline {table}{\numberline {10}{\ignorespaces \texttt {MinuteInference} 工作表欄位清冊（第二部分：M～X 欄 推論狀態與離線驗證）\relax }}{22}{table.caption.13}%
+\contentsline {table}{\numberline {11}{\ignorespaces \texttt {Model\_Logic} 工作表線上推論 vs 離線驗證之因果防線設計表\relax }}{23}{table.caption.14}%
+\contentsline {table}{\numberline {12}{\ignorespaces 全廠 160 PT 評測之 12 種受控時序工況數學模型與半導體流體物理意義表\relax }}{24}{table.caption.15}%
+\contentsline {table}{\numberline {13}{\ignorespaces 全廠 160 個 PT 測點四種方法在 1,920 場試驗下之性能綜合比較表\relax }}{26}{table.caption.17}%
+\contentsfinish 
