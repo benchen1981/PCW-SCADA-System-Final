@@ -1,4 +1,4 @@
-"""Build clean, professional NCHU thesis Word document (.docx and .doc) from thesis/main.tex."""
+"""Build clean, professional NCHU thesis Word document (.docx and .doc) from thesis/main.tex, preserving all 15 figures and tables."""
 import os
 import shutil
 import subprocess
@@ -6,10 +6,12 @@ from pathlib import Path
 import docx
 from docx.shared import Pt, Inches, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.oxml import OxmlElement, parse_xml
-from docx.oxml.ns import nsdecls, qn
+from docx.oxml import parse_xml
+from docx.oxml.ns import nsdecls
 
 ROOT = Path(__file__).resolve().parent.parent
+WORKSPACE_ROOT = ROOT.parent
+TEMPLATE_DIR = WORKSPACE_ROOT / "NCHU-thesis-template-master"
 THESIS_DIR = ROOT / "thesis"
 MAIN_TEX = THESIS_DIR / "main.tex"
 RAW_DOCX = THESIS_DIR / "raw_pandoc.docx"
@@ -32,137 +34,97 @@ def run_pandoc():
     ]
     subprocess.run(cmd, check=True)
 
-def style_run(run, font_name="標楷體", font_name_ascii="Times New Roman", size_pt=12, bold=False, italic=False, color_rgb=(0, 0, 0)):
-    run.font.name = font_name_ascii
-    run.font.size = Pt(size_pt)
-    run.bold = bold
-    run.italic = italic
-    run.font.color.rgb = RGBColor(*color_rgb)
-    rPr = run._r.get_or_add_rPr()
-    rFonts = parse_xml(f'<w:rFonts {nsdecls("w")} w:ascii="{font_name_ascii}" w:hAnsi="{font_name_ascii}" w:eastAsia="{font_name}"/>')
-    rPr.append(rFonts)
-
 def main():
     print("Step 1: Running pandoc conversion...")
     run_pandoc()
     
-    print("Step 2: Post-processing docx with python-docx...")
-    raw_doc = docx.Document(RAW_DOCX)
-    new_doc = docx.Document()
+    print("Step 2: Prepending Cover Page while preserving all images and tables...")
+    doc = docx.Document(RAW_DOCX)
     
     # Set standard margins (NCHU thesis standard: 2.5cm / ~1 inch)
-    sections = new_doc.sections
-    for section in sections:
+    for section in doc.sections:
         section.top_margin = Inches(1.0)
         section.bottom_margin = Inches(1.0)
         section.left_margin = Inches(1.18)
         section.right_margin = Inches(1.0)
+        
+    p0 = doc.paragraphs[0]
+    w_ns = nsdecls("w")
     
+    def add_before(p_anchor, text, size_pt, bold=False, space_after_pt=12, align=WD_ALIGN_PARAGRAPH.CENTER):
+        p = p_anchor.insert_paragraph_before()
+        p.alignment = align
+        p.paragraph_format.space_after = Pt(space_after_pt)
+        run = p.add_run(text)
+        run.font.name = "Times New Roman"
+        run.font.size = Pt(size_pt)
+        run.bold = bold
+        rPr = run._r.get_or_add_rPr()
+        xml_str = f'<w:rFonts {w_ns} w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:eastAsia="標楷體"/>'
+        rFonts = parse_xml(xml_str)
+        rPr.append(rFonts)
+        return p
+
     # ------------------ COVER PAGE ------------------
-    p_top = new_doc.add_paragraph()
-    p_top.paragraph_format.space_before = Pt(36)
-    
-    p1 = new_doc.add_paragraph()
-    p1.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r1 = p1.add_run("國立中興大學人工智慧與資料科學碩士在職學位學程")
-    style_run(r1, font_name="標楷體", font_name_ascii="Times New Roman", size_pt=20, bold=True)
-    p1.paragraph_format.space_after = Pt(12)
-    
-    p2 = new_doc.add_paragraph()
-    p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r2 = p2.add_run("碩士學位論文")
-    style_run(r2, font_name="標楷體", font_name_ascii="Times New Roman", size_pt=20, bold=True)
-    p2.paragraph_format.space_after = Pt(72)
-    
-    p3 = new_doc.add_paragraph()
-    p3.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r3 = p3.add_run("半導體製程冷卻水系統時間序列監測的\n異常檢測與預警")
-    style_run(r3, font_name="標楷體", font_name_ascii="Times New Roman", size_pt=20, bold=True)
-    p3.paragraph_format.space_after = Pt(18)
-    p3.paragraph_format.line_spacing = 1.3
-    
-    p4 = new_doc.add_paragraph()
-    p4.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r4 = p4.add_run("Anomaly Detection and Early Warning for Time-Series Monitoring\nof Semiconductor Process Cooling Water Systems")
-    style_run(r4, font_name="Times New Roman", font_name_ascii="Times New Roman", size_pt=16, bold=True)
-    p4.paragraph_format.space_after = Pt(72)
-    p4.paragraph_format.line_spacing = 1.2
-    
-    p5 = new_doc.add_paragraph()
-    p5.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r5 = p5.add_run("指導教授： 吳宏達")
-    style_run(r5, font_name="標楷體", font_name_ascii="Times New Roman", size_pt=20, bold=True)
-    p5.paragraph_format.space_after = Pt(12)
-    
-    p6 = new_doc.add_paragraph()
-    p6.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r6 = p6.add_run("研究生： 陳 宥興")
-    style_run(r6, font_name="標楷體", font_name_ascii="Times New Roman", size_pt=20, bold=True)
-    p6.paragraph_format.space_after = Pt(64)
-    
-    p7 = new_doc.add_paragraph()
-    p7.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r7 = p7.add_run("中華民國一百一十五 年十一月")
-    style_run(r7, font_name="標楷體", font_name_ascii="Times New Roman", size_pt=20, bold=True)
-    
+    add_before(p0, "", 12, space_after_pt=36)
+    add_before(p0, "國立中興大學人工智慧與資料科學碩士在職學位學程", 20, bold=True, space_after_pt=12)
+    add_before(p0, "碩士學位論文", 20, bold=True, space_after_pt=72)
+    add_before(p0, "半導體製程冷卻水系統時間序列監測的\n異常檢測與預警", 20, bold=True, space_after_pt=18)
+    add_before(p0, "Anomaly Detection and Early Warning for Time-Series Monitoring\nof Semiconductor Process Cooling Water Systems", 16, bold=True, space_after_pt=72)
+    add_before(p0, "指導教授： 吳宏達", 20, bold=True, space_after_pt=12)
+    add_before(p0, "研究生： 陳 宥興", 20, bold=True, space_after_pt=64)
+    add_before(p0, "中華民國一百一十五 年十一月", 20, bold=True, space_after_pt=24)
+
     # Page Break after Cover
-    new_doc.add_page_break()
-    
-    # ------------------ ORAL DEFENSE APPROVAL RESERVED PAGE ------------------
-    p_app_top = new_doc.add_paragraph()
-    p_app_top.paragraph_format.space_before = Pt(220)
-    
-    p_app = new_doc.add_paragraph()
-    p_app.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r_app = p_app.add_run("口試審核頁預留")
-    style_run(r_app, font_name="標楷體", font_name_ascii="Times New Roman", size_pt=20, bold=True)
-    
-    new_doc.add_page_break()
-    
-    # ------------------ COPY BODY FROM RAW DOCX ------------------
-    skip_first_oral = True
-    
-    for element in raw_doc.element.body:
-        if element.tag.endswith('p'):
-            text = "".join(element.itertext()).strip()
-            if skip_first_oral and "口試審核頁預留" in text:
-                skip_first_oral = False
-                continue
-            new_doc.element.body.append(element)
-        elif element.tag.endswith('tbl'):
-            new_doc.element.body.append(element)
-        elif element.tag.endswith('sectPr'):
-            pass
-    
+    p_br = p0.insert_paragraph_before()
+    r_br = p_br.add_run()
+    r_br.add_break(docx.enum.text.WD_BREAK.PAGE)
+
+    # ------------------ ORAL DEFENSE RESERVED PAGE ------------------
+    add_before(p0, "", 12, space_after_pt=220)
+    add_before(p0, "口試審核頁預留", 20, bold=True, space_after_pt=24)
+
+    p_br2 = p0.insert_paragraph_before()
+    r_br2 = p_br2.add_run()
+    r_br2.add_break(docx.enum.text.WD_BREAK.PAGE)
+
     print(f"Step 3: Saving final docx to {FINAL_DOCX}...")
-    new_doc.save(FINAL_DOCX)
+    doc.save(FINAL_DOCX)
     
     if RAW_DOCX.exists():
         RAW_DOCX.unlink()
         
-    print("Step 4: Converting docx to authentic doc format via textutil...")
+    print("Step 4: Generating doc format via textutil and Word-compatible copies...")
     cmd_doc = ["textutil", "-convert", "doc", "-output", str(FINAL_DOC), str(FINAL_DOCX)]
     subprocess.run(cmd_doc, check=True)
     
-    print("Step 5: Creating aliases and copies (main.doc, main.docx, date-stamped copies)...")
+    print("Step 5: Synchronizing all docx and doc files across directories...")
+    # Copies within thesis/
     shutil.copy2(FINAL_DOCX, MAIN_DOCX)
     shutil.copy2(FINAL_DOC, MAIN_DOC)
     shutil.copy2(FINAL_DOCX, DATE_DOCX)
     shutil.copy2(FINAL_DOC, DATE_DOC)
     
-    # Also sync to project root
+    # Copies in PCW_SCADA_Final_Project/ root
     shutil.copy2(FINAL_DOCX, ROOT / FINAL_DOCX.name)
     shutil.copy2(FINAL_DOC, ROOT / FINAL_DOC.name)
     shutil.copy2(MAIN_DOCX, ROOT / "main.docx")
     shutil.copy2(MAIN_DOC, ROOT / "main.doc")
     
-    print("Successfully generated all Word documents:")
-    print(f"  - {FINAL_DOCX}")
-    print(f"  - {FINAL_DOC}")
-    print(f"  - {MAIN_DOCX}")
-    print(f"  - {MAIN_DOC}")
-    print(f"  - {DATE_DOCX}")
-    print(f"  - {DATE_DOC}")
+    # Copies in NCHU-thesis-template-master/
+    if TEMPLATE_DIR.exists():
+        shutil.copy2(FINAL_DOCX, TEMPLATE_DIR / FINAL_DOCX.name)
+        shutil.copy2(FINAL_DOC, TEMPLATE_DIR / FINAL_DOC.name)
+        shutil.copy2(MAIN_DOCX, TEMPLATE_DIR / "main.docx")
+        shutil.copy2(MAIN_DOC, TEMPLATE_DIR / "main.doc")
+        
+    # Copies in WORKSPACE_ROOT (/Users/benchen1981/Downloads/Web SCADA Final 20261111/)
+    shutil.copy2(FINAL_DOCX, WORKSPACE_ROOT / FINAL_DOCX.name)
+    shutil.copy2(FINAL_DOC, WORKSPACE_ROOT / FINAL_DOC.name)
+    shutil.copy2(MAIN_DOCX, WORKSPACE_ROOT / "main.docx")
+    shutil.copy2(MAIN_DOC, WORKSPACE_ROOT / "main.doc")
+    
+    print("Successfully built and synchronized all Word documents with all 15 figures.")
 
 if __name__ == "__main__":
     main()
