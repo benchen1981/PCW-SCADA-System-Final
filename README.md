@@ -46,7 +46,7 @@
 | **全廠 >10 分鐘實測** | 本機 v2.0 (`11.35 min`) 注入慢速漂移與 `1.72 bar`，全廠 140 支測點依 L2 穩定鎖定 `T-30`、42 支 `EVENT`，SQLite `prediction_logs` 實存 **203,840 筆** | [`pcw_scada_11min.db`](./evidence/database_exports/pcw_scada_11min.db) |
 | **Web UI v2.0 巡檢** | 無頭 Chrome `1440×900` 巡檢全 9 頁 + SSE `LIVE STREAM`：0 console/page error、`1.72 bar` 與 Pair Level 即時同步 | [`evidence/browser_screenshots/local_v2/`](./evidence/browser_screenshots/local_v2) |
 | **密碼學完整性檢核** | 圖 9 白底黑字呈現 2026-11-14 實驗重跑終端摘要與 SHA-256 數位指紋；35 項核心交付檔案全數通過 `shasum -a 256 -c`（35/35 OK） | [`final_deliverables_sha256.txt`](./evidence/checksums/final_deliverables_sha256.txt) |
-| **正式印刷論文** | **40 頁** 中興大學官方格式 A4 PDF（`6.67 MiB`、0 `Overfull \hbox`、15 圖 5 表全部正文引用、第二章 5 節擴充、第四章 1,920 場 160 PT 實證、第五章結論展望、12 筆 Crossref 實查書目）與可編輯 Word 稿（`.docx` / `.doc`） | [`thesis/main.pdf`](./thesis/main.pdf) · [`可編輯修改稿.docx`](./thesis/NCHU_Thesis_陳宥興_可編輯修改稿.docx) |
+| **正式印刷論文** | **49 頁** 中興大學官方格式 A4 PDF（`6.75 MiB`、0 `Overfull \hbox`、15 圖 6 表全部正文引用、第二章 5 節擴充、第四章包含資料集性質/12種工況物理建模/八階段實驗程序/深入結果分析討論、第五章結論展望、12 筆 Crossref 實查書目）與可編輯 Word 稿（`.docx` / `.doc`） | [`thesis/main.pdf`](./thesis/main.pdf) · [`可編輯修改稿.docx`](./thesis/NCHU_Thesis_陳宥興_可編輯修改稿.docx) |
 
 ---
 

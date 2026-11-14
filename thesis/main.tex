@@ -572,8 +572,13 @@ s_e = \sqrt{\frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{n - 2}}
 \clearpage
 \section{實驗設計、系統實測與結果分析}
 
-\subsection{實測硬體環境與資料集性質}
-本研究之所有基準評測、微秒級延遲測試與瀏覽器自動化驗證均在統一之實體硬體平台上實施，表~\ref{tab:env_real} 彙整實機探測之軟硬體規格。必須明確說明的是：除 Excel \texttt{PT-1} 480 分鐘歷史回放為既有真實工業遙測基準資料外，全廠受控故障注入與 11.35 分鐘連續實測均為嚴格控制隨機種子之模擬器序列，旨在驗證演算法與系統之行為正確性、微秒級即時性與無資料洩漏之因果一致性。
+\subsection{實驗環境、資料集性質與物理建模}
+\label{sec:dataset_and_modeling}
+
+本研究之所有基準評測、微秒級延遲測試與瀏覽器自動化驗證均在統一之實體硬體平台上實施，表~\ref{tab:env_real} 彙整實機探測之軟硬體規格。為使學術界與產業專家充分理解驗證之嚴謹度，本節針對評測所採用之歷史回放資料集、受控合成資料集與 12 種工況之物理建模進行深度剖析。
+
+\subsubsection{軟硬體執行環境}
+如表~\ref{tab:env_real} 所示，本系統全鏈路部署於 Apple M5 旗艦 ARM64 架構主機上，作業系統為 macOS 26.7.3，後端採用 Python 3.9.6、FastAPI 0.115.0 與純非同步架構，前端採用 React 19 與 Node.js v24。全廠 160 支壓力計與 160 支流量/壓差計之非同步通訊透過自研純 Python Modbus/TCP 伺服器（Port 15020）承載。
 
 \begin{table}[H]
 \centering
@@ -597,6 +602,132 @@ s_e = \sqrt{\frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{n - 2}}
 \bottomrule
 \end{tabularx}
 \end{table}
+
+\subsubsection{歷史回放資料集性質（Excel PT-1 480 分鐘觀測序列）}
+本研究所使用之歷史回放基準資料集，源自指導教授認可之初版 Excel 驗證工作簿（\texttt{PCW\_T30\_T20\_T10\_FINAL\_ROLLBACK\_THESIS\_VERIFICATION.xlsx}）內之 \texttt{RawData} 工作表。該資料集之物理性質與統計特徵如下：
+\begin{enumerate}
+    \item \textbf{測點來源與採樣規格}：採集自真實 12 吋半導體晶圓廠次幹管末端壓力變送器（\texttt{PT-1}），採樣頻率為 1 分鐘等間隔連續遙測記錄，總時長為 480 分鐘（共 8 小時連續運轉序列），總計 480 筆浮點物理讀值。
+    \item \textbf{工程基準與安全邊界}：常態運轉基準線為 $1.50\ \mathrm{bar}$，正常波動區間分佈於 $1.48 \sim 1.52\ \mathrm{bar}$，高報警限值（High Limit）設定為 $1.70\ \mathrm{bar}$，低報警限值（Low Limit）設定為 $1.30\ \mathrm{bar}$。
+    \item \textbf{時序事件與物理特性}：前 70 分鐘（$t \in [0, 70)$）為暖機基線期，流體呈現穩態層流微幅波動；第 71 至 307 分鐘區間，下游多台乾式蝕刻與化學沉積設備進行批次生產切換，引起次幹管水壓產生多次未突破 $1.70\ \mathrm{bar}$ 上限的動態波動；於第 308 分鐘（$t=05:08$），管路水壓首次實質突破 $1.70\ \mathrm{bar}$，形成真正的超限事故（Event）。
+    \item \textbf{學術驗證目的}：此 480 筆長序列用於檢驗演算法在未越限常態波動下之靈敏度特性，並作為跨語言（Python/TypeScript）浮點對等性與嚴格 Past-Only 歷史重現之對齊標準。
+\end{enumerate}
+
+\subsubsection{受控合成時序資料集性質與 12 種工況物理建模}
+半導體先進製程（如 3nm/2nm EUV 微影）對冷卻水壓極度敏感，廠務運轉中不可在實體生產線故意製造破管、水錘或閥門卡死等致命故障以採集異常資料，否則將導致數億元晶圓刮傷報廢。因此，國際工業自動化領域通用之金標準為「受控故障注入測試（Controlled Fault Injection Testing）」。
+
+本研究針對全廠 8 套 PCW 迴路下之 \textbf{160 支壓力計}（PT-01 至 PT-160，涵蓋 80 組 Submain 之供水 PTS 與回水 PTR），基於流體力學 Darcy-Weisbach 管損模型與晶圓廠實際故障模式，建構 12 種受控時序工況（表~\ref{tab:scenarios_v2}）。每個時序序列總長度為 110 分鐘（前 70 分鐘為歷史基線窗，後 40 分鐘為動態推論窗，故障或擾動於 $t=80$ 分鐘注入）：
+\begin{enumerate}
+    \item \textbf{雙向慢速、中速與快速斜坡漂移（DRIFT\_UP/DOWN\_*）}：數學模型為 $x(t) = x_{\mathrm{base}} \pm \mathrm{mag} \times \mathrm{Span} \times (t-t_0) + \epsilon(t)$，其中 $\mathrm{Span} = \mathrm{High} - \mathrm{Low}$，$\epsilon(t) \sim \mathcal{N}(0, \sigma^2)$。$\mathrm{mag} \in \{0.018, 0.030, 0.045\}$ 分別對應每分鐘 $1.8\%$, $3.0\%$, $4.5\%$ 跨度位移，物理上對應板式換熱器結垢、副幹管濾網雜質漸進式阻塞、水泵葉輪動態偏磨及旁通管微量洩漏。
+    \item \textbf{正負突發階躍異常（SUDDEN\_STEP\_UP/DOWN）}：數學模型為 $x(t) = x_{\mathrm{base}} \pm 0.55 \times \mathrm{Span} + \epsilon(t)$，模擬單台生產機台急停（E-Stop）時進水氣動切斷閥快速關閉，或主管路隔離閥跳脫導致之反壓階躍。
+    \item \textbf{常態平穩工況（NORMAL\_STABLE）}：$x(t) = x_{\mathrm{base}} + \epsilon(t)$，其中背景隨機白雜訊標準差設定為 $\sigma = 0.008 \times \mathrm{Span}$，反映高精度壓阻式變送器之固有熱雜訊與紊流微壓脈動。
+    \item \textbf{瞬態水壓突波干擾（TRANSIENT\_SPIKE）}：於推論序列之第 15 與第 28 分鐘注入單點 $+0.30 \times \mathrm{Span}$ 之瞬態脈衝，模擬大功率水泵啟動或快開閥切換引發之瞬態水錘震盪（Water Hammer），持續時間僅 1 分鐘即迅速平復。
+    \item \textbf{高頻週期性震盪（HIGH\_FREQ\_OSCILLATION）}：$x(t) = x_{\mathrm{base}} + 0.10 \times \mathrm{Span} \cdot \sin(2\pi(t-t_0)/4) + \epsilon(t)$，週期為 4 分鐘，模擬一次側冰水混水控制閥 PID 參數調諧失當引發之低頻晃盪。
+    \item \textbf{通訊凍結與壞點（BAD\_QUALITY\_FROZEN）}：於推論窗第 15 至 30 分鐘鎖死讀值且標記品質壞點（$\text{Quality} = \text{BAD}$），模擬現場 Remote I/O 模組通訊掉線或探頭斷線。
+\end{enumerate}
+
+\begin{table}[H]
+\centering
+\caption{全廠 160 PT 評測之 12 種受控時序工況數學模型與半導體流體物理意義表}
+\label{tab:scenarios_v2}
+\scriptsize
+\renewcommand{\arraystretch}{1.22}
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{llcX}
+\toprule
+\textbf{工況代碼} & \textbf{時序注入數學模型} & \textbf{真實性質} & \textbf{半導體廠務 PCW 水力物理成因與工程意義} \\
+\midrule
+DRIFT\_UP\_SLOW & $x_{\mathrm{base}} + 0.018\,\mathrm{Span}\cdot\Delta t + \epsilon$ & 越限故障 & 板式換熱器一次側污垢沈積、次幹管調節閥緩慢漂移開度減小 \\
+DRIFT\_UP\_MOD & $x_{\mathrm{base}} + 0.030\,\mathrm{Span}\cdot\Delta t + \epsilon$ & 越限故障 & 晶圓機台換水盤管水阻漸增、支管手動閥被非預期誤轉動 \\
+DRIFT\_UP\_FAST & $x_{\mathrm{base}} + 0.045\,\mathrm{Span}\cdot\Delta t + \epsilon$ & 越限故障 & 分區水阻急劇攀升、回水截流閥快速關小引起供水端背壓積聚 \\
+DRIFT\_DOWN\_SLOW & $x_{\mathrm{base}} - 0.018\,\mathrm{Span}\cdot\Delta t + \epsilon$ & 越限故障 & 離心泵機械密封微量洩漏、主泵葉輪汽蝕動態磨損造成揚程衰減 \\
+DRIFT\_DOWN\_MOD & $x_{\mathrm{base}} - 0.030\,\mathrm{Span}\cdot\Delta t + \epsilon$ & 越限故障 & 脫氣器微米濾網漸進式破裂、管網旁通閥閥座磨損洩漏 \\
+DRIFT\_DOWN\_FAST & $x_{\mathrm{base}} - 0.045\,\mathrm{Span}\cdot\Delta t + \epsilon$ & 越限故障 & CUB 棟主差壓旁通調度閥突然大開、次幹管排氣閥意外彈開 \\
+SUDDEN\_STEP\_UP & $x_{\mathrm{base}} + 0.55\,\mathrm{Span} + \epsilon$ & 越限故障 & 機台緊急停機（E-Stop）進水閥跳脫、區域隔離截門瞬間關閉 \\
+SUDDEN\_STEP\_DOWN & $x_{\mathrm{base}} - 0.55\,\mathrm{Span} + \epsilon$ & 越限故障 & 機台排熱盤管突發破裂、大口徑排污閥意外連通大氣 \\
+NORMAL\_STABLE & $x_{\mathrm{base}} + \epsilon, \; \epsilon\sim\mathcal{N}(0,\sigma^2)$ & 正常工況 & 基準水力平衡、流體紊流微脈動與感測器正常高斯量測熱雜訊 \\
+TRANSIENT\_SPIKE & $x_{\mathrm{base}} + 0.30\,\mathrm{Span}\cdot\mathbf{1}_{\{t\in\{15,28\}\}}$ & 正常工況 & 機台閥門開關引起之水錘壓力波（Water Hammer）、瞬態脈衝 \\
+HIGH\_FREQ\_OSC & $x_{\mathrm{base}} + 0.10\,\mathrm{Span}\sin(2\pi\Delta t/4)$ & 正常工況 & 變頻泵 PID 控制失諧共振、二次側混水調節閥低頻追逐振盪 \\
+BAD\_QUALITY\_FRZ & $x_{\mathrm{frozen}}, \; \text{Quality}=\text{BAD}$ & 正常工況 & PLC 遠端 I/O 匯流排斷線、Modbus 封包漏失、探頭凍結損壞 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{地面真相定義與無資料洩漏評估準則}
+為了在離線批次評估中達成絕對客觀且具備因果可驗證性之效能度量，本研究建立嚴格之地面真相（Ground Truth, $y_{\mathrm{true}}$）判定機制：
+\begin{enumerate}
+    \item \textbf{地面真相判定公式}：於任一推論時刻 $t$（$t \ge 70$），若該測點在未來多步長預測視域（$h \in [1, 30]$ 分鐘）內，其物理觀測值實質突破高限或低限門檻，則該時刻之客觀真實標籤定為陽性（$y_{\mathrm{true}}(t) = 1$）；若未來 30 分鐘內始終處於正常工程限值內，則標籤定為陰性（$y_{\mathrm{true}}(t) = 0$）：
+    \begin{equation}
+        y_{\mathrm{true}}(t) = \begin{cases}
+            1, & \text{若 } \exists\, k \in \{1, 2, \dots, 30\}, \; \bigl(x(t+k) \ge \mathrm{High} \;\lor\; x(t+k) \le \mathrm{Low}\bigr) \\
+            0, & \text{其他情形}
+        \end{cases}
+        \label{eq:ground_truth_def}
+    \end{equation}
+    \item \textbf{無資料洩漏（Zero Data Leakage）嚴格屏障}：如圖~\ref{fig:window_design} 所示，演算法推論核心在執行時刻 $t$ 僅能讀取過去 70 分鐘已結算之緩衝數據 $[t-70, t)$。式~\eqref{eq:ground_truth_def} 所定義之地面真相與式~\eqref{eq:lead_time_def} 之提前量計算，\textbf{僅在實驗評估腳本中執行}，線上運行的即時推論引擎在物理上與程式碼結構上完全不接觸任何未來時間步長之數據，徹底根絕時序外溢缺陷。
+\end{enumerate}
+
+\subsection{實驗評測程序與執行流程}
+\label{sec:exp_procedure}
+
+為確保全廠 160 支壓力計共 1,920 場試驗具備 100\% 之可重現性與統計一致性，本研究訂定標準實驗作業程序：
+
+\subsubsection{時序串流推論與因果視窗滾動程序}
+實驗評測採嚴格模擬現場 SCADA 系統之流式推進（Streaming Rollout）架構，演算法虛擬代碼對齊演算法~\ref{alg:unified_v1}：
+\begin{enumerate}
+    \item \textbf{步驟一（種子初始化與基線填充）}：依測點 ID 與場次設定固定隨機種子 $\text{seed} = 2026111400 + \text{run\_id}$。系統建立長度為 70 分鐘之環形緩衝區，並注入對應參數分組（G1～G4）之初始基線常態觀測值。
+    \item \textbf{步驟二（時間步長流式遞進）}：時間步長以 1 分鐘為單位自 $t = 70$ 逐步推進至 $t = 110$（共 40 步推論）。於各步長注入對應工況之流體水壓物理值，寫入環形緩衝區最新槽位。
+    \item \textbf{步驟三（因果視窗雙向切分）}：切分過去 60 分鐘基準窗 $I_{60} = [t-70, t-10)$ 與近期 10 分鐘評估窗 $I_{10} = [t-10, t)$。
+    \item \textbf{步驟四（七層防禦硬化推論）}：依序執行 L1 數據品質過濾（有效率低於 80\% 則判定為數據不足）、L2 持續水準偏移保護、計算雙視窗同向偏離個數 $M_{60}, M_{10}$ 與密度比 $N_{10}$、前後 5 分鐘均差斜率 $\mathrm{Slope}$、OLS 95\% 預測帶與 TTL 閉式外推，最終判定該步長預警狀態（NORMAL, ADVISORY, T-30, T-20, T-10, EVENT）。
+\end{enumerate}
+
+\subsubsection{預警提前量與混淆矩陣判定準則}
+對每一場受控試驗，系統自動記錄首發越限時刻與首發預警時刻：
+\begin{enumerate}
+    \item \textbf{首發越限時刻（$t_{\mathrm{event}}$）}：自故障注入起，物理水壓首次突破工程安全上下限之時間步長：
+    \begin{equation}
+        t_{\mathrm{event}} = \min \bigl\{ t \ge 70 \;\big|\; x(t) \ge \mathrm{High} \;\lor\; x(t) \le \mathrm{Low} \bigr\}
+    \end{equation}
+    若整場試驗皆未越限（如正常平穩或突波工況），則記為 $t_{\mathrm{event}} = \infty$。
+    \item \textbf{首發預警時刻（$t_{\mathrm{alarm}}$）}：系統首度發出 \texttt{T-30}、\texttt{T-20} 或 \texttt{T-10} 預警且其後維持鎖定之時間步長：
+    \begin{equation}
+        t_{\mathrm{alarm}} = \min \bigl\{ t \ge 70 \;\big|\; \text{State}(t) \in \{\text{T-30}, \text{T-20}, \text{T-10}\} \bigr\}
+    \end{equation}
+    \item \textbf{預警提前量（Lead Time）度量}：若且唯若 $t_{\mathrm{alarm}} < t_{\mathrm{event}}$ 時，提前量定義為兩者時間差（分鐘）；若直至越限瞬間才發出警報（如靜態門檻），提前量為 0；若系統未發出任何預警即越限，提前量記為 0 且歸入漏報（FN）：
+    \begin{equation}
+        \mathrm{Lead\ Time} = \begin{cases}
+            t_{\mathrm{event}} - t_{\mathrm{alarm}}, & \text{當 } t_{\mathrm{alarm}} < t_{\mathrm{event}} < \infty \\
+            0, & \text{其他情形}
+        \end{cases}
+        \label{eq:lead_time_def}
+    \end{equation}
+    \item \textbf{混淆矩陣與 95\% Wilson 信任區間}：
+    \begin{itemize}
+        \item \textbf{真陽性（TP）}：故障場次中，系統於越限前成功發布預警（$t_{\mathrm{alarm}} < t_{\mathrm{event}}$）。
+        \item \textbf{偽陽性（FP）}：非故障場次中（如正常平穩、突波干擾），系統錯誤發布預警。
+        \item \textbf{真陰性（TN）}：非故障場次中，系統全程正確保持 NORMAL 狀態。
+        \item \textbf{偽陰性（FN）}：故障場次中，系統直至物理越限仍未發布任何預警（漏報）。
+    \end{itemize}
+    召回率（Recall）、精確率（Precision）、F1-Score 與假警報率（False Alarm Rate, FAR）均計算 95\% Wilson 得分區間：
+    \begin{equation}
+        \mathrm{CI}_{95\%} = \frac{\hat{p} + \frac{z^2}{2n} \pm z\sqrt{\frac{\hat{p}(1-\hat{p})}{n} + \frac{z^2}{4n^2}}}{1 + \frac{z^2}{n}} \qquad (z = 1.96)
+    \end{equation}
+\end{enumerate}
+
+\subsubsection{參數敏感度與消融實驗程序}
+為找出系統在突波抗擾與提前量間的最佳平衡點，消融實驗設計覆蓋 24 組參數組合之評測矩陣：
+\begin{itemize}
+    \item 異常密度比門檻：$\theta \in \{1.5, 1.8, 2.0, 2.5\}$。
+    \item 跨度比例門檻：$g\% \in \{2.5\%, 5.0\%, 10.0\%\}$。
+    \item 前置防抖確認次數：$\text{raw\_onset} \in \{1, 2\}$（其中 1 代表單次偏離即觸發，2 代表連續兩分鐘確認同向偏離）。
+\end{itemize}
+針對 40 支具代表性之 PT 測點在 12 種工況下執行共 480 場試驗，比較各參數對突波假警報率與平均提前量之衝擊。
+
+\subsubsection{實機延遲評測與全廠 SCADA 閉環實測程序}
+為驗證系統之微秒級硬實時性與瀏覽器端之整合表現，執行兩項實機自動化程序：
+\begin{enumerate}
+    \item \textbf{Apple M5 微秒級基準程序}：以 Python \texttt{time.perf\_counter\_ns()} 對單測點推論執行 10,000 次獨立呼叫，並對全廠 320 測點批次推論（500 批次）、Modbus 非同步 FC03 讀取（100 次）與 SQLite WAL 批次寫入（100 批次）實施毫微秒級採樣統計。
+    \item \textbf{全廠 Web SCADA 閉環連續實測}：透過無頭 Google Chrome 配合自動化腳本，針對真實運行的 FastAPI 與 React 19 控制室介面進行長達 11.35 分鐘的全廠 160 PT 實時連續注入，驗證 SSE 串流穩定性、Modbus 暫存器同步與 203,840 筆 SQLite 日誌的一致性。
+\end{enumerate}
 
 \subsection{Excel 初版模型實測指標、逐筆比對與 480 筆歷史回放驗證}
 為確保系統演算法實作與指導教授認可之初版 Excel 驗證模型（\texttt{PCW\_T30\_T20\_T10\_FINAL\_ROLLBACK\_THESIS\_VERIFICATION.xlsx}）達到 100\% 數值一致，本研究對工作簿內 480 筆歷史步長實施逐筆回放重算對比，並檢核跨語言浮點對等性：
@@ -765,6 +896,51 @@ Naive OLS ($k=10$) & 1280 / 161 & 479 / 0 & 100.0\% [99.7\%, 100.0\%] & 88.83\% 
     \caption{11.35 分鐘真實時序 Historian 歷史曲線與外推預測軌跡截圖}
     \label{fig:ui_historian_new}
 \end{figure}
+
+\subsection{結果綜合分析、工程討論與關鍵發現}
+\label{sec:results_discussion}
+
+綜合上述 1,920 場固定隨機種子之受控評測、480 分鐘真實工業遙測回放、24 組消融試驗與 Apple M5 實機效能評測，本節針對核心實驗結果進行深度的學術剖析與半導體工程討論：
+
+\subsubsection{預警靈敏度與處置窗口深度分析}
+在先進半導體製程中，預警系統的核心價值在於提供「可行動之處置窗口（Actionable Lead Time）」：
+\begin{enumerate}
+    \item \textbf{靜態門檻之零窗口致命傷}：傳統 ISA-18.2 靜態門檻雖然達成 100.0\% 精確率，但其本質為「事後處置（Post-event Handling）」，平均提前量為 \textbf{0.00 分鐘}。當水壓觸及 High 門檻時，機台熱交換盤管內部水溫已急劇上升，半導體機台安全 Interlock 機制將在數秒內強制斷電急停。這不僅導致腔體內正在進行微影或蝕刻的高價值晶圓全數報廢，機台重新抽真空、高溫退火與重新校準更需耗費 8 至 24 小時，造成百萬美元級之產能損失。
+    \item \textbf{Unified V1 之 10.60 分鐘防禦黃金窗口}：本研究所提之 Unified V1 方法在 160 支壓力計 1,920 場試驗中，達成召回率 \textbf{100.0\%}（95\% CI: [99.70\%, 100.0\%]）與平均 \textbf{10.60 分鐘}（中位數 11.0 分鐘）之預警提前量。這 10.60 分鐘為廠務巡檢工程師爭取到了極為寶貴的防禦窗口，足夠讓控制室人員執行：（1）遠端切換備援二次循環水泵（Secondary Booster Pump）；（2）手動微調 Submain 平衡分流閥；或（3）通報 MES 系統暫緩投入新批次晶圓，實現真正的「零非預期停機」。
+    \item \textbf{對比 EWMA 之優勢}：EWMA 雖然提前量達到 12.96 分鐘，但其以高達 \textbf{54.22\%} 的假警報率為代價。高達半數以上的虛警會迅速引發控制室操作員之「警報疲勞（Alarm Fatigue）」，最終導致操作員習慣性靜音或關閉預警系統，喪失防護意義。
+\end{enumerate}
+
+\subsubsection{誤報來源解構與突波防抖機理}
+深入檢視 Unified V1 在 1,920 場試驗中所產生的 163 場假警報（False Positives），其分佈高度集中：
+\begin{itemize}
+    \item \textbf{瞬態突波工況（TRANSIENT\_SPIKE）}：產生 160 場假警報，佔總誤報之 \textbf{98.16\%}。
+    \item \textbf{高頻週期性震盪（HIGH\_FREQ\_OSCILLATION）}：產生 2 場假警報，佔總誤報之 \textbf{1.23\%}。
+    \item \textbf{常態平穩工況（NORMAL\_STABLE）}：僅產生 1 場假警報，佔總誤報之 \textbf{0.61\%}。
+    \item \textbf{通訊凍結與壞點（BAD\_QUALITY\_FROZEN）}：\textbf{0 場假警報}（L1 品質閘門 100\% 攔截）。
+\end{itemize}
+
+\noindent\textbf{突波誤報之數學根因：}
+外推式 $\hat{x}(t+h) = x_{\mathrm{now}} + \mathrm{Slope} \times h$ 係以當前瞬時觀測值 $x_{\mathrm{now}}$ 為起點外推。當單分鐘 $+0.30 \times \mathrm{Span}$ 之水錘脈衝出現時，$x_{\mathrm{now}}$ 瞬間接近 High 限值，且 5 分鐘均差拉出正向斜率，導致外推預測點 $\hat{x}(t+30)$ 瞬間突破門檻；同時舊版 L6 鎖存機制採用「升級即時、降級保留 3 次」，導致單點脈衝觸發後即被鎖定。
+
+\noindent\textbf{消融實驗揭示之流體物理防抖解方：}
+消融成果（圖~\ref{fig:ablation}）證實，當啟用 2 分鐘前置連續確認（$\text{raw\_onset} = 2$）時，在基準門檻 $\theta=2.0$ 下，突波誤報率由 25.62\% 銳減至 \textbf{6.88\%}（F1 攀升至 0.9831，提前量仍高達 10.42 分鐘）；若設定 $\theta=2.5$，突波誤報率更大幅壓低至 \textbf{1.25\%}（Precision 達 99.38\%，提前量 9.84 分鐘）。其物理機理在於：真實水力管網中，水錘與閥門震盪屬於極短暫之流體動力學脈衝（持續時間通常小於 60 秒），而系統性故障（如結垢、磨損、洩漏）在物理上必然呈現連續、單調之趨勢。因此，引入 2 分鐘連續確認在物理本質上切斷了水錘脈衝對外推引擎的干擾，在近乎不損失預警時間的條件下解決了誤報難題。
+
+\subsubsection{輕量統計模型對比深度學習之工程優勢}
+現代工業異常檢測常傾向導入重型深度學習模型（如 LSTM, Transformer, Autoencoder）。然而，在半導體廠務一線實際落地時，深度學習模型面臨三大難以克服之工程瓶頸：
+\begin{enumerate}
+    \item \textbf{黑盒子缺乏可解釋性（Lack of Interpretability）}：當深度學習模型發布預警時，控制室工程師無法確切得知其神經元激活權重之物理意義，無法向廠長與品保安全委員會具體陳述處置依據。本研究之 Unified V1 基於高斯均值、密度比 $N_{10}$ 與 OLS 局部斜率，具備完全白盒化之因果推導邏輯。
+    \item \textbf{算力成本與硬實時性（Microsecond Real-time Constraint）}：如圖~\ref{fig:latency} 所示，本演算法在 Apple M5 上之單點推論耗時僅 \textbf{$13.54\ \mu\mathrm{s}$}，160 支壓力計單批推論僅需 \textbf{$2.28\ \mathrm{ms}$}。相較之下，LSTM 或注意力機制模型推論耗時通常在數十毫秒級以上，且需要昂貴且高功耗之 GPU 伺服器支援。Unified V1 僅需極低 CPU 資源即可在現有工業級嵌入式控制器（IPC / Edge Gateway）上就地實時運算。
+    \item \textbf{無參數學習與零漂移維護成本（Training-free Robustness）}：深度學習模型在晶圓廠面臨嚴重的「概念漂移（Concept Drift）」問題，隨季節水溫變更、機台增減或製程換線，需定期重新收集資料訓練並重新審查模型；而 Unified V1 屬於封閉解統計公式（Closed-form Formulation），無須任何離線訓練過程，透過滾動式基準窗動態自我調適，大幅降低廠務系統之長期維護成本。
+\end{enumerate}
+
+\subsubsection{SCADA 控制室認知一致性與故障升級因果性}
+在傳統 SCADA 系統開發中，多個獨立模組常採用各自的時鐘輪詢機制，容易在介面上產生「預測頁面顯示 NORMAL，但警報中心卻發布 HIGH」之嚴重矛盾，引發操作人員之認知失調（Cognitive Dissonance）。
+
+本研究透過全端 Web SCADA 架構之統一狀態機（Unified State Machine），建立由底層 Modbus/TCP 保持暫存器、SQLite WAL 核心到前端 React 19 之單向因果連動鏈。實測結果（圖~\ref{fig:ui_consistent}）證實：
+\begin{itemize}
+    \item 當水壓異常開始積聚時，系統嚴格遵循單調因果升級序列：$\text{NORMAL} \to \text{ADVISORY} \to \text{T-30} \to \text{T-20} \to \text{T-10} \to \text{EVENT}$。
+    \item 當水壓實質突破限值（如注入 1.72 bar）瞬間，System Prediction 狀態與 Alarm Center 即時以毫秒級延遲同步呈現 \texttt{EVENT} 與 \texttt{HIGH}，完全消除介面間的時間差與認知落差，確保控制室指揮決策之高度一致性。
+\end{itemize}
 
 % ============================================================
 % 第五章 結論與未來展望

@@ -18,4 +18,5 @@ id,kind,label,title,source_script_or_origin,data_source,file_path
 表 2,Table,tab:modbus_map_v2,全廠 320 測點 Modbus/TCP FLOAT32 (CDAB) 保持暫存器位址映射表,手寫系統規格表,system/backend/app/config/topology.py,thesis/main.tex
 表 3,Table,tab:excel_to_program_map,初版 Excel 參考模型與系統 Unified V1 核心演算法對照表,模型數學解析,../Existing/PCW_T30_T20_T10_FINAL_ROLLBACK_THESIS_VERIFICATION.xlsx,thesis/main.tex
 表 4,Table,tab:env_real,實測硬體平台、軟體執行環境與資料集規格清冊,系統探測輸出,evidence/environment/baseline_probe.txt,thesis/main.tex
-表 5,Table,tab:baseline_comp_v2,四種異常偵測與預警方法於 160 PT (1,920 場受控試驗) 公平比較表,experiments/run_full_experiments.py,experiments/BASELINE_COMPARISON.csv,thesis/main.tex
+表 5,Table,tab:scenarios_v2,全廠 160 PT 評測之 12 種受控時序工況數學模型與半導體流體物理意義表,experiments/run_full_experiments.py,experiments/TEST_CASES.csv,thesis/main.tex
+表 6,Table,tab:baseline_comp_v2,四種異常偵測與預警方法於 160 PT (1,920 場受控試驗) 公平比較表,experiments/run_full_experiments.py,experiments/BASELINE_COMPARISON.csv,thesis/main.tex
