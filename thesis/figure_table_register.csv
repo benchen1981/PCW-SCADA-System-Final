@@ -6,15 +6,16 @@ id,kind,label,title,source_script_or_origin,data_source,file_path
 圖 5,Figure,fig:comp_1920,160 PT 測點 (1,920 場) 四種方法評估指標與平均提前量比較圖,scripts/generate_all_figures.py,evidence/test_reports/full_experiments_summary.json,thesis/picture/fig_model_comparison_1920.png
 圖 6,Figure,fig:ablation,異常密度門檻 θ 與前置連續確認條件 (raw_onset = 1 vs 2) 之誤報率與提前量消融分析圖,scripts/generate_all_figures.py,evidence/test_reports/ablation_sensitivity.json,thesis/picture/fig_ablation_onset_sensitivity.png
 圖 7,Figure,fig:latency,Apple M5 實測單點推論、Modbus/TCP、SQLite 與 320 測點批次延遲分佈圖,scripts/generate_all_figures.py,evidence/test_reports/performance_benchmarks.json,thesis/picture/fig_performance_latency.png
-圖 8,Figure,fig:realtime_11min,全廠 320 測點 11.35 分鐘即時 Modbus 行為偏差連續運轉實測軌跡圖,scripts/generate_all_figures.py,evidence/inference_logs/*_11min_deviation_log.json,thesis/picture/fig_11min_realtime_deviation.png
-圖 9,Figure,fig:ui_pid,次幹管 Submain 配水閥件與供回水測點動態 P&ID 監控畫面,Chrome Headless UI v2.0,http://127.0.0.1:8000/submain,thesis/picture/ui_local_pid.png
-圖 10,Figure,fig:ui_consistent,預警與事件狀態即時一致性驗證截圖（System Prediction 與 Alarm Center 同步連動）,scripts/verify_local_rewritten_and_11min.mjs,http://127.0.0.1:8000/t30,thesis/picture/ui_local_consistent_pred.png
-圖 11,Figure,fig:ui_overview_new,全廠八套 PCW 迴路總覽與 SQLite 統計指標即時監控介面,Chrome Headless UI v2.0,http://127.0.0.1:8000/,thesis/picture/ui_local_overview.png
-圖 12,Figure,fig:ui_pair_new,Submain 供回水配對層級 (Pair Level) 預警診斷畫面,scripts/verify_local_rewritten_and_11min.mjs,http://127.0.0.1:8000/t30,thesis/picture/ui_local_pair_diag.png
-圖 13,Figure,fig:ui_injector_new,Modbus/TCP 模擬器與全廠 320 測點行為偏差注入面板實測截圖,scripts/verify_local_rewritten_and_11min.mjs,http://127.0.0.1:8000/modbus,thesis/picture/ui_local_fault_injector.png
-圖 14,Figure,fig:ui_historian_new,11.35 分鐘真實時序 Historian 歷史曲線與外推預測軌跡截圖,scripts/verify_local_rewritten_and_11min.mjs,http://127.0.0.1:8000/historian,thesis/picture/ui_local_historian.png
+圖 8,Figure,fig:realtime_11min,全廠 160 PT 測點 11.35 分鐘即時 Modbus 行為偏差連續運轉實測軌跡圖,scripts/generate_all_figures.py,evidence/inference_logs/*_11min_deviation_log.json,thesis/picture/fig_11min_realtime_deviation.png
+圖 9,Figure,fig:terminal_sha256,2026-11-14 實驗重跑終端摘要、執行時間與證據檔 SHA-256 驗證圖,scripts/generate_all_figures.py,evidence/checksums/final_deliverables_sha256.txt,thesis/picture/fig_terminal_sha256_evidence.png
+圖 10,Figure,fig:ui_pid,次幹管 Submain 配水閥件與供回水測點動態 P&ID 監控畫面,Chrome Headless UI v2.0,http://127.0.0.1:8000/submain,thesis/picture/ui_local_pid.png
+圖 11,Figure,fig:ui_consistent,預警與事件狀態即時一致性驗證截圖（System Prediction 與 Alarm Center 同步連動）,scripts/verify_local_rewritten_and_11min.mjs,http://127.0.0.1:8000/t30,thesis/picture/ui_local_consistent_pred.png
+圖 12,Figure,fig:ui_overview_new,全廠八套 PCW 迴路總覽與 SQLite 統計指標即時監控介面,Chrome Headless UI v2.0,http://127.0.0.1:8000/,thesis/picture/ui_local_overview.png
+圖 13,Figure,fig:ui_pair_new,Submain 供回水配對層級 (Pair Level) 預警診斷畫面,scripts/verify_local_rewritten_and_11min.mjs,http://127.0.0.1:8000/t30,thesis/picture/ui_local_pair_diag.png
+圖 14,Figure,fig:ui_injector_new,Modbus/TCP 模擬器與行為偏差注入面板實測截圖,scripts/verify_local_rewritten_and_11min.mjs,http://127.0.0.1:8000/modbus,thesis/picture/ui_local_fault_injector.png
+圖 15,Figure,fig:ui_historian_new,11.35 分鐘真實時序 Historian 歷史曲線與外推預測軌跡截圖,scripts/verify_local_rewritten_and_11min.mjs,http://127.0.0.1:8000/historian,thesis/picture/ui_local_historian.png
 表 1,Table,tab:pcw_groups_v2,PCW 八套獨立迴路四大參數分組基準線與工程安全限值配置表,手寫系統規格表,system/backend/app/config/topology.py,thesis/main.tex
 表 2,Table,tab:modbus_map_v2,全廠 320 測點 Modbus/TCP FLOAT32 (CDAB) 保持暫存器位址映射表,手寫系統規格表,system/backend/app/config/topology.py,thesis/main.tex
 表 3,Table,tab:excel_to_program_map,初版 Excel 參考模型與系統 Unified V1 核心演算法對照表,模型數學解析,../Existing/PCW_T30_T20_T10_FINAL_ROLLBACK_THESIS_VERIFICATION.xlsx,thesis/main.tex
 表 4,Table,tab:env_real,實測硬體平台、軟體執行環境與資料集規格清冊,系統探測輸出,evidence/environment/baseline_probe.txt,thesis/main.tex
-表 5,Table,tab:baseline_comp_v2,四種異常偵測與預警方法於 160 PT (1,920 場) 與全廠 320 測點 (3,840 場) 公平比較表,experiments/run_full_experiments.py,experiments/BASELINE_COMPARISON.csv,thesis/main.tex
+表 5,Table,tab:baseline_comp_v2,四種異常偵測與預警方法於 160 PT (1,920 場受控試驗) 公平比較表,experiments/run_full_experiments.py,experiments/BASELINE_COMPARISON.csv,thesis/main.tex

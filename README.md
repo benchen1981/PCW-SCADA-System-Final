@@ -40,12 +40,13 @@
 | **全廠感測器規格** | **320 支感測器**（8 PCW × 10 Submain × 4 測點：**160 PT** + **80 FT** + **80 PDT**）；Group 4 PT 基準 `2.20 bar` | [`topology.py`](./system/backend/app/config/topology.py) |
 | **單元與全端測試** | **`6 passed in 4.76s`**（拓撲與 CDAB 編碼、$N_{10}\ge\theta$ 與 L1–L7、Python/TS $<10^{-9}$ 對等、10 分鐘偏移、Modbus wire 讀寫、FastAPI API） | [`test_unified_system.py`](./system/tests/test_unified_system.py) |
 | **Excel 參考一致率** | `PT-1` 480 列逐筆比對 **480 / 480（100.00%，最大誤差 `0.0`）** | [`EXCEL_PROGRAM_COMPARISON.csv`](./experiments/EXCEL_PROGRAM_COMPARISON.csv) |
-| **3,840 場基準實驗** | **320 測點 × 12 情境** + **12/12 邊界測試**；160 PT 子集 `Recall=100.0%` [95% Wilson CI: `99.70%–100.00%`], `Prec=88.77%`, `F1=0.9405`, `Lead=10.58m` | [`BASELINE_COMPARISON.csv`](./experiments/BASELINE_COMPARISON.csv) |
+| **1,920 場基準實驗** | **160 PT 測點 × 12 情境 = 1,920 場固定隨機種子試驗**（`seed = 2026111400 + run_id`）+ **12/12 邊界測試**；`Recall=100.0%` [95% Wilson CI: `99.70%–100.00%`], `Prec=88.70%` [95% CI: `86.97%–90.24%`], `F1=0.9401`, `Lead=10.60m` | [`BASELINE_COMPARISON.csv`](./experiments/BASELINE_COMPARISON.csv) |
 | **突波防抖消融分析** | 40 PT × 12 = 480 場：`raw_onset=2` 使誤報率由 **25.62%** 降至 **6.88%** (`θ=2.0, F1=0.9831`) 與 **1.25%** (`θ=2.5, F1=0.9969`) | [`ablation_sensitivity.json`](./evidence/test_reports/ablation_sensitivity.json) |
-| **Apple M5 執行效能** | 單點平均 **`14.53 µs`** (`68,352 ops/s`)、320 批次 **`4.68 ms`**、含 SQLite **`20.54 ms`**、Modbus FC03 **`271.4 µs`** | [`performance_benchmarks.json`](./evidence/test_reports/performance_benchmarks.json) |
-| **雙邊 >10 分鐘實測** | 線上 `vercel.app` (`11.12 min`) 捕獲 `1.72 bar` 矛盾與 `10.48m` 回落 `NORMAL`；本機 v2.0 (`11.35 min`) 同步 `HIGH+EVENT`，**320 / 320 支全數執行預警/事件**，SQLite `prediction_logs` 實存 **203,840 筆** | [`pcw_scada_11min.db`](./evidence/database_exports/pcw_scada_11min.db) |
+| **Apple M5 執行效能** | 單點平均 **`13.54 µs`** (`73,380 ops/s`)、160 PT 批次 **`2.28 ms`**（320 批次 **`4.56 ms`**）、含 SQLite **`19.21 ms`**、Modbus FC03 **`264.2 µs`** | [`performance_benchmarks.json`](./evidence/test_reports/performance_benchmarks.json) |
+| **全廠 >10 分鐘實測** | 本機 v2.0 (`11.35 min`) 注入慢速漂移與 `1.72 bar`，全廠 140 支測點依 L2 穩定鎖定 `T-30`、42 支 `EVENT`，SQLite `prediction_logs` 實存 **203,840 筆** | [`pcw_scada_11min.db`](./evidence/database_exports/pcw_scada_11min.db) |
 | **Web UI v2.0 巡檢** | 無頭 Chrome `1440×900` 巡檢全 9 頁 + SSE `LIVE STREAM`：0 console/page error、`1.72 bar` 與 Pair Level 即時同步 | [`evidence/browser_screenshots/local_v2/`](./evidence/browser_screenshots/local_v2) |
-| **正式印刷論文** | **34 頁** 中興大學官方格式 A4 PDF（`5.14 MiB`、0 `Overfull \hbox`、14 圖 5 表全部正文引用、含口試簡化公式與備註、7 筆 Crossref 實查書目）與可編輯 Word 稿（`.docx` / `.doc`） | [`thesis/main.pdf`](./thesis/main.pdf) · [`可編輯修改稿.docx`](./thesis/NCHU_Thesis_陳宥興_可編輯修改稿.docx) |
+| **密碼學完整性檢核** | 圖 9 白底黑字呈現 2026-11-14 實驗重跑終端摘要與 SHA-256 數位指紋；35 項核心交付檔案全數通過 `shasum -a 256 -c`（35/35 OK） | [`final_deliverables_sha256.txt`](./evidence/checksums/final_deliverables_sha256.txt) |
+| **正式印刷論文** | **40 頁** 中興大學官方格式 A4 PDF（`6.67 MiB`、0 `Overfull \hbox`、15 圖 5 表全部正文引用、第二章 5 節擴充、第四章 1,920 場 160 PT 實證、第五章結論展望、12 筆 Crossref 實查書目）與可編輯 Word 稿（`.docx` / `.doc`） | [`thesis/main.pdf`](./thesis/main.pdf) · [`可編輯修改稿.docx`](./thesis/NCHU_Thesis_陳宥興_可編輯修改稿.docx) |
 
 ---
 

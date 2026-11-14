@@ -1,55 +1,55 @@
 {
   "single_predict": {
     "samples": 10000,
-    "mean_us": 14.531,
-    "median_us": 13.75,
-    "std_us": 4.554,
-    "p95_us": 17.625,
-    "p99_us": 31.792,
-    "min_us": 12.625,
-    "max_us": 117.833,
-    "throughput_ops_sec": 68352.1
+    "mean_us": 13.541,
+    "median_us": 13.416,
+    "std_us": 0.914,
+    "p95_us": 14.208,
+    "p99_us": 14.5,
+    "min_us": 12.542,
+    "max_us": 38.5,
+    "throughput_ops_sec": 73380.3
   },
   "batch_320_predict": {
     "samples": 500,
-    "mean_us": 4681.957,
-    "median_us": 4631.312,
-    "std_us": 294.261,
-    "p95_us": 4959.292,
-    "p99_us": 5441.958,
-    "min_us": 4370.667,
-    "max_us": 8014.0,
+    "mean_us": 4561.805,
+    "median_us": 4573.52,
+    "std_us": 77.101,
+    "p95_us": 4678.416,
+    "p99_us": 4720.167,
+    "min_us": 4365.042,
+    "max_us": 4747.459,
     "batch_size": 320,
-    "throughput_tags_sec": 68343.7
+    "throughput_tags_sec": 70146.1
   },
   "full_320_eval_and_sqlite_insert": {
     "samples": 100,
-    "mean_us": 20540.468,
-    "median_us": 19751.042,
-    "std_us": 4817.462,
-    "p95_us": 28964.709,
-    "p99_us": 44690.375,
-    "min_us": 16379.666,
-    "max_us": 47827.583
+    "mean_us": 19206.334,
+    "median_us": 19063.541,
+    "std_us": 3136.006,
+    "p95_us": 22750.875,
+    "p99_us": 31554.042,
+    "min_us": 15342.292,
+    "max_us": 35108.166
   },
   "sqlite_query_100_rows": {
     "samples": 100,
-    "mean_us": 706.063,
-    "median_us": 645.5,
-    "std_us": 142.067,
-    "p95_us": 939.916,
-    "p99_us": 995.209,
-    "min_us": 593.375,
-    "max_us": 1621.792
+    "mean_us": 612.274,
+    "median_us": 601.854,
+    "std_us": 82.238,
+    "p95_us": 618.625,
+    "p99_us": 700.834,
+    "min_us": 581.75,
+    "max_us": 1412.334
   },
   "modbus_tcp_fc03_20regs": {
     "samples": 100,
-    "mean_us": 271.373,
-    "median_us": 266.979,
-    "std_us": 29.271,
-    "p95_us": 317.667,
-    "p99_us": 380.625,
-    "min_us": 237.458,
-    "max_us": 442.5
+    "mean_us": 264.195,
+    "median_us": 254.333,
+    "std_us": 36.044,
+    "p95_us": 296.625,
+    "p99_us": 421.042,
+    "min_us": 234.208,
+    "max_us": 532.375
   }
 }

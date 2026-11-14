@@ -291,13 +291,14 @@ def generate_scenario_series(limits: EngineeringLimits, scenario: str, mag: floa
 
 
 def run_full_sensor_matrix() -> Dict[str, Any]:
-    _, _, sensors = build_topology()
+    _, _, all_sensors = build_topology()
+    # Restricted strictly to 160 PT sensors x 12 scenarios = 1,920 controlled trials
+    sensors = [s for s in all_sensors if s.measurement_type == "PRESSURE"]
     model_names = ["Static Threshold", "EWMA", "Naive OLS", "Proposed Unified"]
 
     def make_stats():
         return {m: {"y_true": [], "y_pred": [], "lead": [], "early_hits": 0, "anomaly_total": 0} for m in model_names}
 
-    stats_all = make_stats()
     stats_pt = make_stats()
 
     matrix_rows = []
@@ -309,7 +310,7 @@ def run_full_sensor_matrix() -> Dict[str, Any]:
         sensor_pass = 0
         for trial_idx, (scenario, is_fault, mag) in enumerate(SCENARIOS, 1):
             run_id += 1
-            seed = 2026111100 + run_id
+            seed = 2026111400 + run_id
             history, series = generate_scenario_series(lim, scenario, mag, seed)
             breach = next((i for i, pt in enumerate(series) if i >= 10 and pt.good and (pt.v >= lim.high or pt.v <= lim.low)), None)
 
@@ -344,17 +345,15 @@ def run_full_sensor_matrix() -> Dict[str, Any]:
                 lead = max(0.0, float(breach - first_trig)) if (breach is not None and first_trig is not None) else None
                 early_before_breach = bool(is_fault and breach is not None and first_trig is not None and first_trig < breach)
 
-                for bucket in (stats_all[m_name], stats_pt[m_name] if sdef.measurement_type == "PRESSURE" else None):
-                    if bucket is None:
-                        continue
-                    bucket["y_true"].append(int(is_fault))
-                    bucket["y_pred"].append(int(triggered))
-                    if is_fault:
-                        bucket["anomaly_total"] += 1
-                        if early_before_breach:
-                            bucket["early_hits"] += 1
-                    if is_fault and triggered and lead is not None:
-                        bucket["lead"].append(lead)
+                bucket = stats_pt[m_name]
+                bucket["y_true"].append(int(is_fault))
+                bucket["y_pred"].append(int(triggered))
+                if is_fault:
+                    bucket["anomaly_total"] += 1
+                    if early_before_breach:
+                        bucket["early_hits"] += 1
+                if is_fault and triggered and lead is not None:
+                    bucket["lead"].append(lead)
 
                 per_model_out[m_name] = {"triggered": triggered, "first_trig": first_trig, "lead": lead, "final_state": final_state}
 
@@ -440,18 +439,16 @@ def run_full_sensor_matrix() -> Dict[str, Any]:
         w.writerows(exec_log_rows)
 
     summary_pt = summarize(stats_pt)
-    summary_all = summarize(stats_all)
 
     comp_rows = []
-    for scope, smap in (("PT_160_SENSORS_1920_RUNS", summary_pt), ("ALL_320_SENSORS_3840_RUNS", summary_all)):
-        for m_name, vals in smap.items():
-            comp_rows.append({"scope": scope, "model": m_name, **vals})
+    for m_name, vals in summary_pt.items():
+        comp_rows.append({"scope": "PT_160_SENSORS_1920_RUNS", "model": m_name, **vals})
     with (EXP_DIR / "BASELINE_COMPARISON.csv").open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=list(comp_rows[0].keys()))
         w.writeheader()
         w.writerows(comp_rows)
 
-    return {"pt_160": summary_pt, "all_320": summary_all, "total_runs": run_id}
+    return {"pt_160": summary_pt, "total_runs": run_id}
 
 
 # ============================================================================
