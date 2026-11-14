@@ -1,27 +1,40 @@
 Type,ID,Label,Caption,Evidence_File
-Figure,1,fig:fab_topology,12 吋半導體晶圓廠空間拓撲與雙棟水力輸送動線架構圖,picture/fig_fab_topology_design.png
-Figure,2,fig:system_layers,Web SCADA 與雙核心因果預警系統四層整合架構圖,picture/fig_system_architecture_layers.png
-Figure,3,fig:past_only_window,嚴格過去資料約束 (Past-Only) 之因果雙滑動視窗特徵提取時序設計,picture/fig_past_only_window_design.png
-Figure,4,fig:state_machine,四階多層預警狀態機 (Normal -> T-30 -> T-20 -> T-10 -> EVENT) 轉移邏輯,TikZ Embedded
-Figure,5,fig:excel_pt1_replay,PT-01 測點 480 筆時間步長跨平台推論數值對齊實測,picture/fig_excel_pt1_replay.png
-Figure,6,fig:model_comparison_1920,全廠 160 測點 1920 場試驗之綜合指標與處置提前量比較,picture/fig_model_comparison_1920.png
-Figure,7,fig:latency_benchmark,Apple M5 實機單測點與全廠批次推論延遲分佈,picture/fig_performance_latency.png
-Figure,8,fig:ablation_onset_sensitivity,消融實驗：漂移起始時間敏感度對精確率與處置時間之影響,picture/fig_ablation_onset_sensitivity.png
-Figure,9,fig:terminal_sha256_evidence,實驗重跑終端日誌、執行時間與關鍵證據檔 SHA-256 驗證截圖,picture/fig_terminal_sha256_evidence.png
-Figure,10,fig:scada_overview,Web SCADA 工業控制室全廠拓撲總覽介面 (含 35 分鐘持續監控狀態),picture/ui_local_overview.png
-Figure,11,fig:scada_predictions,全廠即時一致性預測與多層階梯式預警監控面板,picture/ui_local_consistent_pred.png
-Figure,12,fig:scada_historian,歷史趨勢曲線與雙滑動視窗滾動基線動態追蹤介面,picture/ui_local_historian.png
-Figure,13,fig:scada_fault_injector,工業實體故障注入測試介面 (漂移注入與受控回放),picture/ui_local_fault_injector.png
-Figure,14,fig:scada_pair_diagnostics,供水/回水配對壓差診斷與水力阻抗異常監控介面,picture/ui_local_pair_diag.png
-Figure,15,fig:35min_deviation_evidence,35 分鐘連續行為偏差實測時序走勢與狀態機四階跳轉響應圖,picture/fig_35min_realtime_deviation.png
-Table,1,tab:pcw_parameter_groups,半導體 PCW 系統四大製程區域壓力監控參數與門檻定義,LaTeX main.tex
-Table,2,tab:experiment_scenarios,全廠 160 個 PT 測點之 12 種故障與干擾實驗情境設計矩陣,LaTeX main.tex
-Table,3,tab:excel_benchmark_pt1,PT-01 基準測點 480 筆時間步長跨平台推論數值對齊結果,LaTeX main.tex
-Table,4,tab:model_benchmark,全廠 1,920 場試驗之五大多模型公平基準比較 (受控環境),LaTeX main.tex
-Table,5,tab:confusion_matrices,本研究模型在單次觸發與連續兩點確認下之全廠混淆矩陣對比,LaTeX main.tex
-Table,6,tab:historical_uncalibrated,非受控真實歷史資料回放實測消融結果 (誠實揭露限制),LaTeX main.tex
-Table,7,tab:ablation_mechanisms,多層預警防禦機制之逐步消融分析,LaTeX main.tex
-Table,8,tab:hardware_specs,效能測試實機硬體與軟體環境規格,LaTeX main.tex
-Table,9,tab:inference_latency,本模型於各計算階層之微秒級推論延遲與資源消耗,LaTeX main.tex
-Table,10,tab:modbus_mapping,Modbus TCP 保持暫存器映射配置表,LaTeX main.tex
-Table,11,tab:sha256_registry,本論文核心程式碼、試驗日誌與證據檔之 SHA-256 密碼學指紋登記表,LaTeX main.tex
+Figure,1,fig:fab_topology,12 吋先進半導體晶圓廠空間拓撲與 FAB/CUB 雙棟水力輸送動線架構圖,picture/fig_fab_topology_design.png
+Figure,2,fig:study_topology,八套 PCW、80 組 Submain 與 320 個感測器之研究拓撲層級展開圖,picture/fig_pcw_topology_320sensors.png
+Figure,3,fig:data_pipeline,各類感測器經 PLC / Modbus、SCADA 至 Historian 與推論引擎之資料流向圖,picture/fig_sensor_scada_historian_flow.png
+Figure,4,fig:modbus_simulator_ui,Modbus TCP 伺服器訊號模擬與暫存器參數調整控制台介面,picture/ui_local_modbus_simulator.png
+Figure,5,fig:code_provenance,核心推論引擎實際程式碼、行號與原始檔 SHA-256 可追溯性證據截圖,picture/fig_core_inference_code_provenance.png
+Figure,6,fig:past_only_window,Past-Only 70 分鐘因果滑動雙視窗切分定義架構圖,picture/fig_past_only_window_design.png
+Figure,7,fig:system_layers,Web SCADA 與雙核心因果預警系統五層整合架構與資料流向拓撲圖,picture/fig_system_architecture_layers.png
+Figure,8,fig:state_machine,四階多層預警狀態機轉移邏輯與遲滯鎖存拓撲圖,TikZ Embedded Vector
+Figure,9,fig:dual_path_flowchart,偏移偵測與趨勢預測雙路推論、聯合判定與結果留存流程圖,picture/fig_dual_path_inference_workflow.png
+Figure,10,fig:experiment_matrix_code,全廠 160PT、1,920 場試驗矩陣、固定種子情境產生器與多模型公平比較程式碼,picture/fig_experiment_matrix_code_1920.png
+Figure,11,fig:terminal_sha256_evidence,實驗重跑終端日誌、執行時間與關鍵證據檔 SHA-256 驗證截圖,picture/fig_terminal_sha256_evidence.png
+Figure,12,fig:excel_pt1_replay,Excel 參考模型 PT-01 測點（480 分鐘）Past-Only 逐筆串流推論與狀態回放驗證圖,picture/fig_excel_pt1_replay.png
+Figure,13,fig:model_comparison_1920,全廠 160 測點 1,920 場試驗之五大多模型公平基準評估指標與處置提前量比較圖,picture/fig_model_comparison_1920.png
+Figure,14,fig:ablation_onset_sensitivity,異常密度門檻 θ 與前置連續確認條件之誤報率與提前量消融分析圖,picture/fig_ablation_onset_sensitivity.png
+Figure,15,fig:35min_deviation_evidence,全廠 160 PT 測點 35 分鐘連續行為偏差實測時序走勢與狀態機四階跳轉響應圖,picture/fig_35min_realtime_deviation.png
+Figure,16,fig:scada_overview,Web SCADA 控制室全廠拓撲總覽介面（含 35 分鐘持續監控健康狀態）,picture/ui_local_overview.png
+Figure,17,fig:scada_pid,次幹管 Submain 配水閥件、供回水測點動態 P&ID 監控畫面,picture/ui_local_pid.png
+Figure,18,fig:scada_historian,歷史趨勢曲線調閱與雙滑動視窗滾動基線動態追蹤介面,picture/ui_local_historian.png
+Figure,19,fig:scada_live_trend,即時回傳資料調閱與高頻趨勢曲線動態監控介面,picture/ui_local_live_trend.png
+Figure,20,fig:scada_alarm_center,工業控制室即時警報監視、事件確認與歷史調閱中心,picture/ui_local_alarm_center.png
+Figure,21,fig:scada_consistent_pred,全廠即時一致性預測、OLS 95% 信賴錐面與多層階梯式預警監控面板,picture/ui_local_consistent_pred.png
+Figure,22,fig:scada_pair_diag,次幹管供水/回水配對壓差診斷與水力阻抗異常監控介面,picture/ui_local_pair_diag.png
+Figure,23,fig:scada_fault_injector,工業實體故障注入與 Modbus 參數模擬測試介面,picture/ui_local_fault_injector.png
+Figure,24,fig:latency_benchmark,Apple M5 實機單測點與全廠批次推論延遲分佈圖,picture/fig_performance_latency.png
+Table,1,tab:pcw_parameter_groups,PCW 八套獨立循環系統四大分組基準線與安全限值配置表,LaTeX main.tex
+Table,2,tab:modbus_mapping,全廠 320 測點 Modbus/TCP FLOAT32 保持暫存器位址映射表,LaTeX main.tex
+Table,3,tab:hardware_specs,實測硬體平台、軟體執行環境與資料集規格清冊,LaTeX main.tex
+Table,4,tab:excel_sheets,Excel 基準驗證工作簿（10 大功能工作表）結構清冊與用途說明,LaTeX main.tex
+Table,5,tab:excel_parameters,Parameters 工作表 8 大核心參數設定清冊,LaTeX main.tex
+Table,6,tab:minute_inference_pt1,MinuteInference 工作表欄位清冊（第一部分：A～L 欄 觀測與因果特徵）,LaTeX main.tex
+Table,7,tab:minute_inference_pt2,MinuteInference 工作表欄位清冊（第二部分：M～X 欄 推論狀態與離線驗證）,LaTeX main.tex
+Table,8,tab:experiment_scenarios,全廠 160 個 PT 測點之 12 種故障與干擾實驗情境設計矩陣,LaTeX main.tex
+Table,9,tab:excel_benchmark_pt1,PT-01 基準測點 480 筆時間步長跨平台推論數值對齊結果,LaTeX main.tex
+Table,10,tab:model_benchmark,四種異常偵測與預警方法於全廠 160 PT（1,920 場）之公平比較表,LaTeX main.tex
+Table,11,tab:confusion_matrices,本研究模型在單次觸發與連續兩點確認下之全廠混淆矩陣對比,LaTeX main.tex
+Table,12,tab:ablation_mechanisms,多層預警防禦機制之逐步消融分析表,LaTeX main.tex
+Table,13,tab:historical_uncalibrated,非受控真實歷史資料回放實測消融結果（誠實揭露限制）,LaTeX main.tex
+Table,14,tab:inference_latency,本模型於各計算階層之微秒級推論延遲與資源消耗清冊,LaTeX main.tex
+Table,15,tab:sha256_registry,本論文核心程式碼、試驗日誌與證據檔之 SHA-256 密碼學指紋登記表,LaTeX main.tex

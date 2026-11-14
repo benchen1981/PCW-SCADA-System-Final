@@ -121,7 +121,24 @@ def main():
     shutil.copy2(FINAL_DOCX, DATE_DOCX)
     shutil.copy2(FINAL_DOC, DATE_DOC)
 
-    print("All Word documents built successfully!")
+    MEETING_DOCX = CLEAN_DIR / "NCHU_Thesis_陳宥興_程式驗證整合可編輯版_20261114.docx"
+    MEETING_DOC = CLEAN_DIR / "NCHU_Thesis_陳宥興_程式驗證整合可編輯版_20261114.doc"
+    shutil.copy2(FINAL_DOCX, MEETING_DOCX)
+    shutil.copy2(FINAL_DOC, MEETING_DOC)
+
+    # Sync to workspace root
+    ROOT = CLEAN_DIR.parent
+    shutil.copy2(FINAL_DOCX, ROOT / FINAL_DOCX.name)
+    shutil.copy2(FINAL_DOC, ROOT / FINAL_DOC.name)
+    shutil.copy2(MEETING_DOCX, ROOT / MEETING_DOCX.name)
+    shutil.copy2(MEETING_DOC, ROOT / MEETING_DOC.name)
+    shutil.copy2(MAIN_DOCX, ROOT / "main.docx")
+    shutil.copy2(MAIN_DOC, ROOT / "main.doc")
+    shutil.copy2(CLEAN_DIR / "main.pdf", ROOT / "NCHU_Thesis_20261114_Final.pdf")
+    shutil.copy2(CLEAN_DIR / "main.pdf", ROOT / "main.pdf")
+
+    print("All Word documents built and synchronized successfully!")
 
 if __name__ == "__main__":
     main()
+
