@@ -18,5 +18,10 @@ id,kind,label,title,source_script_or_origin,data_source,file_path
 表 2,Table,tab:modbus_map_v2,全廠 320 測點 Modbus/TCP FLOAT32 (CDAB) 保持暫存器位址映射表,手寫系統規格表,system/backend/app/config/topology.py,thesis/main.tex
 表 3,Table,tab:excel_to_program_map,初版 Excel 參考模型與系統 Unified V1 核心演算法對照表,模型數學解析,../Existing/PCW_T30_T20_T10_FINAL_ROLLBACK_THESIS_VERIFICATION.xlsx,thesis/main.tex
 表 4,Table,tab:env_real,實測硬體平台、軟體執行環境與資料集規格清冊,系統探測輸出,evidence/environment/baseline_probe.txt,thesis/main.tex
-表 5,Table,tab:scenarios_v2,全廠 160 PT 評測之 12 種受控時序工況數學模型與半導體流體物理意義表,experiments/run_full_experiments.py,experiments/TEST_CASES.csv,thesis/main.tex
-表 6,Table,tab:baseline_comp_v2,四種異常偵測與預警方法於 160 PT (1,920 場受控試驗) 公平比較表,experiments/run_full_experiments.py,experiments/BASELINE_COMPARISON.csv,thesis/main.tex
+表 5,Table,tab:excel_sheets_register,初版 Excel 驗證模型工作簿十大功能工作表清冊與用途說明,工作簿結構解析,../Existing/PCW_T30_T20_T10_FINAL_ROLLBACK_THESIS_VERIFICATION.xlsx,thesis/main.tex
+表 6,Table,tab:excel_parameters,Parameters 工作表參數配置、數值與工程目的對照表,參數工作表,../Existing/PCW_T30_T20_T10_FINAL_ROLLBACK_THESIS_VERIFICATION.xlsx,thesis/main.tex
+表 7,Table,tab:excel_rawdata,RawData 工作表欄位架構、資料型態與資料檢核規則表,原始資料工作表,../Existing/PCW_T30_T20_T10_FINAL_ROLLBACK_THESIS_VERIFICATION.xlsx,thesis/main.tex
+表 8,Table,tab:excel_minute_inference,MinuteInference 工作表 24 個欄位（A～X 欄）結構、公式與因果屬性清冊,推論主工作表,../Existing/PCW_T30_T20_T10_FINAL_ROLLBACK_THESIS_VERIFICATION.xlsx,thesis/main.tex
+表 9,Table,tab:excel_model_logic,Model_Logic 工作表線上推論 vs 離線驗證之因果防線設計表,因果防線工作表,../Existing/PCW_T30_T20_T10_FINAL_ROLLBACK_THESIS_VERIFICATION.xlsx,thesis/main.tex
+表 10,Table,tab:scenarios_v2,全廠 160 PT 評測之 12 種受控時序工況數學模型與半導體流體物理意義表,experiments/run_full_experiments.py,experiments/TEST_CASES.csv,thesis/main.tex
+表 11,Table,tab:baseline_comp_v2,四種異常偵測與預警方法於 160 PT (1,920 場受控試驗) 公平比較表,experiments/run_full_experiments.py,experiments/BASELINE_COMPARISON.csv,thesis/main.tex

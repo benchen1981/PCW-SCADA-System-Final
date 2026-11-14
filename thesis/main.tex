@@ -603,14 +603,164 @@ s_e = \sqrt{\frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{n - 2}}
 \end{tabularx}
 \end{table}
 
-\subsubsection{歷史回放資料集性質（Excel PT-1 480 分鐘觀測序列）}
-本研究所使用之歷史回放基準資料集，源自指導教授認可之初版 Excel 驗證工作簿（\texttt{PCW\_T30\_T20\_T10\_FINAL\_ROLLBACK\_THESIS\_VERIFICATION.xlsx}）內之 \texttt{RawData} 工作表。該資料集之物理性質與統計特徵如下：
+\subsubsection{指導教授認可之初版 Excel 驗證模型工作簿架構與工作表清冊}
+\label{sec:excel_sheets_overview}
+為徹底保證本研究演算法之學術傳承性與工程實作之真確性，本系統之核心特徵工程、雙視窗滑動機制與預警決策門檻，皆嚴格對齊指導教授親自審查認可之初版 Excel 驗證工作簿（\texttt{PCW\_T30\_T20\_T10\_FINAL\_ROLLBACK\_THESIS\_VERIFICATION.xlsx}）。該工作簿包含十大功能工作表（表~\ref{tab:excel_sheets_register}），涵蓋參數定義、原始遙測輸入、逐分鐘串流推論、因果防線界定、事件提前量統計至資料品質診斷，構築了完整的時間序列預警驗證基準體系。
+
+\begin{table}[H]
+\centering
+\caption{初版 Excel 驗證模型工作簿十大功能工作表清冊與用途說明}
+\label{tab:excel_sheets_register}
+\scriptsize
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{llcX}
+\toprule
+\textbf{工作表名稱} & \textbf{資料規模} & \textbf{核心角色} & \textbf{工作表工程目的與論文驗證職責} \\
+\midrule
+\texttt{Parameters} & 11 列 $\times$ 4 欄 & 參數主檔 & 定義 SCADA 硬警報限值（1.7 bar）、密度比門檻（$N=2$）、視窗長度與三級預警水準閘門 \\
+\texttt{RawData} & 5,003 列 $\times$ 6 欄 & 原始遙測 & 記錄現場壓力計（\texttt{PT-1}）480 筆連續一分鐘實測時序、序列化時間戳記與資料品質檢核 \\
+\texttt{MinuteInference} & 5,003 列 $\times$ 24 欄 & 推論主表 & 逐分鐘計算 Past-Only 特徵（均值、斜率、外推預測、雙視窗偏離次數與密度比），輸出狀態與提前量 \\
+\texttt{Model\_Logic} & 9 列 $\times$ 5 欄 & 因果防線 & 嚴格定義各欄位屬於線上即時推論（Production Runtime）或離線評估標籤（Offline Label） \\
+\texttt{Event\_Summary} & 9 列 $\times$ 4 欄 & 提前量統計 & 自動定位首發越限事件時刻（First Event），計算 T-30、T-20、T-10 預警提前分鐘數（Lead Time） \\
+\texttt{Analysis\_Charts} & 圖表物件 & 時序軌跡 & 繪製水壓實測值、外推預測趨勢線與三級預警階梯狀態之時間軸關聯圖 \\
+\texttt{Final\_Evaluation} & 14 列 $\times$ 13 欄 & 效能指標 & 分別按 T-30、T-20、T-10 計算混淆矩陣（TP/FP/FN/TN）與 Precision、Recall、F1、FPR 指標 \\
+\texttt{Thesis\_Model} & 24 列 $\times$ 6 欄 & 模型鎖定 & 逐項列出論文最終數學模型元件、無未來資料屬性與回滾版保留決策 \\
+\texttt{Final\_Plan} & 13 列 $\times$ 6 欄 & 研發計畫 & 規範模型凍結、公式審計、多視域驗證至 SCADA 落地的十階段研發流程 \\
+\texttt{Diagnostics} & 13 列 $\times$ 4 欄 & 完整性診斷 & 檢驗資料載入列數、無壞時間、無壞數值、存在越限事件與無未來資料洩漏 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{歷史回放資料集欄位詳解：RawData 與 Parameters 工作表}
+\label{sec:rawdata_parameters_detail}
+作為系統演算法與指導教授模型對齊的唯一真實工業資料集，\texttt{RawData} 與 \texttt{Parameters} 工作表奠定了所有數學運算的輸入規範：
 \begin{enumerate}
-    \item \textbf{測點來源與採樣規格}：採集自真實 12 吋半導體晶圓廠次幹管末端壓力變送器（\texttt{PT-1}），採樣頻率為 1 分鐘等間隔連續遙測記錄，總時長為 480 分鐘（共 8 小時連續運轉序列），總計 480 筆浮點物理讀值。
-    \item \textbf{工程基準與安全邊界}：常態運轉基準線為 $1.50\ \mathrm{bar}$，正常波動區間分佈於 $1.48 \sim 1.52\ \mathrm{bar}$，高報警限值（High Limit）設定為 $1.70\ \mathrm{bar}$，低報警限值（Low Limit）設定為 $1.30\ \mathrm{bar}$。
-    \item \textbf{時序事件與物理特性}：前 70 分鐘（$t \in [0, 70)$）為暖機基線期，流體呈現穩態層流微幅波動；第 71 至 307 分鐘區間，下游多台乾式蝕刻與化學沉積設備進行批次生產切換，引起次幹管水壓產生多次未突破 $1.70\ \mathrm{bar}$ 上限的動態波動；於第 308 分鐘（$t=05:08$），管路水壓首次實質突破 $1.70\ \mathrm{bar}$，形成真正的超限事故（Event）。
-    \item \textbf{學術驗證目的}：此 480 筆長序列用於檢驗演算法在未越限常態波動下之靈敏度特性，並作為跨語言（Python/TypeScript）浮點對等性與嚴格 Past-Only 歷史重現之對齊標準。
+    \item \textbf{\texttt{Parameters} 參數配置表}（表~\ref{tab:excel_parameters}）：工作簿明確規範 8 項關鍵工程常數。其中，\texttt{AlarmLimit} 設為 $1.70\ \mathrm{bar}$，代表 SCADA 實體越限硬警報（Hard Alarm）；\texttt{NThreshold} 設為 $2.0$，代表近 10 分鐘偏離密度必須達到過去 60 分鐘基準的 2 倍以上；\texttt{Gate30}、\texttt{Gate20}、\texttt{Gate10} 分別設為 $1.55\ \mathrm{bar}$、$1.58\ \mathrm{bar}$、$1.62\ \mathrm{bar}$，作為水準偏移之防抖安全閘門。
+    \item \textbf{\texttt{RawData} 原始資料結構}（表~\ref{tab:excel_rawdata}）：涵蓋 A 至 F 共 6 個欄位。前三欄（A:C）為手動或資料庫貼入之工業原始遙測點（TagName、DateTime、Value）。D 欄透過 \texttt{DATE} 與 \texttt{TIME} 函數將 ISO 格式字串標準化為 Excel 浮點序列數；E 欄強制實施數值型態轉型；F 欄則執行數據完整性檢核（若時間或數值異常則分別標註 \texttt{BAD DATETIME} 或 \texttt{BAD VALUE}，全數正常則標註 \texttt{OK}）。診斷結果顯示 480 筆歷史觀測值全數為 \texttt{OK}。
 \end{enumerate}
+
+\begin{table}[H]
+\centering
+\caption{\texttt{Parameters} 工作表參數配置、數值與工程目的對照表}
+\label{tab:excel_parameters}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{5pt}
+\begin{tabularx}{0.96\textwidth}{llcX}
+\toprule
+\textbf{參數名稱 (Parameter)} & \textbf{設定數值 (Value)} & \textbf{物理單位 (Unit)} & \textbf{半導體廠務工程目的與演算法角色 (Purpose)} \\
+\midrule
+\texttt{AlarmLimit} & 1.70 & bar & 實際 SCADA 越限硬警報限值（Hard Alarm），作為故障客觀地面真相 \\
+\texttt{NThreshold} & 2.00 & ratio & 異常密度比判斷門檻，要求近 10 分鐘超越基準均值密度大於過去 2 倍 \\
+\texttt{TrendWindow} & 5 & min & 局部均差斜率計算視窗（Recent 5 分鐘均值對比 Previous 5 分鐘均值） \\
+\texttt{Gate30} & 1.55 & bar & 當 $N_{10} > 2$ 成立時，觸發 T-30 預警之輔助水準閘門（Auxiliary Gate） \\
+\texttt{Gate20} & 1.58 & bar & 當 $N_{10} > 2$ 成立時，觸發 T-20 預警之輔助水準閘門 \\
+\texttt{Gate10} & 1.62 & bar & 當 $N_{10} > 2$ 成立時，觸發 T-10 預警之輔助水準閘門 \\
+\texttt{BaselineMin} & 60 & min & 歷史基準視窗長度（$t-70$ 分鐘至 $t-10$ 分鐘，共 60 筆觀測值） \\
+\texttt{CurrentMin} & 10 & min & 近期評估視窗長度（$t-10$ 分鐘至 $t$ 當前時刻，共 10 筆觀測值） \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{\texttt{RawData} 工作表欄位架構、資料型態與資料檢核規則表}
+\label{tab:excel_rawdata}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{5pt}
+\begin{tabularx}{0.96\textwidth}{clllX}
+\toprule
+\textbf{欄位} & \textbf{欄位代碼} & \textbf{資料型態} & \textbf{取值範例} & \textbf{欄位說明與 Excel 計算公式} \\
+\midrule
+A & \texttt{TagName} & String & \texttt{PT-1} & 實體感測器標籤代碼（半導體製程次幹管末端壓力計） \\
+B & \texttt{DateTime} & DateTime & 2026-08-05 03:01 & 現場 PLC / SCADA 遙測時間戳記（1 分鐘等間隔連續記錄） \\
+C & \texttt{Value} & Float & 1.639648 & 壓力物理量測讀值（單位：bar） \\
+D & \texttt{DateTime\_Num} & Number & 46239.12569 & 序列化日期數值：\texttt{DATE(LEFT(...)) + TIME(MID(...))} \\
+E & \texttt{Value\_Num} & Number & 1.639648 & 浮點數值強制轉換：\texttt{IFERROR(1*C4, "")} \\
+F & \texttt{InputCheck} & String & \texttt{OK} & 輸入品質檢驗：\texttt{IF(D4="","BAD TIME",IF(E4="","BAD VAL","OK"))} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{MinuteInference 工作表 24 欄位結構、數學公式與因果屬性清冊}
+\label{sec:minute_inference_24cols}
+\texttt{MinuteInference} 為整個初版驗證模型的核心推論引擎工作表。工作表由 A 欄至 X 欄共編排 \textbf{24 個連續計算欄位}（表~\ref{tab:excel_minute_inference}）。為防止時序資料洩漏，工作表在結構上將「線上即時推論欄位」與「離線驗證標籤欄位」進行了嚴格的因果切分：
+\begin{enumerate}
+    \item \textbf{線上實時推論欄位（Production Runtime，A 欄至 R 欄、V 欄與 W 欄）}：所有公式的計算範圍嚴格限制於當前時間 $A_t$ 以前之歷史觀測值。例如，基準均值 $K_t$ 僅抓取 $[A_t - 70/1440, A_t - 10/1440)$ 區間；局部均差斜率 $G_t$ 僅比較前後 5 分鐘均值；外推值 $H_t \sim J_t$ 僅使用當前讀值與正向斜率外推；預警狀態 $O_t \sim Q_t$ 僅由歷史特徵判定。即時運行環境絕無任何未來數據輸入。
+    \item \textbf{離線評估標籤欄位（Offline Label Only，S 欄至 U 欄與 X 欄）}：S、T、U 欄分別透過 \texttt{COUNTIFS} 統計未來 30、20、10 分鐘內是否真實發生水壓突破 $1.70\ \mathrm{bar}$，作為事後計算混淆矩陣的客觀真實標籤（Ground Truth）；X 欄則以 \texttt{MINIFS} 尋找下一次越限發生的未來時刻，反向計算系統提前了多少分鐘預警。這些欄位在線上 SCADA 部署時嚴禁啟用。
+\end{enumerate}
+
+\begin{table}[H]
+\centering
+\caption{\texttt{MinuteInference} 工作表 24 個欄位（A～X 欄）結構、公式與因果屬性清冊}
+\label{tab:excel_minute_inference}
+\scriptsize
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabularx}{\textwidth}{cllcX}
+\toprule
+\textbf{欄位} & \textbf{欄位名稱} & \textbf{對應數學符號} & \textbf{執行屬性} & \textbf{工作表 Excel 核心計算公式與工程物理定義} \\
+\midrule
+A & \texttt{Time} & $t$ & Runtime & \texttt{=IF(RawData!D4="","",RawData!D4)}：推論時間戳記 \\
+B & \texttt{TagName} & $\mathrm{Tag}$ & Runtime & \texttt{=IF(RawData!A4="","",RawData!A4)}：感測器標籤名稱（\texttt{PT-1}） \\
+C & \texttt{Value} & $x(t)$ & Runtime & \texttt{=IF(RawData!E4="","",RawData!E4)}：當前水壓實測值（bar） \\
+D & \texttt{HardAlarm} & $I_{\mathrm{hard}}(t)$ & Runtime & \texttt{=--(C4>=Parameters!\$B\$4)}：是否突破 1.70 bar 硬警報門檻 \\
+E & \texttt{Prev5Avg} & $\mathrm{Prev5}(t)$ & Runtime & 前 5 分鐘均值：\texttt{AVERAGEIFS(..., [t-10, t-5))} \\
+F & \texttt{Recent5Avg} & $\mathrm{Recent5}(t)$ & Runtime & 近 5 分鐘均值：\texttt{AVERAGEIFS(..., [t-5, t))} \\
+G & \texttt{Slope/min} & $\mathrm{Slope}(t)$ & Runtime & \texttt{=MAX(0, (F4-E4)/5)}：正向水壓上升速率（bar/min） \\
+H & \texttt{Forecast30} & $\hat{x}(t+30)$ & Runtime & \texttt{=C4 + G4*30}：基於局部斜率之 30 分鐘外推預測水壓值 \\
+I & \texttt{Forecast20} & $\hat{x}(t+20)$ & Runtime & \texttt{=C4 + G4*20}：基於局部斜率之 20 分鐘外推預測水壓值 \\
+J & \texttt{Forecast10} & $\hat{x}(t+10)$ & Runtime & \texttt{=C4 + G4*10}：基於局部斜率之 10 分鐘外推預測水壓值 \\
+K & \texttt{BaseAvg60} & $\mathrm{BaseAvg}_{60}(t)$ & Runtime & 基準均值：過去 60 分鐘正常水力基準均值 \\
+L & \texttt{M60} & $M_{60}(t)$ & Runtime & 基準期內超越基準值次數：\texttt{COUNTIFS(..., ">"\&BaseAvg)} \\
+M & \texttt{M10} & $M_{10}(t)$ & Runtime & 近期 10 分鐘超越基準值次數：\texttt{COUNTIFS(..., ">"\&BaseAvg)} \\
+N & \texttt{N10} & $N_{10}(t)$ & Runtime & 近期相對基準異常密度比：\texttt{M10 / (M60 / 6)} \\
+O & \texttt{Pred\_T30} & $\hat{y}_{30}(t)$ & Runtime & 30 分鐘預警決策：\texttt{Forecast30 >= 1.7 OR (N10 > 2 AND Value >= 1.55)} \\
+P & \texttt{Pred\_T20} & $\hat{y}_{20}(t)$ & Runtime & 20 分鐘預警決策：\texttt{Forecast20 >= 1.7 OR (N10 > 2 AND Value >= 1.58)} \\
+Q & \texttt{Pred\_T10} & $\hat{y}_{10}(t)$ & Runtime & 10 分鐘預警決策：\texttt{Forecast10 >= 1.7 OR (N10 > 2 AND Value >= 1.62)} \\
+R & \texttt{AnyWarning} & $W(t)$ & Runtime & 預警彙總旗標：\texttt{Pred\_T30 OR Pred\_T20 OR Pred\_T10} \\
+S & \texttt{Actual\_T30} & $y_{30}^*(t)$ & \textbf{Offline} & 未來 30 分鐘真實越限標籤：\texttt{COUNTIFS(future 30m, ">=1.7") > 0} \\
+T & \texttt{Actual\_T20} & $y_{20}^*(t)$ & \textbf{Offline} & 未來 20 分鐘真實越限標籤：\texttt{COUNTIFS(future 20m, ">=1.7") > 0} \\
+U & \texttt{Actual\_T10} & $y_{10}^*(t)$ & \textbf{Offline} & 未來 10 分鐘真實越限標籤：\texttt{COUNTIFS(future 10m, ">=1.7") > 0} \\
+V & \texttt{ActualEvent} & $\mathrm{Event}(t)$ & Runtime & 當前物理讀值是否已超越 1.70 bar：\texttt{Value >= 1.7} \\
+W & \texttt{State} & $S(t)$ & Runtime & 狀態機輸出：\texttt{EVENT / T-10 / T-20 / T-30 / Normal} \\
+X & \texttt{LeadToNext} & $\mathrm{Lead}(t)$ & \textbf{Offline} & 距離下一次事故提前分鐘數：\texttt{(Next\_Event\_Time - Current\_Time) * 1440} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Model\_Logic、Event\_Summary、Final\_Evaluation 與 Diagnostics 工作表之因果防線與驗證}
+\label{sec:excel_other_sheets}
+除主推論表外，工作簿其餘工作表為研究提供了完整的驗證閉環：
+\begin{enumerate}
+    \item \textbf{\texttt{Model\_Logic} 工作表之因果安全防線}：如表~\ref{tab:excel_model_logic} 所示，工作表以專題形式列出核心欄位之未來資料依賴性檢核。明確規範 \texttt{Actual\_T30/T20/T10} 與 \texttt{LeadToNextEvent} 僅能用於離線模型驗證，在線上生產環境（Production）中直接停用，杜絕一切時序穿越。
+    \item \textbf{\texttt{Event\_Summary} 工作表之提前量統計}：工作簿以 \texttt{MINIFS} 函數自動鎖定 \texttt{PT-1} 序列首次突破 $1.70\ \mathrm{bar}$ 之時刻發生於第 128 步長（$t=05:08$），並向上檢索事件前最後一個預警時刻。實測公式計算結果顯示，系統於事件前 9.0 分鐘即發出 \texttt{T-10} 預警，成功證明預警機制能先於實體事故動作。
+    \item \textbf{\texttt{Final\_Evaluation} 工作表之分層指標評估}：工作表針對 T-30、T-20、T-10 分別建立完整的四象限混淆矩陣。排除暖機期後，在單測點未越限之長序列波動下，T-10 預警實測召回率為 40.00\%、精確率為 10.17\%、F1 達 0.1622，真實量化出工業現場在無多測點關聯濾除時之單點警報負荷（Warning Rate = 2.45\%）。
+    \item \textbf{\texttt{Diagnostics} 工作表之資料完整性診斷}：診斷結果顯示：載入有效資料 480 筆、時間異常 0 筆、數值異常 0 筆、最高實測水壓為 $1.704\ \mathrm{bar}$（證實包含真實 Event），且 \texttt{Future Leakage} 欄位檢核為 \textbf{NO}，證實初版 Excel 驗證模型之高度純淨性。
+\end{enumerate}
+
+\begin{table}[H]
+\centering
+\caption{\texttt{Model\_Logic} 工作表線上推論 vs 離線驗證之因果防線設計表}
+\label{tab:excel_model_logic}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{5pt}
+\begin{tabularx}{0.96\textwidth}{llccX}
+\toprule
+\textbf{核心欄位名稱} & \textbf{引用未來數據？} & \textbf{線上部署？} & \textbf{工程語義} & \textbf{演算法判定規則} \\
+\midrule
+\texttt{Forecast30/20/10} & \textbf{NO (否)} & \textbf{YES (是)} & 純 Past-Only 趨勢外推 & 當前讀值 $+$ 正向斜率 $\times$ 預測跨度 \\
+\texttt{N10} & \textbf{NO (否)} & \textbf{YES (是)} & 原始異常密度比證據 & 近 10 分鐘超限次數 $/$ (過去 60 分鐘超限次數 $/ 6$) \\
+\texttt{Pred\_T30/T20/T10} & \textbf{NO (否)} & \textbf{YES (是)} & 即時預測性早期警報 & 外推值 $\ge 1.70$ 或 ($N_{10} > 2$ 且讀值 $\ge$ 水準閘門) \\
+\texttt{Actual\_T30/T20/T10} & \textbf{YES (是)} & \textbf{NO (否)} & \textbf{離線評估標籤專用} & 未來視域 $[t, t+h]$ 內是否包含 $\mathrm{Value} \ge 1.70$ \\
+\texttt{ActualEvent} & \textbf{NO (否)} & \textbf{YES (是)} & SCADA 實體越界硬警報 & 當前水壓 $\mathrm{Value} \ge 1.70\ \mathrm{bar}$ \\
+\texttt{LeadToNextEvent} & \textbf{YES (是)} & \textbf{NO (否)} & \textbf{離線提前量度量專用} & 下一次事件發生時刻 $-$ 當前預警時刻 \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
 \subsubsection{受控合成時序資料集性質與 12 種工況物理建模}
 半導體先進製程（如 3nm/2nm EUV 微影）對冷卻水壓極度敏感，廠務運轉中不可在實體生產線故意製造破管、水錘或閥門卡死等致命故障以採集異常資料，否則將導致數億元晶圓刮傷報廢。因此，國際工業自動化領域通用之金標準為「受控故障注入測試（Controlled Fault Injection Testing）」。
